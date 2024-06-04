@@ -7,7 +7,8 @@
     "css-update": "npx tailwindcss -i ./style/tailwind-input.css -o ./style/tailwind.css --watch",
     "generate-ssl": "openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem",
     "fetch-models": "node fetch_models.js",
-    "prod:use-remote-models": "node update_config.js remote-models && npm run build && npm run copy-models",
+    "prod:github": "node update_config.js remote-models && npm run build && node build_sub_proj.js github && npm run copy-models",
+    "prod:use-remote-models": "node update_config.js remote-models && npm run build && node build_sub_proj.js && npm run copy-models",
     "prod": "node update_config.js && npm run build && npm run fetch-models && node build_sub_proj.js && npm run copy-models",
     "startup": "cd ./dist && http-server -S -C ../cert.pem -K ../key.pem -o"
   },

@@ -6,6 +6,8 @@ import {
   env
 } from "@xenova/transformers";
 
+import { USE_REMOTE_MODELS } from "../../../config";
+
 class CallbackTextStreamer extends TextStreamer {
   constructor(tokenizer, cb) {
     super(tokenizer, {
@@ -135,9 +137,14 @@ async function load() {
     data: `Loading model`
   });
 
-  env.backends.onnx.wasm.wasmPaths = "/models/wasm/ort-web@1_19_0_dev/";
+  let baseUrl = "/";
 
-  if (location.href.toLowerCase().indexOf("github.io") > -1) {
+  if (
+    location.href.toLowerCase().indexOf("github.io") > -1 ||
+    USE_REMOTE_MODELS
+  ) {
+    // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
+    baseUrl = "/web-ai-showcase/";
     // force to use remote model
     env.allowLocalModels = false;
     env.allowRemoteModels = true;
@@ -147,6 +154,8 @@ async function load() {
     env.allowLocalModels = true;
     env.allowRemoteModels = false;
   }
+
+  env.backends.onnx.wasm.wasmPaths = `${baseUrl}models/wasm/ort-web@1_19_0_dev/`;
 
   // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {

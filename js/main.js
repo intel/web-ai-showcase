@@ -6,6 +6,12 @@
 
 import { setupNavigBar } from "./navbar.js";
 
+// Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
+const baseUrl =
+  location.href.toLowerCase().indexOf("github.io") > -1
+    ? "/web-ai-showcase/"
+    : "/";
+
 const BACKENDS = {
   WebGPU: "WebGPU",
   WebAssembly: "WebAssembly",
@@ -22,7 +28,7 @@ let SAMPLES = [
   {
     title: "Phi-3",
     desc: "A private and powerful AI chatbot that runs locally in your browser.",
-    poster: "/assets/phi3.png",
+    poster: `${baseUrl}assets/phi3.png`,
     sampleUrl: "./samples/phi3-webgpu/index.html",
     model: "Phi-3-mini-4k-instruct",
     webApi: [BACKENDS.WebGPU],
@@ -32,8 +38,8 @@ let SAMPLES = [
   {
     title: "Stable Diffusion Turbo",
     desc: "Transform your words into stunning AI visuals with stable diffusion turbo",
-    poster: "/assets/stable_diffusion_demo_poster.png",
-    video: "/assets/stable_diffusion_demo.mp4",
+    poster: `${baseUrl}assets/stable_diffusion_demo_poster.png`,
+    video: `${baseUrl}assets/stable_diffusion_demo.mp4`,
     sampleUrl: "./samples/stable_diffusion/stable-diffusion.html",
     model: "SD Turbo",
     webApi: [BACKENDS.WebGPU],
@@ -42,8 +48,8 @@ let SAMPLES = [
   {
     title: "Summarization",
     desc: "Generate summaries of paragraphs",
-    poster: "/assets/summarization_demo_poster.png",
-    video: "/assets/summarization.mp4",
+    poster: `${baseUrl}assets/summarization_demo_poster.png`,
+    video: `${baseUrl}assets/summarization.mp4`,
     sampleUrl: "./samples/summarization/index.html",
     model: "DistilBART CNN",
     webApi: [BACKENDS.WebAssembly],
@@ -53,8 +59,8 @@ let SAMPLES = [
   {
     title: "LLM-Gemma",
     desc: "LLM-Gemma",
-    poster: "/assets/llm-gemma-poster.png",
-    video: "/assets/llm-gemma.mp4",
+    poster: `${baseUrl}assets/llm-gemma-poster.png`,
+    video: `${baseUrl}assets/llm-gemma.mp4`,
     sampleUrl: "./samples/llm_gemma/gemma.html",
     model: "Gemma 2B",
     webApi: [BACKENDS.WebGPU],
@@ -64,8 +70,8 @@ let SAMPLES = [
   {
     title: "Image To Text",
     desc: "Generate text from image",
-    poster: "/assets/image_to_text_poster.png",
-    video: "/assets/image-to-text.mp4",
+    poster: `${baseUrl}assets/image_to_text_poster.png`,
+    video: `${baseUrl}assets/image-to-text.mp4`,
     sampleUrl: "./samples/image_to_text/index.html",
     model: "ViT GPT2",
     webApi: [BACKENDS.WebAssembly],
@@ -75,8 +81,8 @@ let SAMPLES = [
   {
     title: "Question Answering",
     desc: "Answer question from context",
-    poster: "/assets/question_answering.png",
-    video: "/assets/question_answering.mp4",
+    poster: `${baseUrl}assets/question_answering.png`,
+    video: `${baseUrl}assets/question_answering.mp4`,
     sampleUrl: "./samples/question_answering/index.html",
     model: "DistilBERT",
     webApi: [BACKENDS.WebAssembly],
@@ -86,8 +92,8 @@ let SAMPLES = [
   {
     title: "Background Removal",
     desc: "Remove the background of an image",
-    poster: "/assets/background_removal_poster.png",
-    video: "/assets/background_removal.mp4",
+    poster: `${baseUrl}assets/background_removal_poster.png`,
+    video: `${baseUrl}assets/background_removal.mp4`,
     sampleUrl: "./samples/image_background_removal/index.html",
     model: "RMBG v1.4",
     webApi: [BACKENDS.WebGPU],
@@ -97,8 +103,8 @@ let SAMPLES = [
   {
     title: "Code Editor",
     desc: "Test out some sample code directly in a compatible browser",
-    poster: "/assets/webnn_code_editor_poster.png",
-    video: "/assets/webnn_code_editor.mp4",
+    poster: `${baseUrl}assets/webnn_code_editor_poster.png`,
+    video: `${baseUrl}assets/webnn_code_editor.mp4`,
     sampleUrl:
       "https://webmachinelearning.github.io/webnn-samples/code/index.html",
     model: "",
@@ -109,8 +115,8 @@ let SAMPLES = [
   {
     title: "Image Classification",
     desc: "Try image classification with models like MobileNet V2, SqueezeNet, and ResNet V2 50",
-    poster: "/assets/image_classification_poster.png",
-    video: "/assets/image_classification.mp4",
+    poster: `${baseUrl}assets/image_classification_poster.png`,
+    video: `${baseUrl}assets/image_classification.mp4`,
     sampleUrl:
       "https://webmachinelearning.github.io/webnn-samples/image_classification/index.html",
     model: "MobileNet v2 · SqueezeNet · ResNet v2 50",
@@ -125,8 +131,8 @@ let SAMPLES = [
   {
     title: "Object Detection",
     desc: "Check out this sample for object detection with models like Tiny Yolo V2 and SSD MobileNet V1",
-    poster: "/assets/object_detection_poster.png",
-    video: "/assets/object_detection.mp4",
+    poster: `${baseUrl}assets/object_detection_poster.png`,
+    video: `${baseUrl}assets/object_detection.mp4`,
     sampleUrl:
       "https://webmachinelearning.github.io/webnn-samples/object_detection/index.html",
     model: "Tiny Yolo v2 · SSD MobileNet v1",
@@ -141,8 +147,8 @@ let SAMPLES = [
   {
     title: "Semantic Segmentation",
     desc: "See how semantic segmentation works with the DeepLab V3 with MobileNet V2 models",
-    poster: "/assets/semantic_segmentation_poster.png",
-    video: "/assets/semantic_segmentation.mp4",
+    poster: `${baseUrl}assets/semantic_segmentation_poster.png`,
+    video: `${baseUrl}assets/semantic_segmentation.mp4`,
     sampleUrl:
       "https://webmachinelearning.github.io/webnn-samples/semantic_segmentation/index.html",
     model: "DeepLab v3 · MobileNet v2",
@@ -153,8 +159,8 @@ let SAMPLES = [
   {
     title: "Facial Landmark Detection",
     desc: "See how facial landmark detection works with the SSD MobileNet V2 Face model",
-    poster: "/assets/face_landmark_detection_poster.png",
-    video: "/assets/face_landmark_detection.mp4",
+    poster: `${baseUrl}assets/face_landmark_detection_poster.png`,
+    video: `${baseUrl}assets/face_landmark_detection.mp4`,
     sampleUrl:
       "https://webmachinelearning.github.io/webnn-samples/facial_landmark_detection/index.html",
     model: "SSD MobileNet v2 Face",
@@ -165,8 +171,8 @@ let SAMPLES = [
   {
     title: "Face Recognition",
     desc: "Explore the power of face recognition in your browser with the SSD MobileNet V2 Face model",
-    poster: "/assets/face_recognition_poster.png",
-    video: "/assets/face_recognition.mp4",
+    poster: `${baseUrl}assets/face_recognition_poster.png`,
+    video: `${baseUrl}assets/face_recognition.mp4`,
     sampleUrl:
       "https://webmachinelearning.github.io/webnn-samples/face_recognition/index.html",
     model: "SSD MobileNet v2 Face",
@@ -177,8 +183,8 @@ let SAMPLES = [
   {
     title: "Stable Diffusion 1.5",
     desc: "Transform your words into stunning AI visuals with stable diffusion 1.5",
-    poster: "/assets/stable_diffusion_demo_webnn_ort_poster.png",
-    video: "/assets/stable_diffusion_demo_webnn_ort.mp4",
+    poster: `${baseUrl}assets/stable_diffusion_demo_webnn_ort_poster.png`,
+    video: `${baseUrl}assets/stable_diffusion_demo_webnn_ort.mp4`,
     sampleUrl:
       "https://microsoft.github.io/webnn-developer-preview/demos/stable-diffusion-1.5/",
     model: "SD Turbo",
@@ -189,8 +195,8 @@ let SAMPLES = [
   {
     title: "Stable Diffusion Turbo",
     desc: "Transform your words into stunning AI visuals with stable diffusion turbo",
-    poster: "/assets/stable_diffusion_demo_webnn.png",
-    video: "/assets/stable_diffusion_demo_webnn.mp4",
+    poster: `${baseUrl}assets/stable_diffusion_demo_webnn.png`,
+    video: `${baseUrl}assets/stable_diffusion_demo_webnn.mp4`,
     sampleUrl:
       "https://microsoft.github.io/webnn-developer-preview/demos/sd-turbo/",
     model: "SD Turbo",
@@ -201,8 +207,8 @@ let SAMPLES = [
   {
     title: "Segment Anything",
     desc: `Segment Anything is a new AI model from Meta AI that can "cut out" any object.`,
-    poster: "/assets/webnn_segment_anything.png",
-    video: "/assets/webnn_segment_anything.mp4",
+    poster: `${baseUrl}assets/webnn_segment_anything.png`,
+    video: `${baseUrl}assets/webnn_segment_anything.mp4`,
     sampleUrl:
       "https://microsoft.github.io/webnn-developer-preview/demos/segment-anything/",
     model: "Sam",
@@ -213,8 +219,8 @@ let SAMPLES = [
   {
     title: "Whisper Base",
     desc: "Whisper Base is a pre-trained model for automatic speech recognition (ASR) and speech translation.",
-    poster: "/assets/webnn_whisper_base.png",
-    video: "/assets/webnn_whisper_base.mp4",
+    poster: `${baseUrl}assets/webnn_whisper_base.png`,
+    video: `${baseUrl}assets/webnn_whisper_base.mp4`,
     sampleUrl:
       "https://microsoft.github.io/webnn-developer-preview/demos/whisper-base/",
     model: "Encoder · Decoder",

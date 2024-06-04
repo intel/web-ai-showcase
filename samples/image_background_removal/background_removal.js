@@ -23,6 +23,8 @@ import {
   TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH
 } from "../../config.js";
 
+import exampleImg from "/assets/person.avif";
+
 // load navigation bar
 setupNavigBar("../..");
 
@@ -39,7 +41,6 @@ if (!USE_REMOTE_MODELS) {
 }
 
 // Constants
-const EXAMPLE_URL = "/assets/person.avif";
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
 const MODEL_NAME = "RMBG-1.4";
 
@@ -193,7 +194,7 @@ function model_progress_cb_handler(message) {
 
 example.addEventListener("click", (e) => {
   e.preventDefault();
-  predict(EXAMPLE_URL);
+  predict(exampleImg);
 });
 
 fileUpload.addEventListener("change", function (e) {

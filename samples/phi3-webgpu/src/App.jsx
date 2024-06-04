@@ -5,6 +5,8 @@ import ArrowRightIcon from "./components/icons/ArrowRightIcon";
 import StopIcon from "./components/icons/StopIcon";
 import Progress from "./components/Progress";
 
+import logoImg from "/assets/logo.png";
+
 const IS_WEBGPU_AVAILABLE = !!navigator.gpu;
 const STICKY_SCROLL_THRESHOLD = 120;
 
@@ -36,7 +38,7 @@ function App() {
 
   function onEnter(message) {
     startNewDialog();
-    setDialogMessages((prev) => [ ...prev, { role: "user", content: message }]);
+    setDialogMessages((prev) => [...prev, { role: "user", content: message }]);
     setTps(null);
     setIsRunning(true);
     setInput("");
@@ -66,7 +68,7 @@ function App() {
     if (!worker.current) {
       // Create the worker if it does not yet exist.
       worker.current = new Worker(new URL("./worker.js", import.meta.url), {
-        type: "module",
+        type: "module"
       });
     }
 
@@ -113,7 +115,7 @@ function App() {
             setDialogMessages((prev) => [
               // This?
               ...prev,
-              { role: "assistant", content: "" },
+              { role: "assistant", content: "" }
             ]);
           }
           break;
@@ -130,7 +132,7 @@ function App() {
               const last = cloned.at(-1);
               cloned[cloned.length - 1] = {
                 ...last,
-                content: last.content + output,
+                content: last.content + output
               };
               return cloned;
             });
@@ -186,7 +188,7 @@ function App() {
         <div className="h-full overflow-auto scrollbar-thin flex justify-center items-center flex-col relative">
           <div className="flex flex-col items-center mb-1 max-w-[250px] text-center">
             <img
-              src="/assets/logo.png"
+              src={logoImg}
               width="100%"
               height="auto"
               className="block"
