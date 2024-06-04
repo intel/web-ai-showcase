@@ -1,0 +1,546 @@
+<!--
+ *  Copyright (C) 2024 Intel Corporation. All rights reserved.
+ *  Licensed under the Apache License 2.0. See LICENSE in the project root for license information.
+ *  SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stable Diffusion Turbo</title>
+
+    <style>
+      textarea:focus {
+        outline: none;
+        border: 1px solid #000;
+      }
+
+      section#progressDisplaySection,
+      section#imageDisplaySection {
+        transition: all 0.7s ease-in-out;
+      }
+      section#imageDisplaySection.disappear,
+      section#progressDisplaySection.disappear {
+        margin-top: 0;
+        padding: 0;
+        opacity: 0;
+        max-height: 0;
+      }
+
+      section#imageDisplaySection.disappear {
+        & div,
+        & canvas {
+          max-height: 0;
+        }
+      }
+
+      section#progressDisplaySection {
+        opacity: 1;
+        max-height: 150px;
+      }
+
+      section#imageDisplaySection {
+        div#canvasWrapper {
+          backdrop-filter: blur(10px);
+          box-shadow: 10px 15px 20px 1px rgba(0, 0, 0, 0.15);
+        }
+        opacity: 1;
+        max-height: 600px;
+      }
+
+      section#promptInputSection.running-mode {
+        & textarea,
+        & button {
+          cursor: not-allowed;
+          opacity: 0.6;
+        }
+      }
+    </style>
+    <script type="module" crossorigin src="../../assets/stable_diffusion-UfReDzph.js"></script>
+    <link rel="modulepreload" crossorigin href="../../assets/navbar-B3GQCZKa.js">
+    <link rel="modulepreload" crossorigin href="../../assets/image-O15s_1zf.js">
+    <link rel="modulepreload" crossorigin href="../../assets/config-C7GNoNA1.js">
+    <link rel="modulepreload" crossorigin href="../../assets/utility-Cpztc4yD.js">
+    <link rel="stylesheet" crossorigin href="../../assets/navbar-CJ65REdf.css">
+  </head>
+  <body>
+    <div id="naviBar" class="sticky top-0 z-50"></div>
+
+    <div class="container mx-auto my-8 w-full px-8 lg:px-20">
+      <div>
+        <h1 class="text-shadow-sm">
+          <span
+            class="mt-2 font-sans block text-3xl font-extrabold md:text-4xl lg:text-5xl text-stone-50 text-center"
+            >Stable Diffusion Turbo</span
+          >
+        </h1>
+      </div>
+
+      <div>
+        <section id="modelStatusPanel" class="grid grid-rows">
+          <div
+            class="text-nowrap justify-self-center flex gap-2 2xl:gap-4 items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono mt-10"
+          >
+            <div class="text-md text-stone-50 font-semibold">Models Status</div>
+
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Unet</span
+                >
+
+                <span
+                  id="unetStatusBar"
+                  class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Text Encoder</span
+                >
+
+                <span
+                  id="text_encoderStatusBar"
+                  class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 my-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Vae Decoder</span
+                >
+
+                <span
+                  id="vae_decoderStatusBar"
+                  class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 my-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="loadModelPromptContent"
+            class="justify-self-center italic p-2 text-stone-200/80 text-md font-semibold"
+          >
+            [ Models will be loaded on first inference ]
+          </div>
+
+          <div class="w-full flex justify-between gap-4 items-center mt-5">
+            <div class="relative">
+              <button
+                id="loadModelBtn"
+                class="w-[200px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+              >
+                Load Models Locally
+              </button>
+              <div
+                id="modelPopover"
+                class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[80px] left-[160px] backdrop-blur-xl"
+              >
+                <div
+                  class="w-screen max-w-[300px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                >
+                  <span class="font-semibold text-md p-2 italic"
+                    >Required files</span
+                  >
+
+                  <div
+                    class="min-h-[40px] flex bg-stone-200 rounded-md text-sm items-center justify-between gap-2 font-mono p-1 m-1"
+                  >
+                    <a
+                      class="text-gray-900 font-semibold text-indigo-600 px-1"
+                      href="https://huggingface.co/schmuell/sd-turbo-ort-web/tree/main/unet"
+                      target="_blank"
+                      >Unet
+                      <span
+                        id="unetStatusFlag"
+                        class="hidden text-lg text-green-600"
+                        >√</span
+                      ></a
+                    >
+
+                    <button
+                      class="px-2 mx-2 rounded-md text-stone-50 outline outline-1 bg-stone-500/50 hover:bg-stone-500/90"
+                    >
+                      <label class="cursor-pointer" for="uploadInput4Unet"
+                        >Load</label
+                      >
+                      <input
+                        style="display: none"
+                        type="file"
+                        id="uploadInput4Unet"
+                        multiple
+                      />
+                    </button>
+                  </div>
+
+                  <div
+                    class="min-h-[40px] flex bg-stone-200 rounded-md text-sm items-center justify-between gap-2 font-mono p-1 m-1"
+                  >
+                    <a
+                      class="text-gray-900 font-semibold text-indigo-600 px-1"
+                      href="https://huggingface.co/schmuell/sd-turbo-ort-web/tree/main/unet"
+                      target="_blank"
+                      >Vae Decoder
+                      <span
+                        id="vae_decoderStatusFlag"
+                        class="hidden text-lg text-green-600"
+                        >√</span
+                      ></a
+                    >
+
+                    <button
+                      class="px-2 mx-2 rounded-md text-stone-50 outline outline-1 bg-stone-500/50 hover:bg-stone-500/90"
+                    >
+                      <label
+                        class="cursor-pointer"
+                        for="uploadInput4vae_decoder"
+                        >Load</label
+                      >
+                      <input
+                        style="display: none"
+                        type="file"
+                        id="uploadInput4vae_decoder"
+                        multiple
+                      />
+                    </button>
+                  </div>
+
+                  <div
+                    class="min-h-[40px] flex bg-stone-200 rounded-md text-sm items-center justify-between gap-2 font-mono p-1 m-1"
+                  >
+                    <a
+                      class="text-gray-900 font-semibold text-indigo-600 px-1"
+                      href="https://huggingface.co/schmuell/sd-turbo-ort-web/tree/main/unet"
+                      target="_blank"
+                      >Text Encoder
+                      <span
+                        id="text_encoderStatusFlag"
+                        class="hidden text-lg text-green-600"
+                        >√</span
+                      ></a
+                    >
+
+                    <button
+                      class="px-2 mx-2 rounded-md text-stone-50 outline outline-1 bg-stone-500/50 hover:bg-stone-500/90"
+                    >
+                      <label
+                        class="cursor-pointer"
+                        for="uploadInput4text_encoder"
+                        >Load</label
+                      >
+                      <input
+                        style="display: none"
+                        type="file"
+                        id="uploadInput4text_encoder"
+                        multiple
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="progressBar"
+              class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+            ></div>
+
+            <div
+              class="rounded-md bg-stone-50/60 text-base font-semibold text-stone-800 mt-2 2xl:mt-0"
+            >
+              <button id="logPanel" class="hidden p-2" disabled>
+                Loading models...
+              </button>
+            </div>
+          </div>
+        </section>
+        <section
+          id="progressDisplaySection"
+          class="grid place-items-center mt-10 2xl:mt-20 p-4 disappear"
+        >
+          <div
+            class="w-4/5 backdrop-blur-md flex flex-col items-center gap-y-3 text-stone-100"
+          >
+            <div class="text-left w-full -mb-1">
+              <span
+                id="downloadPrompt"
+                class="font-mono items-center px-2"
+              ></span>
+            </div>
+
+            <div
+              id="unetModelWrapper"
+              class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+            ></div>
+
+            <div
+              id="text_encoderModelWrapper"
+              class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+            ></div>
+
+            <div
+              id="vae_decoderModelWrapper"
+              class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+            ></div>
+          </div>
+        </section>
+        <section
+          id="imageDisplaySection"
+          class="disappear 2xl:mt-20 p-4 grid place-items-center"
+        >
+          <div
+            id="canvasWrapper"
+            class="bg-stone-900/40 w-[512px] h-[512px] rounded-3xl"
+          >
+            <div
+              id="generatingProgress"
+              class="absolute_center grid justify-items-center"
+            >
+              <svg
+                class="py-2"
+                width="80"
+                height="80"
+                viewBox="0 0 25 25"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="#000"
+                  d="M3.5 24.3a3 3 0 0 1-1.9-.8c-.5-.5-.8-1.2-.8-1.9V2.9c0-.7.3-1.3.8-1.9.6-.5 1.2-.7 2-.7h18.6c.7 0 1.3.2 1.9.7.5.6.7 1.2.7 2v18.6c0 .7-.2 1.4-.7 1.9a3 3 0 0 1-2 .8H3.6Zm0-2.7h18.7V2.9H3.5v18.7Zm2.7-2.7h13.3c.3 0 .5 0 .6-.3v-.7l-3.7-5a.6.6 0 0 0-.6-.2c-.2 0-.4 0-.5.3l-3.5 4.6-2.4-3.3a.6.6 0 0 0-.6-.3c-.2 0-.4.1-.5.3l-2.7 3.6c-.1.2-.2.4 0 .7.1.2.3.3.6.3Z"
+                ></path>
+              </svg>
+              <div
+                class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
+              >
+                <button id="status" disabled>Generating Image...</button>
+              </div>
+            </div>
+
+            <canvas id="canvas" width="512" height="512">
+              Canvas is not supported. You'll need to try a newer browser
+              version or another browser.
+            </canvas>
+          </div>
+        </section>
+        <section
+          id="promptInputSection"
+          class="relative flex bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-3xl p-4 mt-5 2xl:mt-10"
+        >
+          <div class="absolute_center">
+            <svg
+              fill="#5693f5"
+              version="1.1"
+              id="loadingIcon"
+              class="animate-spin hidden"
+              height="30px"
+              width="30px"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              viewBox="0 0 330 330"
+              xml:space="preserve"
+              stroke="#5693f5"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g id="XMLID_2_">
+                  <path
+                    id="XMLID_4_"
+                    d="M97.5,165c0-8.284-6.716-15-15-15h-60c-8.284,0-15,6.716-15,15s6.716,15,15,15h60 C90.784,180,97.5,173.284,97.5,165z"
+                  ></path>
+                  <path
+                    id="XMLID_5_"
+                    d="M307.5,150h-30c-8.284,0-15,6.716-15,15s6.716,15,15,15h30c8.284,0,15-6.716,15-15S315.784,150,307.5,150z"
+                  ></path>
+                  <path
+                    id="XMLID_6_"
+                    d="M172.5,90c8.284,0,15-6.716,15-15V15c0-8.284-6.716-15-15-15s-15,6.716-15,15v60 C157.5,83.284,164.216,90,172.5,90z"
+                  ></path>
+                  <path
+                    id="XMLID_7_"
+                    d="M172.501,240c-8.284,0-15,6.716-15,15v60c0,8.284,6.716,15,15,15c8.284,0,15-6.716,15-15v-60 C187.501,246.716,180.785,240,172.501,240z"
+                  ></path>
+                  <path
+                    id="XMLID_8_"
+                    d="M77.04,48.327c-5.856-5.858-15.354-5.857-21.213,0c-5.858,5.858-5.858,15.355,0,21.213l42.427,42.428 c2.929,2.929,6.768,4.394,10.606,4.394c3.838,0,7.678-1.465,10.606-4.393c5.858-5.858,5.858-15.355,0-21.213L77.04,48.327z"
+                  ></path>
+                  <path
+                    id="XMLID_9_"
+                    d="M246.746,218.034c-5.857-5.857-15.355-5.857-21.213,0c-5.858,5.858-5.857,15.355,0,21.213l42.428,42.426 c2.929,2.929,6.768,4.393,10.607,4.393c3.839,0,7.678-1.465,10.606-4.393c5.858-5.858,5.858-15.355,0-21.213L246.746,218.034z"
+                  ></path>
+                  <path
+                    id="XMLID_10_"
+                    d="M98.254,218.034L55.828,260.46c-5.858,5.858-5.858,15.355,0,21.213c2.929,2.929,6.768,4.393,10.607,4.393 c3.839,0,7.678-1.464,10.606-4.393l42.426-42.426c5.858-5.858,5.858-15.355,0-21.213 C113.609,212.176,104.111,212.176,98.254,218.034z"
+                  ></path>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <textarea
+            class="w-full font-sans lg:text-lg"
+            rows="3"
+            id="userInput"
+            style="
+              resize: none;
+              height: 72px;
+              border-width: 0px;
+              background-color: transparent;
+            "
+          ></textarea>
+          <div class="flex flex-row-reverse items-center gap-x-4 text-lg">
+            <button
+              id="loadModelsTriggerBtn"
+              type="button"
+              class="w-[140px] ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+            >
+              Load Models
+            </button>
+
+            <button
+              id="generateTriggerBtn"
+              type="button"
+              class="hidden ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+            >
+              Generate
+            </button>
+
+            <button
+              id="promptInspireBtn"
+              title="Give me one prompt"
+              class="pl-2"
+            >
+              <svg
+                class="transition ease-in-out hover:-translate-y-1 duration-200 brightness-125"
+                width="36px"
+                height="36px"
+                version="1.1"
+                id="Layer_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                viewBox="0 0 511.999 511.999"
+                xml:space="preserve"
+                fill="#000000"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    style="fill: #999999"
+                    d="M279.883,474.891v11.037c0,9.32-7.554,16.875-16.875,16.875h-14.005 c-9.32,0-16.875-7.554-16.875-16.875v-11.037c4.317,1.006,8.817,1.545,13.453,1.545h20.836 C271.053,476.436,275.554,475.896,279.883,474.891z"
+                  ></path>
+                  <g>
+                    <path
+                      style="fill: #b3b3b3"
+                      d="M187.76,428.608h136.492c-4.329,22.847-21.866,41.021-44.369,46.282 c-4.329,1.006-8.83,1.545-13.465,1.545h-20.836c-4.636,0-9.136-0.54-13.453-1.545C209.626,469.63,192.089,451.455,187.76,428.608z"
+                    ></path>
+                    <path
+                      style="fill: #b3b3b3"
+                      d="M325.295,396.503v21.056c0,3.777-0.356,7.468-1.042,11.049H187.76 c-0.687-3.581-1.042-7.272-1.042-11.049v-21.056h33.111h36.177h36.177H325.295z"
+                    ></path>
+                  </g>
+                  <path
+                    style="fill: #f95428"
+                    d="M256.006,155.133l19.205,28.647c-5.482,3.691-12.092,5.85-19.205,5.85s-13.711-2.146-19.205-5.85 L256.006,155.133z"
+                  ></path>
+                  <path
+                    style="fill: #cccccc"
+                    d="M275.211,183.78l16.973,25.312h-0.012c-11.54,4.991-23.852,7.481-36.165,7.481 c-12.325,0-24.637-2.489-36.177-7.481l16.973-25.312c5.494,3.704,12.092,5.85,19.205,5.85 C263.119,189.63,269.729,187.472,275.211,183.78z"
+                  ></path>
+                  <g>
+                    <path
+                      style="fill: #8684f5"
+                      d="M292.183,209.092v187.41h-36.177V216.585v-0.012c12.313,0,24.625-2.489,36.165-7.481H292.183z"
+                    ></path>
+                    <path
+                      style="fill: #8684f5"
+                      d="M256.006,216.585v179.917h-36.177v-187.41c11.54,4.991,23.852,7.481,36.177,7.481V216.585z"
+                    ></path>
+                  </g>
+                  <path
+                    style="fill: #f7b239"
+                    d="M402.837,206.554c0,39.77-15.82,75.837-41.487,102.277c-22.871,23.546-36.055,54.842-36.055,87.672 h-33.111v-187.41l-16.973-25.312l-19.205-28.647l-19.205,28.647l-16.973,25.312v187.41h-33.111 c0-32.891-13.281-64.163-36.165-87.782c-25.189-25.986-40.862-61.256-41.377-100.18c-1.067-80.657,64.064-147.664,144.709-148.805 C335.952,58.583,402.837,124.756,402.837,206.554z"
+                  ></path>
+                  <g>
+                    <path
+                      style="fill: #ffffff"
+                      d="M372.178,215.751c-5.08,0-9.198-4.118-9.198-9.198c0-47.507-31.917-89.812-77.618-102.877 c-4.883-1.397-7.711-6.487-6.314-11.372c1.397-4.885,6.489-7.71,11.371-6.316c53.553,15.311,90.956,64.888,90.956,120.563 C381.376,211.633,377.258,215.751,372.178,215.751z"
+                    ></path>
+                    <path
+                      style="fill: #ffffff"
+                      d="M262.39,99.751c-0.162,0-0.325-0.004-0.488-0.012c-2.081-0.109-4.124-0.157-6.075-0.159 c-0.438,0-0.876,0-1.313,0.01c-5.065,0.114-9.285-3.917-9.395-8.995c-0.11-5.078,3.917-9.285,8.995-9.395 c2.846-0.061,5.749,0.012,8.75,0.17c5.073,0.266,8.97,4.594,8.705,9.666C271.311,95.943,267.25,99.751,262.39,99.751z"
+                    ></path>
+                  </g>
+                  <g>
+                    <path
+                      style="fill: #f7b239"
+                      d="M455.337,217.738h-16.053c-5.08,0-9.198-4.118-9.198-9.198s4.118-9.198,9.198-9.198h16.053 c5.08,0,9.198,4.118,9.198,9.198S460.416,217.738,455.337,217.738z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M72.703,217.738H56.662c-5.08,0-9.198-4.118-9.198-9.198s4.118-9.198,9.198-9.198h16.041 c5.08,0,9.198,4.118,9.198,9.198S77.784,217.738,72.703,217.738z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M414.727,126.094c-3.181,0-6.275-1.652-7.977-4.607c-2.536-4.401-1.024-10.025,3.377-12.561 l13.919-8.02c4.401-2.535,10.025-1.024,12.561,3.377c2.536,4.401,1.024,10.025-3.377,12.561l-13.919,8.02 C417.866,125.698,416.286,126.094,414.727,126.094z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M83.381,317.404c-3.179,0-6.27-1.649-7.974-4.601c-2.54-4.399-1.031-10.024,3.368-12.564 l13.895-8.02c4.4-2.54,10.024-1.031,12.564,3.368c2.54,4.399,1.031,10.024-3.368,12.564l-13.895,8.02 C86.522,317.007,84.94,317.404,83.381,317.404z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M347.63,59.013c-1.561,0-3.143-0.397-4.591-1.235c-4.399-2.541-5.905-8.166-3.365-12.565 l8.033-13.907c2.541-4.399,8.167-5.905,12.565-3.364c4.399,2.541,5.905,8.166,3.365,12.565l-8.033,13.907 C353.899,57.365,350.808,59.013,347.63,59.013z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M256.006,34.46c-5.08,0-9.198-4.118-9.198-9.198V9.198c0-5.08,4.118-9.198,9.198-9.198 s9.198,4.118,9.198,9.198v16.065C265.204,30.342,261.086,34.46,256.006,34.46z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M164.369,59.013c-3.177,0-6.269-1.648-7.972-4.599l-8.033-13.907 c-2.541-4.399-1.034-10.024,3.365-12.565c4.398-2.54,10.023-1.035,12.565,3.364l8.033,13.907 c2.541,4.399,1.034,10.024-3.365,12.565C167.512,58.616,165.93,59.013,164.369,59.013z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M97.271,126.094c-1.559,0-3.139-0.396-4.587-1.231l-13.907-8.02c-4.4-2.537-5.91-8.163-3.372-12.563 c2.537-4.401,8.161-5.911,12.563-3.372l13.907,8.02c4.4,2.537,5.91,8.163,3.372,12.563 C103.544,124.444,100.45,126.094,97.271,126.094z"
+                    ></path>
+                    <path
+                      style="fill: #f7b239"
+                      d="M428.63,317.404c-1.56,0-3.142-0.397-4.59-1.234l-13.895-8.02c-4.399-2.54-5.907-8.165-3.368-12.564 c2.54-4.4,8.165-5.906,12.564-3.368l13.895,8.02c4.399,2.54,5.907,8.165,3.368,12.564 C434.901,315.755,431.809,317.404,428.63,317.404z"
+                    ></path>
+                  </g>
+                  <path
+                    style="fill: #333333"
+                    d="M365.546,95.448c-29.969-29.55-69.665-45.5-111.789-44.906 c-85.928,1.207-154.91,72.139-153.773,158.117c0.529,39.95,16.14,77.759,43.958,106.463c21.649,22.338,33.571,51.24,33.571,81.384 v21.058c0,29.592,18.988,54.821,45.414,64.178v4.186c0,14.376,11.696,26.072,26.072,26.072h14.004 c14.376,0,26.072-11.696,26.072-26.072v-4.187c26.424-9.358,45.409-34.587,45.409-64.177v-21.058 c0-30.189,11.882-59.051,33.46-81.269c28.428-29.273,44.083-67.87,44.083-108.681C412.029,164.462,395.522,125.004,365.546,95.448z M195.909,417.561v-11.86h120.182v11.86c0,0.619-0.025,1.234-0.047,1.848H195.956C195.934,418.796,195.909,418.182,195.909,417.561z M265.198,225.308c5.997-0.548,11.948-1.643,17.782-3.267v165.265h-17.782V225.308z M239.855,195.729 c5.098,2.033,10.558,3.098,16.146,3.098c5.586,0,11.043-1.066,16.142-3.098l5.787,8.632c-14.326,3.966-29.539,3.966-43.864,0 L239.855,195.729z M250.513,179.832l5.487-8.183l5.487,8.183c-1.787,0.395-3.623,0.6-5.484,0.6 C254.138,180.432,252.3,180.228,250.513,179.832z M229.02,222.042c5.834,1.624,11.784,2.718,17.782,3.267v161.998H229.02V222.042z M270.681,485.927c0,4.233-3.444,7.677-7.677,7.677H249c-4.233,0-7.677-3.444-7.677-7.677v-0.441 c1.412,0.087,2.829,0.147,4.263,0.147h20.831c1.434,0,2.854-0.06,4.266-0.147v0.441H270.681z M266.415,467.238h-20.831 c-20.183,0-37.581-12.107-45.347-29.432h111.524C303.996,455.132,286.599,467.238,266.415,467.238z M354.749,302.42 c-22.735,23.412-36.15,53.264-38.336,84.888h-15.039V209.092c0-1.824-0.542-3.607-1.559-5.122l-36.177-53.959 c-1.708-2.547-4.573-4.075-7.639-4.075c-3.066,0-5.932,1.528-7.639,4.075l-36.177,53.959c-1.015,1.515-1.559,3.298-1.559,5.122 v178.215h-15.041c-2.194-31.586-15.641-61.473-38.432-84.988c-24.538-25.319-38.307-58.668-38.773-93.904 c-0.484-36.559,13.405-71.25,39.107-97.685c25.705-26.439,59.988-41.281,96.532-41.795c0.666-0.01,1.331-0.013,1.997-0.013 c36.413,0,70.657,14.027,96.618,39.626c26.441,26.072,41.003,60.878,41.003,98.008C393.634,242.553,379.824,276.599,354.749,302.42z "
+                  ></path>
+                </g>
+              </svg>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <div id="status" style="font: 1em consolas"></div>
+    </div>
+  </body>
+
+  <script src="../common/3rdparty/ort_web/ort.webgpu.min.js"></script>
+</html>
