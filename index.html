@@ -1,0 +1,122 @@
+<!--
+ *  Copyright (C) 2024 Intel Corporation. All rights reserved.
+ *  Licensed under the Apache License 2.0. See LICENSE in the project root for license information.
+ *  SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./style/tailwind.css" rel="stylesheet" />
+    <link href="./style/general.css" rel="stylesheet" />
+
+    <title>Web AI Showcase</title>
+    <style>
+      #sampleCardContainer > a {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        box-shadow: 10px 15px 20px 1px rgba(0, 0, 0, 0.15);
+        transition: all 0.35s ease;
+      }
+
+      #sampleCardContainer > a:hover {
+        box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.2);
+      }
+    </style>
+  </head>
+
+  <body class="background-gradient">
+    <div id="naviBar" class="sticky top-0 z-50"></div>
+    <div class="container mx-auto 2xl:my-8 my-2 w-full">
+      <section class="flex flex-col px-10 xl:px-20">
+        <div>
+          <h1 class="text-shadow-sm">
+            <span
+              class="mt-2 font-sans block text-3xl font-semibold md:text-4xl lg:text-5xl text-stone-50"
+              >Web AI Showcase</span
+            >
+          </h1>
+
+          <h2 class="mt-3 font-semibold text-stone-50 text-xl lg:text-2xl">
+            Start your AI journey from your client side, free forever!
+          </h2>
+        </div>
+
+        <div class="2xl:mt-8 mt-1">
+          <div
+            class="flex items-center gap-8 text-stone-50 2xl:text-md text-sm"
+          >
+            <div
+              id="backendFilterSelection"
+              class="flex gap-4 items-center"
+            ></div>
+
+            <div
+              id="deviceFilterSelection"
+              class="flex gap-4 items-center"
+            ></div>
+          </div>
+        </div>
+
+        <div
+          id="sampleCardContainer"
+          class="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4 2xl:gap-x-12 2xl:gap-y-6 2xl:mt-8 mt-6"
+        ></div>
+      </section>
+
+      <section id="paginationSection">
+        <div class="flex items-center mt-5">
+          <div class="mx-auto">
+            <div
+              class="isolate inline-flex gap-x-3 -space-x-px rounded-md shadow-sm"
+            >
+              <div
+                id="prePageBtn"
+                class="cursor-pointer relative inline-flex items-center rounded-l-md px-2 py-2 text-stone-50 hover:bg-stone-500/50"
+              >
+                <svg
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+
+              <div
+                id="pageNumberWrapper"
+                class="text-sm font-semibold text-stone-50 items-center"
+              ></div>
+
+              <div
+                id="nextPageBtn"
+                class="cursor-pointer relative inline-flex items-center rounded-r-md px-2 py-2 text-stone-50 hover:bg-stone-500/50"
+              >
+                <svg
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+  <script type="module" src="./js/main.js"></script>
+</html>

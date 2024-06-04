@@ -1,0 +1,35 @@
+{
+  "scripts": {
+    "format": "prettier --log-level warn --write \"./{js,samples,styles}/**/*.{js,css}\"",
+    "build": "vite build",
+    "dev": "vite --port 9999 --host",
+    "copy-models": "node copy_models.js",
+    "css-update": "npx tailwindcss -i ./style/tailwind-input.css -o ./style/tailwind.css --watch",
+    "generate-ssl": "openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem",
+    "fetch-models": "node fetch_models.js",
+    "prod:use-remote-models": "node update_config.js remote-models && npm run build && npm run copy-models",
+    "prod": "node update_config.js && npm run build && npm run fetch-models && node build_sub_proj.js && npm run copy-models",
+    "startup": "cd ./dist && http-server -S -C ../cert.pem -K ../key.pem -o"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
+    "adm-zip": "^0.5.12",
+    "eslint": "^7.5.0",
+    "eslint-config-google": "^0.14.0",
+    "fs-extra": "^11.2.0",
+    "http-server": "^14.1.1",
+    "mkdirp": "^3.0.1",
+    "prettier": "^3.2.5",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.1.7",
+    "vite-plugin-top-level-await": "^1.4.1"
+  },
+  "dependencies": {
+    "@mediapipe/tasks-genai": "0.10.12",
+    "@xenova/transformers": "github:xenova/transformers.js#aadeed936af7cc9049e1d238fd4ec70545dfd508",
+    "dompurify": "3.1.0",
+    "highlight.js": "11.9.0",
+    "marked": "12.0.1"
+  }
+}

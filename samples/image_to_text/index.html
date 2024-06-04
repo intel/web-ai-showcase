@@ -1,0 +1,295 @@
+<!--
+ *  Copyright (C) 2024 Intel Corporation. All rights reserved.
+ *  Licensed under the Apache License 2.0. See LICENSE in the project root for license information.
+ *  SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="../../style/tailwind.css" rel="stylesheet" />
+    <link href="../../style/general.css" rel="stylesheet" />
+
+    <style>
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border: 1px solid #000;
+      }
+    </style>
+    <title>Web AI - Image to text</title>
+  </head>
+  <body>
+    <div id="naviBar" class="sticky top-0 z-50"></div>
+
+    <div class="container mx-auto my-1 2xl:my-8 w-full px-8 lg:px-20">
+      <div>
+        <h1 class="text-shadow-sm">
+          <span
+            class="font-sans block text-3xl font-extrabold md:text-4xl lg:text-5xl text-stone-50 text-center"
+            >Image to text
+          </span>
+        </h1>
+      </div>
+
+      <section id="modelStatusPanel" class="grid grid-rows">
+        <div
+          class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono mt-4 2xl:mt-10 gap-2 2xl:gap-4 w-[720px] 2xl:w-auto"
+        >
+          <div class="text-lg text-stone-50 font-semibold">Model Status</div>
+          <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+            <div class="flex items-center justify-between imageDisplayEle">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                encoder_model_quantized.onnx</span
+              >
+
+              <span
+                id="encoder_model_quantizedStatusBar"
+                class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >unload
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between imageDisplayEle">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                decoder_model_merged_quantized.onnx</span
+              >
+
+              <span
+                id="decoder_model_merged_quantizedStatusBar"
+                class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >unload
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          id="loadModelPromptContent"
+          class="justify-self-center italic p-2 text-stone-200/80 text-md font-semibold w-[720px] 2xl:w-auto"
+        >
+          [ Models will be loaded on first inference ]
+        </div>
+      </section>
+
+      <section id="modelsParams" class="grid grid-rows mt-2 2xl:mt-10">
+        <div
+          class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono gap-2 2xl:gap-4"
+        >
+          <div class="text-lg text-stone-50 font-semibold">Parameters</div>
+
+          <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+            <div class="flex items-center justify-between">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                Max length</span
+              >
+
+              <input
+                id="max_new_tokens"
+                type="number"
+                class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+            <div class="flex items-center justify-between">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                No.beams
+              </span>
+
+              <input
+                id="num_beams"
+                type="number"
+                class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+            <div class="flex items-center justify-between">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                Temp.
+              </span>
+
+              <input
+                id="temperature"
+                type="number"
+                class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+              />
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+            <div class="flex items-center justify-between">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                Top K
+              </span>
+
+              <input
+                id="top_k"
+                type="number"
+                class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+              />
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+            <div class="flex items-center justify-between">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                Sample</span
+              >
+
+              <select
+                id="do_sample"
+                class="w-[150px] rounded-md bg-stone-50/60 px-2 py-1 rounded-r-md min-h-[32px] max-w-[80px] ring-1 ring-inset ring-stone-500/10 text-stone-800"
+              >
+                <option value="false">No</option>
+                <option value="true">Yes</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          id="paramsPromptContent"
+          class="justify-self-center italic p-2 text-stone-200/80 text-md font-semibold"
+        >
+          [ You can directly use the default values ]
+        </div>
+      </section>
+
+      <div class="grid gap-2 2xl:gap-6 mt-2 2xl:mt-8">
+        <div
+          class="2xl:grid justify-self-center 2xl:justify-normal justify-between flex justify-items-center 2xl:gap-6"
+        >
+          <div
+            class="w-[720px] flex justify-between 2xl:grid gap-2 2xl:gap-6 rounded-3xl"
+          >
+            <div
+              class="justify-self-center 2xl:flex 2xl:w-full 2xl:justify-between"
+            >
+              <div class="2xl:flex grid 2xl:gap-6 gap-2">
+                <div class="w-full flex gap-4 items-center">
+                  <div class="relative">
+                    <button
+                      id="loadModelBtn"
+                      class="w-[150px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+                    >
+                      Load Models
+                    </button>
+                    <div
+                      id="modelPopover"
+                      class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[80px] left-[160px] backdrop-blur-xl"
+                    >
+                      <div
+                        id="modelPanelWrapper"
+                        class="w-screen max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="flex gap-2 items-center">
+                  <label
+                    id="upload-button"
+                    for="upload"
+                    class="w-[120px] cursor-pointer control-entry transition ease-in-out bg-stone-500/50 2xl:hover:-translate-y-1 2xl:hover:translate-x-0 hover:translate-x-1 hover:bg-stone-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+                  >
+                    <input
+                      style="display: none"
+                      type="file"
+                      id="upload"
+                      accept="image/*"
+                    />Upload image
+                  </label>
+                </div>
+                <div>
+                  <button
+                    id="example"
+                    class="w-[120px] cursor-pointer control-entry transition ease-in-out bg-blue-500 2xl:hover:-translate-y-1 2xl:hover:translate-x-0 hover:translate-x-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+                  >
+                    Try example
+                  </button>
+                </div>
+              </div>
+              <div
+                class="hidden rounded-md bg-stone-50/60 text-base font-semibold text-stone-500 mt-2 2xl:mt-0"
+              >
+                <button id="status" class="p-2 w-[120px]" disabled></button>
+              </div>
+            </div>
+
+            <div
+              class="justify-self-center bg-stone-900/40 rounded-2xl w-[450px] 2xl:min-w-[720px] h-[300px] 2xl:min-h-[480px] overflow-hidden flex justify-center items-center"
+              id="image-wrapper"
+            >
+              <div id="generatingProgress">
+                <svg
+                  width="80"
+                  height="80"
+                  viewBox="0 0 25 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill="#000"
+                    d="M3.5 24.3a3 3 0 0 1-1.9-.8c-.5-.5-.8-1.2-.8-1.9V2.9c0-.7.3-1.3.8-1.9.6-.5 1.2-.7 2-.7h18.6c.7 0 1.3.2 1.9.7.5.6.7 1.2.7 2v18.6c0 .7-.2 1.4-.7 1.9a3 3 0 0 1-2 .8H3.6Zm0-2.7h18.7V2.9H3.5v18.7Zm2.7-2.7h13.3c.3 0 .5 0 .6-.3v-.7l-3.7-5a.6.6 0 0 0-.6-.2c-.2 0-.4 0-.5.3l-3.5 4.6-2.4-3.3a.6.6 0 0 0-.6-.3c-.2 0-.4.1-.5.3l-2.7 3.6c-.1.2-.2.4 0 .7.1.2.3.3.6.3Z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="justify-self-center w-[720px] bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-md"
+        >
+          <textarea
+            readonly
+            class="items-center w-full h-[40px] 2xl:h-[60px] text-base font-sans 2xl:text-xl 2xl:p-4 p-2 overflow-auto"
+            rows="3"
+            id="image2text-output-textbox"
+            style="
+              resize: none;
+              border-width: 0px;
+              background-color: transparent;
+            "
+          ></textarea>
+        </div>
+      </div>
+
+      <div
+        id="loadingModelText"
+        class="relative hidden w-full min-h-[50px] mt-5"
+      >
+        <div class="absolute bottom-0 left-0 pl-2 -mb-3">
+          <span
+            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
+            >Downloading models ... (only once)</span
+          >
+        </div>
+      </div>
+
+      <div id="progress" class="mt-6"></div>
+      <div
+        id="progressBar"
+        class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+      ></div>
+    </div>
+  </body>
+
+  <script type="module" src="./image_to_text.js"></script>
+</html>
