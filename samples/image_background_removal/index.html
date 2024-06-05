@@ -1,0 +1,204 @@
+<!--
+ *  Copyright (C) 2024 Intel Corporation. All rights reserved.
+ *  Licensed under the Apache License 2.0. See LICENSE in the project root for license information.
+ *  SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      /* loading effect */
+      .lds-ripple {
+        display: inline-block;
+        position: relative;
+        width: 80px;
+        height: 80px;
+      }
+      .lds-ripple div {
+        position: absolute;
+        border: 4px solid #fff;
+        opacity: 1;
+        border-radius: 50%;
+        animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+      }
+      .lds-ripple div:nth-child(2) {
+        animation-delay: -0.5s;
+      }
+      @keyframes lds-ripple {
+        0% {
+          top: 36px;
+          left: 36px;
+          width: 0;
+          height: 0;
+          opacity: 0;
+        }
+        4.9% {
+          top: 36px;
+          left: 36px;
+          width: 0;
+          height: 0;
+          opacity: 0;
+        }
+        5% {
+          top: 36px;
+          left: 36px;
+          width: 0;
+          height: 0;
+          opacity: 1;
+        }
+        100% {
+          top: 0px;
+          left: 0px;
+          width: 72px;
+          height: 72px;
+          opacity: 0;
+        }
+      }
+
+      canvas {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <title>Web AI - Image Background Removal</title>
+    <script type="module" crossorigin src="../../assets/image_background_removal-BBvvU4Je.js"></script>
+    <link rel="modulepreload" crossorigin href="../../assets/navbar-B3GQCZKa.js">
+    <link rel="modulepreload" crossorigin href="../../assets/image-O15s_1zf.js">
+    <link rel="modulepreload" crossorigin href="../../assets/processors-De2tF4GJ.js">
+    <link rel="modulepreload" crossorigin href="../../assets/config-C7GNoNA1.js">
+    <link rel="modulepreload" crossorigin href="../../assets/utility-Cpztc4yD.js">
+    <link rel="stylesheet" crossorigin href="../../assets/navbar-CJ65REdf.css">
+  </head>
+  <body>
+    <div id="naviBar" class="sticky top-0 z-50"></div>
+
+    <div class="container mx-auto my-8 w-full px-8 lg:px-20">
+      <div>
+        <h1 class="text-shadow-sm">
+          <span
+            class="mt-2 font-sans block text-3xl font-extrabold md:text-4xl lg:text-5xl text-stone-50 text-center"
+            >Image Background Removal
+          </span>
+        </h1>
+      </div>
+      <section id="modelStatusPanel" class="grid grid-rows">
+        <div
+          class="text-nowrap justify-self-center flex gap-2 2xl:gap-4 items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono mt-10"
+        >
+          <div class="text-md text-stone-50 font-semibold">Models Status</div>
+
+          <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+            <div class="flex items-center justify-between">
+              <span
+                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+                model.onnx</span
+              >
+
+              <span
+                id="modelStatusBar"
+                class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+              >
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          id="loadModelPromptContent"
+          class="justify-self-center italic p-2 text-stone-200/80 text-md font-semibold"
+        >
+          [ Models will be loaded on first inference ]
+        </div>
+      </section>
+
+      <div id="imageSelectSection" class="grid justify-items-center gap-6">
+        <div
+          class="w-[720px] flex justify-between items-center min-h-[50px] mt-10"
+        >
+          <div class="relative">
+            <button
+              id="loadModelBtn"
+              class="w-[150px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+            >
+              Load Models
+            </button>
+            <div
+              id="modelPopover"
+              class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[40px] left-[160px] backdrop-blur-xl"
+            >
+              <div
+                id="modelPanelWrapper"
+                class="w-screen max-w-[220px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+              ></div>
+            </div>
+          </div>
+          <div
+            class="flex gap-2 items-center rounded-md text-base font-semibold text-stone-900"
+          >
+            <label
+              id="upload-button"
+              for="upload"
+              class="control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+            >
+              <input
+                style="display: none"
+                type="file"
+                id="upload"
+                name="image-file"
+                accept="image/*"
+              />Upload image
+            </label>
+
+            <button
+              id="example"
+              class="control-entry transition ease-in-out bg-stone-500/50 hover:-translate-y-1 hover:bg-stone-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+            >
+              Try example
+            </button>
+          </div>
+        </div>
+        <div
+          id="progressBar"
+          class="relative hidden rounded-2xl w-[720px] min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+        ></div>
+        <div
+          id="container"
+          class="relative bg-stone-900/40 rounded-2xl w-[720px] h-[480px]"
+        >
+          <svg
+            class="absolute_center"
+            width="80"
+            height="80"
+            viewBox="0 0 25 25"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill="#000"
+              d="M3.5 24.3a3 3 0 0 1-1.9-.8c-.5-.5-.8-1.2-.8-1.9V2.9c0-.7.3-1.3.8-1.9.6-.5 1.2-.7 2-.7h18.6c.7 0 1.3.2 1.9.7.5.6.7 1.2.7 2v18.6c0 .7-.2 1.4-.7 1.9a3 3 0 0 1-2 .8H3.6Zm0-2.7h18.7V2.9H3.5v18.7Zm2.7-2.7h13.3c.3 0 .5 0 .6-.3v-.7l-3.7-5a.6.6 0 0 0-.6-.2c-.2 0-.4 0-.5.3l-3.5 4.6-2.4-3.3a.6.6 0 0 0-.6-.3c-.2 0-.4.1-.5.3l-2.7 3.6c-.1.2-.2.4 0 .7.1.2.3.3.6.3Z"
+            ></path>
+          </svg>
+        </div>
+      </div>
+
+      <div
+        id="loadingModelText"
+        class="relative hidden w-full min-h-[50px] mt-5"
+      >
+        <div class="absolute bottom-0 left-0 pl-2 -mb-3">
+          <span
+            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
+            >Downloading models ... (only once)</span
+          >
+        </div>
+      </div>
+      <div id="progress" class="mt-6"></div>
+    </div>
+  </body>
+
+</html>

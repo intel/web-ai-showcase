@@ -1,0 +1,278 @@
+<!--
+ *  Copyright (C) 2024 Intel Corporation. All rights reserved.
+ *  Licensed under the Apache License 2.0. See LICENSE in the project root for license information.
+ *  SPDX-License-Identifier: Apache-2.0
+  -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <style>
+      textarea:focus {
+        outline: none;
+        border: 1px solid #000;
+      }
+    </style>
+    <title>Web AI - Summarization</title>
+    <script type="module" crossorigin src="../../assets/summarization-B6Qbkbwr.js"></script>
+    <link rel="modulepreload" crossorigin href="../../assets/navbar-B3GQCZKa.js">
+    <link rel="modulepreload" crossorigin href="../../assets/config-C7GNoNA1.js">
+    <link rel="modulepreload" crossorigin href="../../assets/utility-Cpztc4yD.js">
+    <link rel="modulepreload" crossorigin href="../../assets/worker-BiNDJZ8E.js">
+    <link rel="stylesheet" crossorigin href="../../assets/navbar-CJ65REdf.css">
+  </head>
+  <body>
+    <div id="naviBar" class="sticky top-0 z-50"></div>
+
+    <div class="container mx-auto my-4 2xl:my-8 w-full px-8 lg:px-20">
+      <div>
+        <h1 class="text-shadow-sm">
+          <span
+            class="mt-2 font-sans block text-3xl font-extrabold md:text-4xl lg:text-5xl text-stone-50 text-center"
+            >Summarization
+          </span>
+        </h1>
+      </div>
+
+      <div>
+        <section id="modelStatusPanel" class="grid grid-rows gap-2">
+          <div
+            class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono mt-10 gap-2 2xl:gap-4"
+          >
+            <div class="text-lg text-stone-50 font-semibold">Model Status</div>
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div class="flex items-center justify-between imageDisplayEle">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  encoder_model_quantized.onnx</span
+                >
+
+                <span
+                  id="encoder_model_quantizedStatusBar"
+                  class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >unload
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between imageDisplayEle">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  decoder_model_merged_quantized.onnx</span
+                >
+
+                <span
+                  id="decoder_model_merged_quantizedStatusBar"
+                  class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >unload
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="loadModelPromptContent"
+            class="justify-self-center italic p-2 text-stone-200/80 text-md font-semibold"
+          >
+            [ Models will be loaded on first inference ]
+          </div>
+
+          <div class="w-full flex gap-4 items-center mt-5">
+            <div class="relative">
+              <button
+                id="loadModelBtn"
+                class="w-[150px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+              >
+                Load Models
+              </button>
+              <div
+                id="modelPopover"
+                class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[80px] left-[160px] backdrop-blur-xl"
+              >
+                <div
+                  id="modelPanelWrapper"
+                  class="w-screen max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                ></div>
+              </div>
+            </div>
+            <div
+              id="progressBar"
+              class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+            ></div>
+          </div>
+        </section>
+        <section id="modelsParams" class="grid grid-rows mt-2 2xl:mt-5">
+          <div
+            class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono gap-2 2xl:gap-4"
+          >
+            <div class="text-lg text-stone-50 font-semibold">Parameters</div>
+
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Max length</span
+                >
+
+                <input
+                  id="max_new_tokens"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  No.beams
+                </span>
+
+                <input
+                  id="num_beams"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Temp.
+                </span>
+
+                <input
+                  id="temperature"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Top K
+                </span>
+
+                <input
+                  id="top_k"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 min-h-[32px] max-w-[60px] px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Sample</span
+                >
+
+                <select
+                  id="do_sample"
+                  class="w-[150px] rounded-md bg-stone-50/60 px-2 py-1 rounded-r-md min-h-[32px] max-w-[80px] ring-1 ring-inset ring-stone-500/10 text-stone-800"
+                >
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            id="paramsPromptContent"
+            class="justify-self-center italic p-2 text-stone-200/80 text-md font-semibold"
+          >
+            [ You can directly use the default values ]
+          </div>
+        </section>
+        <div class="relative w-full min-h-[50px] 2xl:mt-6">
+          <div class="absolute bottom-0 left-0 pl-2 mb-2">
+            <span
+              class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
+              >Context</span
+            >
+          </div>
+        </div>
+        <section
+          id="inputSection"
+          class="relative flex bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-3xl p-4"
+        >
+          <textarea
+            class="w-full h-[160px] 2xl:h-[300px] font-sans lg:text-lg"
+            rows="4"
+            id="summarizationInput"
+            style="
+              resize: none;
+              border-width: 0px;
+              background-color: transparent;
+            "
+          >
+The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure to reach a height of 300 metres. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.</textarea
+          >
+        </section>
+        <div class="relative w-full min-h-[50px] mt-5">
+          <div class="absolute_center">
+            <button
+              id="triggerBtn"
+              type="button"
+              class="transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+            >
+              Generate
+            </button>
+          </div>
+
+          <div class="absolute bottom-0 left-0 pl-2 -mb-3">
+            <span
+              id="summarizeStatus"
+              class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
+              >Summarization</span
+            >
+          </div>
+        </div>
+        <section
+          id="inputSection"
+          class="relative bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-3xl p-4 mt-5"
+        >
+          <textarea
+            readonly
+            class="w-full h-[80px] 2xl:h-[160px] font-sans lg:text-lg"
+            rows="4"
+            id="summarizationOutput"
+            style="
+              resize: none;
+              border-width: 0px;
+              background-color: transparent;
+            "
+          ></textarea>
+        </section>
+      </div>
+
+      <div
+        id="loadingModelText"
+        class="relative hidden w-full min-h-[50px] mt-5"
+      >
+        <div class="absolute bottom-0 left-0 pl-2 -mb-3">
+          <span
+            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
+            >Downloading models ... (only once)</span
+          >
+        </div>
+      </div>
+      <div id="progress" class="mt-6"></div>
+    </div>
+  </body>
+
+</html>
