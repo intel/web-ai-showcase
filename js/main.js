@@ -32,6 +32,7 @@ let SAMPLES = [
     sampleUrl: "./samples/phi3-webgpu/index.html",
     model: "Phi-3-mini-4k-instruct",
     webApi: [BACKENDS.WebGPU],
+    framework: 'Transformers.js',
     supportHdw: ["GPU"]
   },
 
@@ -43,6 +44,7 @@ let SAMPLES = [
     sampleUrl: "./samples/stable_diffusion/stable-diffusion.html",
     model: "SD Turbo",
     webApi: [BACKENDS.WebGPU],
+    framework: 'ONNX Runtime Web',
     supportHdw: ["GPU"]
   },
   {
@@ -53,6 +55,7 @@ let SAMPLES = [
     sampleUrl: "./samples/summarization/index.html",
     model: "DistilBART CNN",
     webApi: [BACKENDS.WebAssembly],
+    framework: 'Transformers.js',
     supportHdw: ["CPU"]
   },
 
@@ -64,6 +67,7 @@ let SAMPLES = [
     sampleUrl: "./samples/llm_gemma/gemma.html",
     model: "Gemma 2B",
     webApi: [BACKENDS.WebGPU],
+    framework: 'MediaPipe',
     supportHdw: ["GPU"]
   },
 
@@ -75,6 +79,7 @@ let SAMPLES = [
     sampleUrl: "./samples/image_to_text/index.html",
     model: "ViT GPT2",
     webApi: [BACKENDS.WebAssembly],
+    framework: 'Transformers.js',
     supportHdw: ["CPU"]
   },
 
@@ -86,6 +91,7 @@ let SAMPLES = [
     sampleUrl: "./samples/question_answering/index.html",
     model: "DistilBERT",
     webApi: [BACKENDS.WebAssembly],
+    framework: 'Transformers.js',
     supportHdw: ["CPU"]
   },
 
@@ -97,6 +103,7 @@ let SAMPLES = [
     sampleUrl: "./samples/image_background_removal/index.html",
     model: "RMBG v1.4",
     webApi: [BACKENDS.WebGPU],
+    framework: 'Transformers.js',
     supportHdw: ["GPU"]
   },
 
@@ -109,6 +116,7 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/code/index.html",
     model: "",
     webApi: [BACKENDS.WebNN],
+    framework: 'Vanilla JavaScript',
     supportHdw: [SUPPORTED_DEVICES.CPU]
   },
 
@@ -121,6 +129,7 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/image_classification/index.html",
     model: "MobileNet v2 · SqueezeNet · ResNet v2 50",
     webApi: [BACKENDS.WebNN],
+    framework: 'Vanilla JavaScript',
     supportHdw: [
       SUPPORTED_DEVICES.CPU,
       SUPPORTED_DEVICES.GPU,
@@ -137,6 +146,7 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/object_detection/index.html",
     model: "Tiny Yolo v2 · SSD MobileNet v1",
     webApi: [BACKENDS.WebNN],
+    framework: 'Vanilla JavaScript',
     supportHdw: [
       SUPPORTED_DEVICES.CPU,
       SUPPORTED_DEVICES.GPU,
@@ -153,6 +163,7 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/semantic_segmentation/index.html",
     model: "DeepLab v3 · MobileNet v2",
     webApi: [BACKENDS.WebNN],
+    framework: 'Vanilla JavaScript',
     supportHdw: [SUPPORTED_DEVICES.CPU, SUPPORTED_DEVICES.GPU]
   },
 
@@ -165,6 +176,7 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/facial_landmark_detection/index.html",
     model: "SSD MobileNet v2 Face",
     webApi: [BACKENDS.WebNN],
+    framework: 'Vanilla JavaScript',
     supportHdw: [SUPPORTED_DEVICES.CPU, SUPPORTED_DEVICES.GPU]
   },
 
@@ -177,6 +189,7 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/face_recognition/index.html",
     model: "SSD MobileNet v2 Face",
     webApi: [BACKENDS.WebNN],
+    framework: 'Vanilla JavaScript',
     supportHdw: [SUPPORTED_DEVICES.CPU, SUPPORTED_DEVICES.GPU]
   },
 
@@ -187,8 +200,9 @@ let SAMPLES = [
     video: `${baseUrl}assets/stable_diffusion_demo_webnn_ort.mp4`,
     sampleUrl:
       "https://microsoft.github.io/webnn-developer-preview/demos/stable-diffusion-1.5/",
-    model: "SD Turbo",
+    model: "SD 1.5",
     webApi: [BACKENDS.WebNN],
+    framework: 'ONNX Runtime Web',
     supportHdw: [SUPPORTED_DEVICES.GPU]
   },
 
@@ -201,6 +215,7 @@ let SAMPLES = [
       "https://microsoft.github.io/webnn-developer-preview/demos/sd-turbo/",
     model: "SD Turbo",
     webApi: [BACKENDS.WebNN],
+    framework: 'ONNX Runtime Web',
     supportHdw: [SUPPORTED_DEVICES.GPU]
   },
 
@@ -213,6 +228,7 @@ let SAMPLES = [
       "https://microsoft.github.io/webnn-developer-preview/demos/segment-anything/",
     model: "Sam",
     webApi: [BACKENDS.WebNN],
+    framework: 'ONNX Runtime Web',
     supportHdw: [SUPPORTED_DEVICES.GPU]
   },
 
@@ -225,6 +241,7 @@ let SAMPLES = [
       "https://microsoft.github.io/webnn-developer-preview/demos/whisper-base/",
     model: "Encoder · Decoder",
     webApi: [BACKENDS.WebNN],
+    framework: 'ONNX Runtime Web',
     supportHdw: [SUPPORTED_DEVICES.GPU, SUPPORTED_DEVICES.NPU]
   }
 ];
@@ -293,7 +310,7 @@ function constructSampleHTML(samples) {
                     sample.webApi.length > 0
                       ? ` <div
                   class="flex rounded-md font-semibold bg-indigo-600/80 px-2 py-1 text-stone-50 ring-1 ring-inset text-sm ring-stone-500/10 w-auto"
-                > ${sample.webApi.join("·")}</div>`
+                > ${sample.webApi.join("·")} · ${sample.framework}</div>`
                       : ``
                   }
                   ${
@@ -359,7 +376,7 @@ function constructFilter() {
   <div
     class="2xl:px-2 px-1 2xl:py-2 py-1 font-semibold rounded-md ring-2 ring-gray-50/50 w-fit"
   >
-    Backends
+    Backend
   </div>`;
   let deviceFilterHTML = `
   <div
