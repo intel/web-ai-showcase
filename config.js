@@ -20,7 +20,7 @@
  *                                                             *
  ***************************************************************/
 
-export const USE_REMOTE_MODELS = false;
+export const USE_REMOTE_MODELS = true;
 
 export const TRANSFORMER_LOCAL_MODEL_PATH = "/models/";
 
