@@ -10,7 +10,6 @@ import {
 } from "./config.js";
 import * as path from "path";
 import { mkdirpSync } from "mkdirp";
-import { execSync } from "child_process";
 import fs from "fs";
 import * as fse from "fs-extra";
 import os from "os";
@@ -61,20 +60,28 @@ function constructUrlDestMapping(modelName) {
   });
 }
 
-function downloadResource(url, dest) {
-  try {
-    if (os.platform() === "win32") {
-      execSync(`wget -O ${dest} ${url}`, {
-        shell: "powershell.exe"
-      });
-    } else {
-      // -c: continue to download rather to restart
-      // -N: will not download if current resource is the latest
-      execSync(`wget -c -N -O ${dest} ${url} > ${logFile} 2>&1`);
-    }
-  } catch (error) {
-    throw error;
-  }
+function downloadFile(url, dest) {
+  return new Promise((resolve, reject) => {
+    fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Failed to download ${url}: ${response.statusText}`);
+      }
+      return response.arrayBuffer();
+    })
+    .then(arrayBuffer => {
+      const buffer = Buffer.from(arrayBuffer);
+      fs.writeFile(dest, buffer, err => {
+        if (err) throw new Error(`Failed to save file: ${err.message}`);
+        console.log(`File saved to ${dest}`);
+        resolve();
+      })
+    })
+    .catch(error => {
+      console.error(error);
+      reject();
+    })
+  })
 }
 
 function cleanUp() {
@@ -92,14 +99,18 @@ async function main() {
 
   // loop to download all resources into destination
   try {
-    console.warn(
-      ">>> Downloading required model files(~3GB), this may take a while ..."
-    );
+    console.warn(">>> Downloading required model files(~3GB), this may take a while ...");
 
-    Object.keys(RESOURCE_URL_DEST_MAPPING).map((_url) => {
-      console.warn(`[+] Downloading ${_url} ...`);
-      downloadResource(_url, RESOURCE_URL_DEST_MAPPING[_url]);
-    });
+    const keys = Object.keys(RESOURCE_URL_DEST_MAPPING);
+    for (var i = 0; i < keys.length; i++) {
+      const url = keys[i];
+      if (fs.existsSync(RESOURCE_URL_DEST_MAPPING[url])) {
+        console.warn(`[+] Already downloaded ${url} ${RESOURCE_URL_DEST_MAPPING[url]}`);
+        continue;
+      }
+      console.warn(`[+] Downloading ${url} ...`);
+      await downloadFile(url, RESOURCE_URL_DEST_MAPPING[url]);
+    }
 
     cleanUp();
 
