@@ -541,10 +541,12 @@ function changeFilterHandler() {
     if (currentBackendFilter.includes(node.innerText)) {
       if (!node.classList.contains("bg-indigo-500/90")) {
         node.classList.add("bg-indigo-500/90");
+        node.classList.remove("text-gray-400");
       }
     } else {
       if (node.classList.contains("bg-indigo-500/90")) {
         node.classList.remove("bg-indigo-500/90");
+        node.classList.add("text-gray-400");
       }
     }
   });
@@ -554,10 +556,12 @@ function changeFilterHandler() {
     if (currentDeviceFilter.includes(node.innerText)) {
       if (!node.classList.contains("bg-sky-600/90")) {
         node.classList.add("bg-sky-600/90");
+        node.classList.remove("text-gray-400");
       }
     } else {
       if (node.classList.contains("bg-sky-600/90")) {
         node.classList.remove("bg-sky-600/90");
+        node.classList.add("text-gray-400");
       }
     }
   });
