@@ -372,7 +372,7 @@ function constructSampleHTML(samples) {
 
             </div>
             </div>
-            <div class="px-1.5 mt-auto w-full h-[100px] 2xl:h-[140px] flex flex-col">
+            <div class="px-3 mt-auto w-full h-[100px] 2xl:h-[140px] flex flex-col">
               <div
               class="flex items-center text-xl w-full group-hover:text-white group-hover:z-50 group-hover:translate-y-[1.5rem] group-hover:drop-shadow-xl duration-[350ms] h-full"
               >
@@ -381,13 +381,13 @@ function constructSampleHTML(samples) {
                   <div class="font-bold text-stone-50 2xl:group-hover:text-2xl group-hover:text-xl h-1/5 2xl:text-2xl/6 text-lg/5 duration-[350ms] 2xl:pt-1 pt-0.5">${sample.title}
                   </div>
 
-                  <div class="group-hover:hidden 2/5 2xl:text-lg/5 text-xs/3 font-normal text-stone-300 font-sans">
+                  <div class="group-hover:hidden h-2/5 2xl:text-lg/5 text-xs/3 font-normal text-stone-300 font-sans">
                     <p>
                     ${sample.desc}
                     </p>
                   </div>
 
-                <div class="flex items-end flex-wrap 2xl:gap-2 gap-x-1 gap-y-0.5 h-2/5 2xl:text-sm text-xs pb-1">
+                <div class="flex flex-wrap 2xl:gap-x-2 gap-x-1 gap-y-0.5 2xl:text-sm text-xs 2xl:pb-2 pb-1">
               ${
                 sample.model
                   ? ` <div
