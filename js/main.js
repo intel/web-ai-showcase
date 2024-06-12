@@ -326,7 +326,7 @@ let SAMPLES = [
 //       host another server for phi3 project since it is
 //       a standalone react + vite project
 if (import.meta.env.MODE === "development") {
-  SAMPLES = SAMPLES.slice(1);
+  SAMPLES = SAMPLES.filter((sample) => sample.id !== "webgpu_phi3_mini");
 }
 
 SAMPLES = SAMPLES.sort((a, b) => (a.update > b.update ? -1 : 1));
