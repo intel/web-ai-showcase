@@ -34,9 +34,9 @@ let SAMPLES = [
     sampleUrl: "./samples/image_to_text/index.html",
     model: "ViT GPT2",
     webApis: [BACKENDS.WASM],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.CPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "wasm_question_answering",
@@ -45,9 +45,9 @@ let SAMPLES = [
     sampleUrl: "./samples/question_answering/index.html",
     model: "DistilBERT",
     webApis: [BACKENDS.WASM],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.CPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "wasm_summarization",
@@ -56,9 +56,9 @@ let SAMPLES = [
     sampleUrl: "./samples/summarization/index.html",
     model: "DistilBART CNN",
     webApis: [BACKENDS.WASM],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.CPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
 
   // WebGPU
@@ -69,20 +69,21 @@ let SAMPLES = [
     sampleUrl: "./samples/image_background_removal/index.html",
     model: "RMBG v1.4",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webgpu_benchmark",
     title: "WebGPU Benchmark",
     desc: "Benchmark to compare perf of WebGPU vs WASM",
-    sampleUrl: "https://huggingface.co/spaces/Xenova/webgpu-embedding-benchmark",
+    sampleUrl:
+      "https://huggingface.co/spaces/Xenova/webgpu-embedding-benchmark",
     model: "all-MiniLM-L6-v2",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webgpu_clip",
@@ -91,9 +92,9 @@ let SAMPLES = [
     sampleUrl: "https://huggingface.co/spaces/Xenova/webgpu-clip",
     model: "clip",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webgpu_llm_gemma",
@@ -102,31 +103,33 @@ let SAMPLES = [
     sampleUrl: "./samples/llm_gemma/gemma.html",
     model: "Gemma 2B",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'MediaPipe',
+    framework: "MediaPipe",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webgpu_modnet",
     title: "MODNet",
     desc: "Realtime Video Background Removal",
-    sampleUrl: "https://huggingface.co/spaces/Xenova/webgpu-video-background-removal",
+    sampleUrl:
+      "https://huggingface.co/spaces/Xenova/webgpu-video-background-removal",
     model: "MODNet",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webgpu_moondream",
     title: "Moondream",
     desc: "Vision-Language Model",
-    sampleUrl: "https://huggingface.co/spaces/Xenova/experimental-moondream-webgpu",
+    sampleUrl:
+      "https://huggingface.co/spaces/Xenova/experimental-moondream-webgpu",
     model: "moondream2",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-10'
+    update: "2024-06-10"
   },
   {
     id: "webgpu_phi3_mini",
@@ -135,9 +138,9 @@ let SAMPLES = [
     sampleUrl: "./samples/phi3-webgpu/index.html",
     model: "Phi-3-mini-4k-instruct",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-09'
+    update: "2024-06-09"
   },
   {
     id: "webgpu_qwen2",
@@ -146,9 +149,9 @@ let SAMPLES = [
     sampleUrl: "https://huggingface.co/spaces/Xenova/webgpu-chat-qwen2",
     model: "Qwen2-0.5B-Instruct",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-10'
+    update: "2024-06-10"
   },
   {
     id: "webgpu_sam",
@@ -157,9 +160,9 @@ let SAMPLES = [
     sampleUrl: "https://huggingface.co/spaces/Xenova/segment-anything-webgpu",
     model: "Sam",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webgpu_sd_turbo",
@@ -168,9 +171,9 @@ let SAMPLES = [
     sampleUrl: "./samples/stable_diffusion/stable-diffusion.html",
     model: "SD Turbo",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'ONNX Runtime Web',
+    framework: "ONNX Runtime Web",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webgpu_webllm",
@@ -179,9 +182,9 @@ let SAMPLES = [
     sampleUrl: "https://chat.webllm.ai/",
     model: "Llama, Phi, Mistral, Gemma, QWen",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'TVM',
+    framework: "TVM",
     devices: [DEVICES.GPU],
-    update: '2024-06-09'
+    update: "2024-06-09"
   },
   {
     id: "webgpu_whisper",
@@ -190,9 +193,9 @@ let SAMPLES = [
     sampleUrl: "https://huggingface.co/spaces/Xenova/realtime-whisper-webgpu",
     model: "whisper-base",
     webApis: [BACKENDS.WEBGPU],
-    framework: 'Transformers.js',
+    framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: '2024-06-10'
+    update: "2024-06-10"
   },
 
   // WebNN
@@ -204,9 +207,9 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/code/index.html",
     model: "Matmul",
     webApis: [BACKENDS.WEBNN],
-    framework: 'VanillaJS',
+    framework: "VanillaJS",
     devices: [DEVICES.CPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webnn_face_landmark_detection",
@@ -216,9 +219,9 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/facial_landmark_detection/index.html",
     model: "SSD MobileNet v2 Face",
     webApis: [BACKENDS.WEBNN],
-    framework: 'VanillaJS',
+    framework: "VanillaJS",
     devices: [DEVICES.CPU, DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webnn_face_recognition",
@@ -228,9 +231,9 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/face_recognition/index.html",
     model: "SSD MobileNet v2 Face",
     webApis: [BACKENDS.WEBNN],
-    framework: 'VanillaJS',
+    framework: "VanillaJS",
     devices: [DEVICES.CPU, DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webnn_image_classification",
@@ -240,13 +243,9 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/image_classification/index.html",
     model: "MobileNet v2 · SqueezeNet · ResNet v2 50",
     webApis: [BACKENDS.WEBNN],
-    framework: 'VanillaJS',
-    devices: [
-      DEVICES.CPU,
-      DEVICES.GPU,
-      DEVICES.NPU
-    ],
-    update: '2024-06-08'
+    framework: "VanillaJS",
+    devices: [DEVICES.CPU, DEVICES.GPU, DEVICES.NPU],
+    update: "2024-06-08"
   },
   {
     id: "webnn_object_detection",
@@ -256,46 +255,45 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/object_detection/index.html",
     model: "Tiny Yolo v2 · SSD MobileNet v1",
     webApis: [BACKENDS.WEBNN],
-    framework: 'VanillaJS',
-    devices: [
-      DEVICES.CPU,
-      DEVICES.GPU,
-      DEVICES.NPU
-    ],
-    update: '2024-06-08'
+    framework: "VanillaJS",
+    devices: [DEVICES.CPU, DEVICES.GPU, DEVICES.NPU],
+    update: "2024-06-08"
   },
   {
     id: "webnn_sam",
     title: "WebNN Segment Anything",
     desc: `Segment Anything is a new AI model from Meta AI that can "cut out" any object.`,
-    sampleUrl: "https://microsoft.github.io/webnn-developer-preview/demos/segment-anything/",
+    sampleUrl:
+      "https://microsoft.github.io/webnn-developer-preview/demos/segment-anything/",
     model: "Sam",
     webApis: [BACKENDS.WEBNN],
-    framework: 'ONNX Runtime Web',
+    framework: "ONNX Runtime Web",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webnn_sd_15",
     title: "Stable Diffusion 1.5",
     desc: "Transform your words into stunning AI visuals with stable diffusion 1.5",
-    sampleUrl: "https://microsoft.github.io/webnn-developer-preview/demos/stable-diffusion-1.5/",
+    sampleUrl:
+      "https://microsoft.github.io/webnn-developer-preview/demos/stable-diffusion-1.5/",
     model: "SD 1.5",
     webApis: [BACKENDS.WEBNN],
-    framework: 'ONNX Runtime Web',
+    framework: "ONNX Runtime Web",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webnn_sd_turbo",
     title: "Stable Diffusion Turbo",
     desc: "Transform your words into stunning AI visuals with stable diffusion turbo",
-    sampleUrl: "https://microsoft.github.io/webnn-developer-preview/demos/sd-turbo/",
+    sampleUrl:
+      "https://microsoft.github.io/webnn-developer-preview/demos/sd-turbo/",
     model: "SD Turbo",
     webApis: [BACKENDS.WEBNN],
-    framework: 'ONNX Runtime Web',
+    framework: "ONNX Runtime Web",
     devices: [DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webnn_semantic_segmentation",
@@ -305,20 +303,21 @@ let SAMPLES = [
       "https://webmachinelearning.github.io/webnn-samples/semantic_segmentation/index.html",
     model: "DeepLab v3 · MobileNet v2",
     webApis: [BACKENDS.WEBNN],
-    framework: 'VanillaJS',
+    framework: "VanillaJS",
     devices: [DEVICES.CPU, DEVICES.GPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   },
   {
     id: "webnn_whisper_base",
     title: "Whisper Base",
     desc: "Whisper Base is a pre-trained model for automatic speech recognition (ASR) and speech translation.",
-    sampleUrl: "https://microsoft.github.io/webnn-developer-preview/demos/whisper-base/",
+    sampleUrl:
+      "https://microsoft.github.io/webnn-developer-preview/demos/whisper-base/",
     model: "Encoder · Decoder",
     webApis: [BACKENDS.WEBNN],
-    framework: 'ONNX Runtime Web',
+    framework: "ONNX Runtime Web",
     devices: [DEVICES.GPU, DEVICES.NPU],
-    update: '2024-06-08'
+    update: "2024-06-08"
   }
 ];
 
@@ -330,7 +329,7 @@ if (import.meta.env.MODE === "development") {
   SAMPLES = SAMPLES.slice(1);
 }
 
-SAMPLES = SAMPLES.sort((a, b) => a.update > b.update ? -1 : 1);
+SAMPLES = SAMPLES.sort((a, b) => (a.update > b.update ? -1 : 1));
 
 let displayedSamples = SAMPLES;
 
@@ -361,7 +360,7 @@ function constructSampleHTML(samples) {
     .map((sample) => {
       return `
             <a class="group relative flex h-[280px] 2xl:h-[360px]  flex-col gap-6 rounded-xl overflow-hidden" href="${sample.sampleUrl}">
-            <div class="absolute inset-0 h-[190px] 2xl:h-[240px]  rounded-xl overflow-hidden group-hover:h-full w-full duration-250">
+            <div class="absolute inset-0 h-[220px] 2xl:h-[260px]  rounded-xl overflow-hidden group-hover:h-full w-full duration-[250ms]">
               <video
               poster="${baseUrl}assets/${sample.id}.png"
               class="h-full w-full rounded-xl object-cover group-hover:scale-125 duration-1000"
@@ -370,19 +369,43 @@ function constructSampleHTML(samples) {
               loop
               ></video>
               <div class="absolute top-[10px] right-[10px]">
-              <div class="flex flex-col items-end flex-wrap gap-2">
-              <div class="flex rounded-md font-semibold bg-sky-600/80 px-2 py-1 text-stone-50 ring-1 ring-inset text-sm ring-stone-500/10 w-auto">
-              ${sample.model}; ${sample.framework}; ${sample.webApis.join("·")}; ${sample.devices.join(" · ")}
-              </div>
-              </div>
+
             </div>
             </div>
-            <div class="px-2 2xl:px-3 pt-1 2xl:pt-4 mt-auto w-full h-[90px] 2xl:h-[120px] flex flex-col gap-0.5">
+            <div class="px-2 2xl:px-3 pt-1 2xl:pt-4 mt-auto w-full h-[60px] 2xl:h-[100px] flex flex-col gap-0.5">
               <div
-              class="flex items-center text-xl w-full group-hover:text-white group-hover:z-50 group-hover:translate-y-[1.5rem] group-hover:drop-shadow-xl duration-350"
+              class="flex items-center text-xl w-full group-hover:text-white group-hover:z-50 group-hover:translate-y-[1.5rem] group-hover:drop-shadow-xl duration-[350ms]"
               >
+
                 <div class="flex flex-col gap-0.5 2xl:gap-2 w-full">
-                  <div class="font-bold text-stone-50 group-hover:text-2xl duration-350">${sample.title}</div>
+                  <div class="flex items-end flex-wrap gap-2">
+              ${
+                sample.model
+                  ? ` <div
+              class="flex rounded-md font-semibold bg-stone-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset 2xl:text-sm text-xs ring-stone-500/10 w-auto"
+            >
+              ${sample.model}
+            </div>`
+                  : ``
+              }
+                  ${
+                    sample.webApis.length > 0
+                      ? ` <div
+                  class="flex rounded-md font-semibold bg-indigo-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset 2xl:text-sm text-xs ring-stone-500/10 w-auto"
+                > ${sample.webApis.join("·")} · ${sample.framework}</div>`
+                      : ``
+                  }
+                  ${
+                    sample.devices.length > 0
+                      ? ` <div
+                  class="flex rounded-md font-semibold bg-sky-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset 2xl:text-sm text-xs ring-stone-500/10 w-auto"
+                >
+                  ${sample.devices.join(" · ")}
+                </div>`
+                      : ``
+                  }
+              </div>
+                  <div class="font-bold text-stone-50 group-hover:text-2xl duration-[350ms]">${sample.title}</div>
                   <div>  <p
                   class="group-hover:hidden 2xl:text-lg text-sm font-normal text-white font-sans">
                     ${sample.desc}
