@@ -1094,20 +1094,24 @@ video {
   height: 100vh;
 }
 
-.h-\[230px\] {
-  height: 230px;
+.h-1\/4 {
+  height: 25%;
 }
 
-.h-\[210px\] {
-  height: 210px;
+.h-1\/5 {
+  height: 20%;
 }
 
-.h-\[60px\] {
-  height: 60px;
+.h-2\/5 {
+  height: 40%;
 }
 
-.h-\[220px\] {
-  height: 220px;
+.h-\[100px\] {
+  height: 100px;
+}
+
+.h-\[180px\] {
+  height: 180px;
 }
 
 .max-h-\[200px\] {
@@ -1305,6 +1309,10 @@ video {
 
 .grow {
   flex-grow: 1;
+}
+
+.grow-0 {
+  flex-grow: 0;
 }
 
 .table-auto {
@@ -1890,6 +1898,19 @@ video {
 
 .gap-y-4 {
   row-gap: 1rem;
+}
+
+.gap-x-1 {
+  -moz-column-gap: 0.25rem;
+       column-gap: 0.25rem;
+}
+
+.gap-y-0 {
+  row-gap: 0px;
+}
+
+.gap-y-0\.5 {
+  row-gap: 0.125rem;
 }
 
 .-space-x-px > :not([hidden]) ~ :not([hidden]) {
@@ -2658,6 +2679,11 @@ video {
   padding-right: 0.25rem;
 }
 
+.px-1\.5 {
+  padding-left: 0.375rem;
+  padding-right: 0.375rem;
+}
+
 .px-10 {
   padding-left: 2.5rem;
   padding-right: 2.5rem;
@@ -2718,6 +2744,34 @@ video {
 
 .pt-1 {
   padding-top: 0.25rem;
+}
+
+.pb-0 {
+  padding-bottom: 0px;
+}
+
+.pb-0\.5 {
+  padding-bottom: 0.125rem;
+}
+
+.pb-5 {
+  padding-bottom: 1.25rem;
+}
+
+.pb-2 {
+  padding-bottom: 0.5rem;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
+
+.pt-0 {
+  padding-top: 0px;
+}
+
+.pt-0\.5 {
+  padding-top: 0.125rem;
 }
 
 .text-left {
@@ -2809,9 +2863,19 @@ video {
   line-height: 1.75rem;
 }
 
+.text-lg\/5 {
+  font-size: 1.125rem;
+  line-height: 1.25rem;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.text-sm\/4 {
+  font-size: 0.875rem;
+  line-height: 1rem;
 }
 
 .text-xl {
@@ -2820,6 +2884,21 @@ video {
 }
 
 .text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
+}
+
+.text-sm\/3 {
+  font-size: 0.875rem;
+  line-height: .75rem;
+}
+
+.text-xs\/3 {
+  font-size: 0.75rem;
+  line-height: .75rem;
+}
+
+.text-xs\/4 {
   font-size: 0.75rem;
   line-height: 1rem;
 }
@@ -3430,12 +3509,12 @@ video {
   transition-duration: 200ms;
 }
 
-.duration-\[350ms\] {
-  transition-duration: 350ms;
-}
-
 .duration-\[250ms\] {
   transition-duration: 250ms;
+}
+
+.duration-\[350ms\] {
+  transition-duration: 350ms;
 }
 
 .ease-in {
@@ -3674,14 +3753,41 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.group:hover .group-hover\:gap-y-4 {
+  row-gap: 1rem;
+}
+
+.group:hover .group-hover\:gap-y-3 {
+  row-gap: 0.75rem;
+}
+
 .group:hover .group-hover\:text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
 }
 
+.group:hover .group-hover\:text-xl {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.group:hover .group-hover\:text-stone-200 {
+  --tw-text-opacity: 1;
+  color: rgb(231 229 228 / var(--tw-text-opacity));
+}
+
 .group:hover .group-hover\:text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.group:hover .group-hover\:text-stone-500 {
+  --tw-text-opacity: 1;
+  color: rgb(120 113 108 / var(--tw-text-opacity));
+}
+
+.group:hover .group-hover\:text-stone-50\/60 {
+  color: rgb(250 250 249 / 0.6);
 }
 
 .group:hover .group-hover\:drop-shadow-xl {
@@ -3820,20 +3926,24 @@ video {
     height: 60px;
   }
 
-  .\32xl\:h-\[280px\] {
-    height: 280px;
+  .\32xl\:h-\[220px\] {
+    height: 220px;
   }
 
-  .\32xl\:h-\[260px\] {
-    height: 260px;
+  .\32xl\:h-\[140px\] {
+    height: 140px;
   }
 
-  .\32xl\:h-\[80px\] {
-    height: 80px;
+  .\32xl\:h-5 {
+    height: 1.25rem;
   }
 
-  .\32xl\:h-\[100px\] {
-    height: 100px;
+  .\32xl\:h-16 {
+    height: 4rem;
+  }
+
+  .\32xl\:h-9 {
+    height: 2.25rem;
   }
 
   .\32xl\:min-h-\[480px\] {
@@ -3876,6 +3986,10 @@ video {
     gap: 1.5rem;
   }
 
+  .\32xl\:gap-3 {
+    gap: 0.75rem;
+  }
+
   .\32xl\:gap-x-12 {
     -moz-column-gap: 3rem;
          column-gap: 3rem;
@@ -3913,6 +4027,10 @@ video {
     padding-top: 1rem;
   }
 
+  .\32xl\:pt-1 {
+    padding-top: 0.25rem;
+  }
+
   .\32xl\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
@@ -3923,14 +4041,29 @@ video {
     line-height: 1.75rem;
   }
 
-  .\32xl\:text-sm {
-    font-size: 0.875rem;
+  .\32xl\:text-lg\/5 {
+    font-size: 1.125rem;
     line-height: 1.25rem;
   }
 
   .\32xl\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .\32xl\:text-xl\/6 {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+
+  .\32xl\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .\32xl\:text-2xl\/6 {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
   }
 
   .\32xl\:ring-2 {
@@ -3947,6 +4080,11 @@ video {
   .\32xl\:hover\:translate-x-0:hover {
     --tw-translate-x: 0px;
     transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .group:hover .\32xl\:group-hover\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
   }
 }
 

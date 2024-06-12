@@ -360,7 +360,7 @@ function constructSampleHTML(samples) {
     .map((sample) => {
       return `
             <a class="group relative flex h-[280px] 2xl:h-[360px]  flex-col gap-6 rounded-xl overflow-hidden" href="${sample.sampleUrl}">
-            <div class="absolute inset-0 h-[220px] 2xl:h-[260px]  rounded-xl overflow-hidden group-hover:h-full w-full duration-[250ms]">
+            <div class="absolute inset-0 h-[180px] 2xl:h-[220px]  rounded-xl overflow-hidden group-hover:h-full w-full duration-[250ms]">
               <video
               poster="${baseUrl}assets/${sample.id}.png"
               class="h-full w-full rounded-xl object-cover group-hover:scale-125 duration-1000"
@@ -372,17 +372,26 @@ function constructSampleHTML(samples) {
 
             </div>
             </div>
-            <div class="px-2 2xl:px-3 pt-1 2xl:pt-4 mt-auto w-full h-[60px] 2xl:h-[100px] flex flex-col gap-0.5">
+            <div class="px-1.5 mt-auto w-full h-[100px] 2xl:h-[140px] flex flex-col">
               <div
-              class="flex items-center text-xl w-full group-hover:text-white group-hover:z-50 group-hover:translate-y-[1.5rem] group-hover:drop-shadow-xl duration-[350ms]"
+              class="flex items-center text-xl w-full group-hover:text-white group-hover:z-50 group-hover:translate-y-[1.5rem] group-hover:drop-shadow-xl duration-[350ms] h-full"
               >
 
-                <div class="flex flex-col gap-0.5 2xl:gap-2 w-full">
-                  <div class="flex items-end flex-wrap gap-2">
+                <div class="flex flex-col h-full w-full 2xl:gap-2 gap-1 group-hover:gap-y-3">
+                  <div class="font-bold text-stone-50 2xl:group-hover:text-2xl group-hover:text-xl h-1/5 2xl:text-2xl/6 text-lg/5 duration-[350ms] 2xl:pt-1 pt-0.5">${sample.title}
+                  </div>
+
+                  <div class="group-hover:hidden 2/5 2xl:text-lg/5 text-xs/3 font-normal text-stone-300 font-sans">
+                    <p>
+                    ${sample.desc}
+                    </p>
+                  </div>
+
+                <div class="flex items-end flex-wrap 2xl:gap-2 gap-x-1 gap-y-0.5 h-2/5 2xl:text-sm text-xs pb-1">
               ${
                 sample.model
                   ? ` <div
-              class="flex rounded-md font-semibold bg-stone-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset 2xl:text-sm text-xs ring-stone-500/10 w-auto"
+              class="flex rounded-md font-semibold bg-stone-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset  ring-stone-500/10 w-auto"
             >
               ${sample.model}
             </div>`
@@ -391,26 +400,22 @@ function constructSampleHTML(samples) {
                   ${
                     sample.webApis.length > 0
                       ? ` <div
-                  class="flex rounded-md font-semibold bg-indigo-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset 2xl:text-sm text-xs ring-stone-500/10 w-auto"
+                  class="flex rounded-md font-semibold bg-indigo-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset  ring-stone-500/10 w-auto"
                 > ${sample.webApis.join("·")} · ${sample.framework}</div>`
                       : ``
                   }
                   ${
                     sample.devices.length > 0
                       ? ` <div
-                  class="flex rounded-md font-semibold bg-sky-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset 2xl:text-sm text-xs ring-stone-500/10 w-auto"
+                  class="flex rounded-md font-semibold bg-sky-600/80 px-1 py-0.5 text-stone-50 ring-1 ring-inset  ring-stone-500/10 w-auto"
                 >
                   ${sample.devices.join(" · ")}
                 </div>`
                       : ``
                   }
               </div>
-                  <div class="font-bold text-stone-50 group-hover:text-2xl duration-[350ms]">${sample.title}</div>
-                  <div>  <p
-                  class="group-hover:hidden 2xl:text-lg text-sm font-normal text-white font-sans">
-                    ${sample.desc}
-                    </p></div>
-                </div>
+
+                    </div>
             </div>
             </div></a
           >
