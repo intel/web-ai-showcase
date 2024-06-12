@@ -16,7 +16,7 @@ import {
   getElementId4Resource,
   removeHiddenClass
 } from "../common/utility.js";
-import exampleImgPath from "/assets/cats.jpg";
+import exampleImgPath from "/assets/cats.png";
 
 import { ALL_NEEDED_MODEL_RESOURCES } from "../../config.js";
 

@@ -3586,11 +3586,11 @@ video {
   transition-duration: 200ms;
 }
 
-.duration-\[250ms\] {
+.duration-250 {
   transition-duration: 250ms;
 }
 
-.duration-\[350ms\] {
+.duration-350 {
   transition-duration: 350ms;
 }
 
