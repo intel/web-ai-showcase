@@ -4,6 +4,7 @@ import react from "@vitejs/plugin-react";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import * as path from "path";
 import { existsSync } from "fs";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 function resourceHandlerPlugin() {
   return {
@@ -46,6 +47,6 @@ export default ({ mode }) => {
 
   return defineConfig({
     base: env.VITE_BASE,
-    plugins: [react(), basicSsl(), resourceHandlerPlugin()]
+    plugins: [react(), basicSsl(), resourceHandlerPlugin(), topLevelAwait()]
   });
 };
