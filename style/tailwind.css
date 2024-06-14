@@ -1102,6 +1102,15 @@ video {
   height: 100vh;
 }
 
+.h-auto {
+  height: auto;
+}
+
+.h-fit {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
 .max-h-\[200px\] {
   max-height: 200px;
 }
@@ -2501,6 +2510,10 @@ video {
   background-color: transparent;
 }
 
+.bg-teal-600\/80 {
+  background-color: rgb(13 148 136 / 0.8);
+}
+
 .bg-opacity-\[92\%\] {
   --tw-bg-opacity: 92%;
 }
@@ -2730,6 +2743,10 @@ video {
   padding-top: 0.125rem;
 }
 
+.pt-1 {
+  padding-top: 0.25rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -2862,6 +2879,14 @@ video {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.font-thin {
+  font-weight: 100;
+}
+
+.font-extralight {
+  font-weight: 200;
 }
 
 .uppercase {
@@ -3889,13 +3914,13 @@ video {
          column-gap: 3rem;
   }
 
-  .\32xl\:gap-y-6 {
-    row-gap: 1.5rem;
-  }
-
   .\32xl\:gap-x-2 {
     -moz-column-gap: 0.5rem;
          column-gap: 0.5rem;
+  }
+
+  .\32xl\:gap-y-6 {
+    row-gap: 1.5rem;
   }
 
   .\32xl\:p-4 {
@@ -3922,12 +3947,16 @@ video {
     padding-bottom: 0.5rem;
   }
 
+  .\32xl\:pb-2 {
+    padding-bottom: 0.5rem;
+  }
+
   .\32xl\:pt-1 {
     padding-top: 0.25rem;
   }
 
-  .\32xl\:pb-2 {
-    padding-bottom: 0.5rem;
+  .\32xl\:pt-2 {
+    padding-top: 0.5rem;
   }
 
   .\32xl\:text-2xl\/6 {
@@ -3953,6 +3982,10 @@ video {
   .\32xl\:text-xl {
     font-size: 1.25rem;
     line-height: 1.75rem;
+  }
+
+  .\32xl\:font-medium {
+    font-weight: 500;
   }
 
   .\32xl\:ring-2 {
