@@ -9,11 +9,13 @@ import {
   initModelsPanelHandler,
   getElementId4Resource,
   removeHiddenClass,
-  getRequestPrefix,
   formatBytes
 } from "../../common/utility.js";
 
-import { ALL_NEEDED_MODEL_RESOURCES } from "../../../config.js";
+import {
+  TRANSFORMER_LOCAL_MODEL_PATH,
+  ALL_NEEDED_MODEL_RESOURCES
+} from "../../../config.js";
 
 import logoImg from "/assets/logo.png";
 
@@ -35,7 +37,14 @@ const MODEL_NAME = (await hasFp16())
   ? "Phi-3-mini-4k-instruct_fp16"
   : "Phi-3-mini-4k-instruct";
 
-const REQUEST_PREFIX = getRequestPrefix(MODEL_NAME);
+const LOCAL_REQUEST_PREFIX =
+  TRANSFORMER_LOCAL_MODEL_PATH +
+  ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].localFolderPathPrefix +
+  MODEL_NAME +
+  "/";
+
+const REMOTE_REQUEST_PREFIX =
+  ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].linkPathPrefix;
 
 function App() {
   // Create a reference to the worker object.
@@ -164,8 +173,15 @@ function App() {
     for (const name of ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].resources) {
       let status = "",
         textContent = "";
-      const url = REQUEST_PREFIX + name;
-      const cacheResponse = await cache.match(url);
+      const localModelUrl = LOCAL_REQUEST_PREFIX + name;
+      // search local model resource in the cache first
+      let cacheResponse = await cache.match(localModelUrl);
+
+      if (!cacheResponse || !cacheResponse.ok) {
+        // search remote model resource in the cache
+        cacheResponse = await cache.match(REMOTE_REQUEST_PREFIX + name);
+      }
+
       const statusBarElement = document.getElementById(
         `${name.split(".")[0].split("/")[1]}-${name.split(".")[1]}StatusBar`
       );
@@ -386,7 +402,7 @@ function App() {
                 }
               });
               // construct the url for this cached resource.
-              const cacheKey = REQUEST_PREFIX + resource;
+              const cacheKey = LOCAL_REQUEST_PREFIX + resource;
               const cacheResponse = await cache.match(cacheKey);
               if (!cacheResponse) {
                 cache
