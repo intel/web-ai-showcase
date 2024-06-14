@@ -71,7 +71,7 @@ export function getRequestPrefix(modelName) {
 export function getElementId4Resource(resource) {
   return resource.split(".")[0].indexOf("/") < 0
     ? resource.split(".")[0]
-    : resource.split(".")[0].split("/")[1];
+    : `${resource.split(".")[0].split("/")[1]}-${resource.split(".")[1]}`;
 }
 
 export function constructLoadModelsPanel(modelName, targetElement) {

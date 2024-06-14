@@ -6,8 +6,6 @@ import {
   env
 } from "@xenova/transformers";
 
-import { USE_REMOTE_MODELS } from "../../../config";
-
 class CallbackTextStreamer extends TextStreamer {
   constructor(tokenizer, cb) {
     super(tokenizer, {
@@ -134,27 +132,21 @@ async function generate(messages) {
 async function load() {
   self.postMessage({
     status: "loading",
-    data: `Loading model`
+    data: `Loading model and initializing`
   });
 
   let baseUrl = "/";
 
-  if (
-    location.href.toLowerCase().indexOf("github.io") > -1 ||
-    USE_REMOTE_MODELS
-  ) {
+  if (location.href.toLowerCase().indexOf("github.io") > -1) {
     // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
     baseUrl = "/web-ai-showcase/";
-    // force to use remote model
-    env.allowLocalModels = false;
-    env.allowRemoteModels = true;
-  } else {
-    // force to use local model
-    env.localModelPath = "/models/";
-    env.allowLocalModels = true;
-    env.allowRemoteModels = false;
   }
 
+  // transformers will first fetch from local model path
+  // then from remote model path if not found locally
+  env.localModelPath = "/models/";
+  env.allowLocalModels = true;
+  // set up the path to use local wasm files for the onnx backend
   env.backends.onnx.wasm.wasmPaths = `${baseUrl}models/wasm/ort-web@1_19_0_dev/`;
 
   // Load the pipeline and save it for future use.
@@ -165,7 +157,7 @@ async function load() {
   });
 
   self.postMessage({
-    status: "loading",
+    status: "compiling",
     data: "Compiling shaders and warming up model..."
   });
 
