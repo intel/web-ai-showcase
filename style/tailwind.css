@@ -2464,6 +2464,10 @@ video {
   background-color: rgb(2 132 199 / 0.9);
 }
 
+.bg-fuchsia-600\/60 {
+  background-color: rgb(192 38 211 / 0.6);
+}
+
 .bg-stone-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(231 229 228 / var(--tw-bg-opacity));
