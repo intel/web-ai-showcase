@@ -147,7 +147,7 @@ async function load() {
   env.localModelPath = "/models/";
   env.allowLocalModels = true;
   // set up the path to use local wasm files for the onnx backend
-  env.backends.onnx.wasm.wasmPaths = `${baseUrl}models/wasm/ort-web@1_19_0_dev/`;
+  env.backends.onnx.wasm.wasmPaths = `${baseUrl}models/wasm/ort-web@1_18_0/`;
 
   // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
