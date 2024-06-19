@@ -5,7 +5,6 @@
  *-----------------------------------------------------------------------------------------------*/
 
 import { AutoTokenizer, env } from "@xenova/transformers";
-// import * as ort from "onnxruntime-web/webgpu";
 import { setupNavigBar } from "../../js/navbar.js";
 import {
   changeClass4StatusBar,
@@ -218,19 +217,6 @@ const STATUS = {
   RUNNING: 2,
   DONE: 3
 };
-
-function defineTokenizerConfigs() {
-  let _tokenizer = {};
-  for (const _config of ALL_NEEDED_MODEL_RESOURCES[tokenizerName].resources) {
-    _tokenizer[_config.split(".")[0]] = {
-      fullUrl: getRequestPrefix(tokenizerName) + _config
-    };
-  }
-
-  return _tokenizer;
-}
-
-const tokenizerConfigs = defineTokenizerConfigs();
 
 function getConfig() {
   var config = {
@@ -1010,12 +996,15 @@ async function updateStatusOfModels() {
     // show the status flag in the status panels or not
     const root = await navigator.storage.getDirectory();
     try {
-      statusBarElement.textContent = "unload";
-      changeClass4StatusBar("unload", statusBarElement);
       const fileHandle = await root.getFileHandle(name);
       await fileHandle.getFile();
+      statusBarElement.textContent = "cached";
+      changeClass4StatusBar("cached", statusBarElement);
       removeHiddenClass(document.getElementById(`${name}StatusFlag`));
-    } catch (e) {}
+    } catch (e) {
+      statusBarElement.textContent = "unload";
+      changeClass4StatusBar("unload", statusBarElement);
+    }
   }
 }
 
@@ -1129,6 +1118,9 @@ async function uploadHandler(event, resource) {
       if (!progressBar.classList.contains("hidden")) {
         progressBar.classList.add("hidden");
       }
+
+      // should update the model status in the status panel
+      await updateStatusOfModels();
     };
 
     reader.readAsArrayBuffer(file);
