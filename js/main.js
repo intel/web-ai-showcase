@@ -384,8 +384,8 @@ function constructSampleHTML(samples) {
   const sampleCardHTML = samples
     .map((sample) => {
       return `
-            <a class="group relative flex h-[280px] 2xl:h-[360px]  flex-col gap-6 rounded-xl overflow-hidden" href="${sample.sampleUrl}">
-            <div class="absolute inset-0 h-[180px] 2xl:h-[220px]  rounded-xl overflow-hidden group-hover:h-full w-full duration-[250ms]">
+            <a class="group relative flex h-[250px] 2xl:h-[360px]  flex-col gap-6 rounded-xl overflow-hidden" href="${sample.sampleUrl}">
+            <div class="absolute inset-0 h-1/2 2xl:h-[220px]  rounded-xl overflow-hidden group-hover:h-full w-full duration-[250ms]">
               <video
               poster="${baseUrl}assets/${sample.id}.png"
               class="h-full w-full rounded-xl object-cover group-hover:scale-125 duration-1000"
@@ -397,38 +397,38 @@ function constructSampleHTML(samples) {
 
             </div>
             </div>
-            <div class="px-3 mt-auto w-full h-[100px] 2xl:h-[140px] flex flex-col">
+            <div class="px-3 mt-auto w-full h-1/2 2xl:h-[140px] flex flex-col">
               <div
               class="flex items-center text-xl w-full group-hover:text-white group-hover:z-50 group-hover:translate-y-[1.5rem] group-hover:drop-shadow-xl duration-[350ms] h-full"
               >
 
-                <div class="flex flex-col h-full w-full  group-hover:gap-y-3">
-                  <div class="font-bold text-stone-50 2xl:group-hover:text-2xl group-hover:text-xl h-1/5 2xl:text-2xl/6 text-lg/5 duration-[350ms] 2xl:pt-1 pt-0.5 drop-shadow-md">${sample.title}
+                <div class="flex flex-col h-full w-full">
+                  <div class="font-bold text-stone-50 2xl:group-hover:text-2xl group-hover:text-xl  2xl:text-2xl/6 text-lg/5 duration-[350ms] 2xl:pt-1 pt-3 drop-shadow-md">${sample.title}
                   </div>
 
-                  <div class="group-hover:hidden h-2/5 2xl:pt-2 pt-1 2xl:text-lg/5 text-xs/3 font-normal text-stone-300 font-sans">
+                  <div class="group-hover:hidden 2xl:pt-3 pt-3 2xl:text-lg/5 text-xs/3 font-normal text-stone-300 font-sans">
                     <p>
                     ${sample.desc}
                     </p>
                   </div>
 
-                <div class="flex flex-wrap h-fit 2xl:gap-x-2 gap-x-1 gap-y-0.5 text-xs 2xl:text-sm 2xl:pb-2 pb-1">
+                <div class="flex flex-wrap h-fit pt-3 2xl:gap-x-2 gap-x-1 text-[10px]/4 gap-y-1 2xl:text-sm">
 
-                <div class="flex 2xl:font-medium rounded-2xl bg-fuchsia-600/60 px-2 py-0.5 text-stone-50 ring-1 ring-inset ring-stone-500/10 w-auto mt-1">${sample.tasks}</div>
+                <div class="flex 2xl:font-medium rounded-2xl bg-fuchsia-600/60 px-2 text-stone-50 w-auto">${sample.tasks}</div>
 
               ${
                 sample.models.length > 0
                   ? ` ${sample.models
                       .map(
                         (model) =>
-                          `<div class="flex 2xl:font-medium rounded-2xl bg-stone-600/80 px-2 py-0.5 text-stone-50 ring-1 ring-inset ring-stone-500/10 w-auto mt-1">${model}</div>`
+                          `<div class="flex 2xl:font-medium rounded-2xl bg-stone-600/80 px-2 text-stone-50 w-auto">${model}</div>`
                       )
                       .join("")}`
                   : ``
               }
 
                   <div
-                    class="flex 2xl:font-medium rounded-2xl bg-teal-600/80 px-2 py-0.5 text-stone-50 ring-1 ring-inset  ring-stone-500/10 w-auto mt-1">${sample.framework}
+                    class="flex 2xl:font-medium rounded-2xl bg-teal-600/80 px-2 text-stone-50">${sample.framework}
                   </div>
 
                   ${
@@ -437,7 +437,7 @@ function constructSampleHTML(samples) {
                  ${sample.webApis
                    .map(
                      (api) =>
-                       `<div class="flex 2xl:font-medium rounded-2xl bg-indigo-600/80 px-2 py-0.5 text-stone-50 ring-1 ring-inset ring-stone-500/10 w-auto mt-1">${api}</div>`
+                       `<div class="flex 2xl:font-medium rounded-2xl bg-indigo-600/80 px-2 text-stone-50">${api}</div>`
                    )
                    .join("")}`
                       : ``
@@ -448,7 +448,7 @@ function constructSampleHTML(samples) {
                       ? `${sample.devices
                           .map(
                             (device) =>
-                              `<div class="flex 2xl:font-medium rounded-2xl bg-sky-600/80 px-2 py-0.5 text-stone-50 ring-1 ring-inset ring-stone-500/10 w-auto mt-1">${device}</div>`
+                              `<div class="flex 2xl:font-medium rounded-2xl bg-sky-600/80 px-2 text-stone-50">${device}</div>`
                           )
                           .join("")}`
                       : ``
