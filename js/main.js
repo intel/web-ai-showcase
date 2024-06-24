@@ -506,7 +506,7 @@ function constructFilter() {
 
   for (const backend of Object.keys(BACKENDS)) {
     backendFilterHTML += `<div
-    class="filter-backend cursor-pointer px-2 py-1 2xl:px-3 2xl:py-2 rounded-md bg-indigo-500/30 hover:bg-indigo-500/90 w-fit"
+    class="filter-backend cursor-pointer px-2 py-1 2xl:px-3 2xl:py-2 rounded-md bg-indigo-500/30 w-fit"
     >
       ${BACKENDS[backend]}
     </div>`;
@@ -514,7 +514,7 @@ function constructFilter() {
 
   for (const device of Object.keys(DEVICES)) {
     deviceFilterHTML += `<div
-    class="filter-device cursor-pointer px-2 py-1 2xl:px-3 2xl:py-2 rounded-md bg-sky-600/30 hover:bg-sky-600/90 w-fit"
+    class="filter-device cursor-pointer px-2 py-1 2xl:px-3 2xl:py-2 rounded-md bg-sky-600/30 w-fit"
     >
       ${DEVICES[device]}
     </div>`;
@@ -688,8 +688,6 @@ function changeFilterHandler() {
 
 constructFilter();
 constructPagination();
-changePageHandler();
-bindPageChangeEventHandler();
 bindFilterChangeEventHandler();
 changeFilterHandler();
 setupVideos();

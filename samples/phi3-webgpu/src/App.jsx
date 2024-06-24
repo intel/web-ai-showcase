@@ -608,7 +608,7 @@ function App() {
   }, [dialogMessages, isRunning]);
 
   return IS_WEBGPU_AVAILABLE ? (
-    <div className="flex flex-col h-screen mx-auto items justify-end text-gray-200 dark:text-gray-200 dark:bg-gray-900">
+    <div className="flex flex-col h-screen mx-auto items justify-end text-gray-200">
       <div id="naviBar" className="sticky top-0 z-50"></div>
 
       <div
