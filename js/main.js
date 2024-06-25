@@ -115,6 +115,18 @@ let SAMPLES = [
     update: "2024-06-08"
   },
   {
+    id: "webgpu_mobilenetv4",
+    title: "MobileNetV4",
+    desc: "Real-time image classification",
+    sampleUrl: "https://huggingface.co/spaces/Xenova/webgpu-mobilenet",
+    models: ["MobileNetV4"],
+    tasks: "Image Classification",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-06-24"
+  },
+  {
     id: "webgpu_modnet",
     title: "MODNet",
     desc: "Realtime Video Background Removal",
