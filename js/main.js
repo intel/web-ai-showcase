@@ -103,6 +103,18 @@ let SAMPLES = [
     update: "2024-06-08"
   },
   {
+    id: "webgpu_florence2",
+    title: "Microsoft Florence2",
+    desc: "Vision Foundation Model by Microsoft",
+    sampleUrl: "https://huggingface.co/spaces/Xenova/florence2-webgpu",
+    models: ["Florence2"],
+    tasks: "Vision Foundation Model",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-06-27"
+  },
+  {
     id: "webgpu_llm_gemma",
     title: "Gemma",
     desc: "LLM-Gemma",
