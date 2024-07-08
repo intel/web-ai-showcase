@@ -24,7 +24,7 @@ import {
   formatBytes
 } from "../common/utility.js";
 import { setupNavigBar } from "../../js/navbar.js";
-import { MEDIAPIPE_WASM_FILE_PATH, USE_REMOTE_MODELS } from "../../config.js";
+import { MEDIAPIPE_WASM_FILE_PATH } from "../../config.js";
 
 const input = document.getElementById("input");
 const output = document.getElementById("output");
@@ -36,13 +36,11 @@ const progressBar = document.getElementById(`progressBar`);
 const promptInspireBtn = document.getElementById("promptInspireBtn");
 const promptContent = document.getElementById("loadModelPromptContent");
 
-const modelFileName = "gemma-2b-it-gpu-int4.bin"; /* Update the file name */
+// const modelFileName = "gemma-2b-it-gpu-int4.bin"; /* Update the file name */
 
 let llmInference;
 const genaiFileset = await FilesetResolver.forGenAiTasks(
-  USE_REMOTE_MODELS
-    ? "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-genai/wasm"
-    : MEDIAPIPE_WASM_FILE_PATH
+  MEDIAPIPE_WASM_FILE_PATH
 );
 
 const STATUS = {
