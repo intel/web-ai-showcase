@@ -1,0 +1,5 @@
+*.pem
+dist
+node_modules
+samples/phi3-webgpu/dist
+samples/phi3-webgpu/node_modules
