@@ -38,9 +38,16 @@ const promptContent = document.getElementById("loadModelPromptContent");
 
 // const modelFileName = "gemma-2b-it-gpu-int4.bin"; /* Update the file name */
 
+let baseUrl = "";
+
+if (location.href.toLowerCase().indexOf("github.io") > -1) {
+  // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
+  baseUrl = "/web-ai-showcase";
+}
+
 let llmInference;
 const genaiFileset = await FilesetResolver.forGenAiTasks(
-  MEDIAPIPE_WASM_FILE_PATH
+  baseUrl + MEDIAPIPE_WASM_FILE_PATH
 );
 
 const STATUS = {
