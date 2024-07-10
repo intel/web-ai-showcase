@@ -1,6 +1,6 @@
 # Web-AI-showcase
 
-This project is a website which demonstrates some emerging Web AI demos that can run on Intel AI PCs. The AI tasks are executed on client side through WebAssembly and WebGPU technology.
+This project is a website which demonstrates some emerging Web AI demos that run locally in your browser, powered by WebAssembly, WebGPU and WebNN technologies.
 
 ## Requirements
 
@@ -113,3 +113,8 @@ Some samples for this repository are based on modifications of examples from [Tr
 | [Summarization](./samples/summarization/)                 | [Transformers.js](https://github.com/xenova/transformers.js/tree/main/examples/demo-site)                | [DistilBART CNN](https://huggingface.co/sshleifer/distilbart-cnn-6-6)                 | Apache-2.0                                                                 |
 | [Phi3 WebGPU](./samples/phi3-webgpu/)                     | [Transformers.js](https://github.com/xenova/transformers.js/tree/v3/examples/webgpu-chat)                | [Phi-3-mini-4k](https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-onnx)         | MIT                                                                        |
 | [LLM Gemma](./samples/llm_gemma/)                         | [MediaPipe](https://github.com/google-ai-edge/mediapipe)                                                 | [Gemma-2B](https://www.kaggle.com/models/google/gemma/tfLite/)                        | [Gemma](https://ai.google.dev/gemma/terms)                                 |
+
+## Contributing
+We encourage public contributions! Actually without tremendous great efforts from projects like ONNX Runtime, Transformers.js, TensorFlow.js, MediaPipe, TVM and so on, we couldn't be here with so many great demos.
+
+Especially we want to thank Joshua Lochner, author of Transformers.js, for his full permission to freely use his images, videos and demos related to Transformers.js project. Please connect the related great stuff to his contributions to this project.
