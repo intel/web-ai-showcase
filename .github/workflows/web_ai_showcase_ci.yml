@@ -1,0 +1,56 @@
+#
+# Copyright (C) 2024 Intel Corporation. All rights reserved.
+# Licensed under the Apache License 2.0. See LICENSE in the project root for license information.
+# SPDX-License-Identifier: Apache-2.0
+#
+
+name: Web AI Showcase CI
+
+# Controls when the action will run. Workflow runs when manually triggered using the UI
+# or API.
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - "CODE_OF_CONDUCT.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE"
+      - "SECURITY.md"
+      - "ATTRIBUTIONS.md"
+  pull_request:
+      types:
+        - opened
+        - synchronize
+      paths-ignore:
+        - "README.md"
+        - "CODE_OF_CONDUCT.md"
+        - "CONTRIBUTING.md"
+        - "LICENSE"
+        - "SECURITY.md"
+        - "ATTRIBUTIONS.md"
+  # allow to be triggered manually
+  workflow_dispatch:
+        
+# Cancel any in-flight jobs for the same PR/branch so there's only one active
+# at a time
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # This workflow contains a single job called "greet"
+  linting_check:
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+          with:
+            fetch-depth: 5
+  
+        - name: Install tool dependencies
+          run: npm install
+  
+        - name: Linting Check
+          run: npm run lint
