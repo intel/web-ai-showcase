@@ -10,15 +10,21 @@
     "prod:github": "node update_config.js remote-models && npm run build && node build_sub_proj.js github && npm run copy-models",
     "prod:use-remote-models": "node update_config.js remote-models && npm run build && node build_sub_proj.js && npm run copy-models",
     "prod": "node update_config.js && npm run build && npm run fetch-models && node build_sub_proj.js && npm run copy-models",
-    "startup": "cd ./dist && http-server -S -C ../cert.pem -K ../key.pem -o"
+    "startup": "cd ./dist && http-server -S -C ../cert.pem -K ../key.pem -o",
+    "lint": "eslint .",
+    "lint-fix": "eslint . --fix"
   },
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^9.6.0",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "adm-zip": "^0.5.12",
-    "eslint": "^7.5.0",
+    "eslint": "^9.6.0",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
     "fs-extra": "^11.2.0",
+    "globals": "^15.8.0",
     "http-server": "^14.1.1",
     "mkdirp": "^3.0.1",
     "prettier": "^3.2.5",

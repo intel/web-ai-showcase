@@ -4,6 +4,9 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
+
 import { AutoTokenizer, env } from "@xenova/transformers";
 import { setupNavigBar } from "../../js/navbar.js";
 import {
@@ -988,7 +991,7 @@ function webgpuResourceInitialize() {
 }
 
 async function updateStatusOfModels() {
-  for (const [name, model] of Object.entries(models)) {
+  for (const [name, _model] of Object.entries(models)) {
     const statusBarElement = document.getElementById(`${name}StatusBar`);
     if (!statusBarElement) return;
     // set status of this model as `unload` by default

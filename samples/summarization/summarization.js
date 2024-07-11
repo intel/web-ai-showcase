@@ -60,7 +60,7 @@ for (const [param, value] of Object.entries(defaultParams)) {
 
 function getParams() {
   let parametersObj = {};
-  for (const [param, value] of Object.entries(defaultParams)) {
+  for (const [param, _v] of Object.entries(defaultParams)) {
     const ele = document.getElementById(param);
 
     if (ele && ele.value !== undefined) {
@@ -76,7 +76,7 @@ function getParams() {
 
 let startTime = 0;
 
-GENERATE_BUTTON.addEventListener("click", async (e) => {
+GENERATE_BUTTON.addEventListener("click", async (_e) => {
   // clear the output first
   SUMMARIZATION_OUTPUT_TEXTBOX.value = "";
   // Set and pass generation settings to web worker
@@ -152,7 +152,7 @@ worker.addEventListener("message", (event) => {
         );
 
         switch (message.data.status) {
-          case "progress":
+          case "progress": {
             if (!message.data.file || !NEEDED_RESOURCES[message.data.file]) {
               break;
             }
@@ -199,8 +199,8 @@ worker.addEventListener("message", (event) => {
               }
             }
             break;
-
-          case "done":
+          }
+          case "done": {
             let endTime = new Date().getTime();
             // Remove the progress bar
             if (barElem !== null) barElem.classList.add("hidden");
@@ -231,16 +231,18 @@ worker.addEventListener("message", (event) => {
               size = 0;
             }
             break;
+          }
         }
       }
 
       break;
-    case "update": // for generation
+    case "update": {
+      // for generation
       let target = message.target;
       let elem = document.getElementById(target);
       elem.value = message.data;
       break;
-
+    }
     case "complete":
       document.getElementById(message.target).value = message.data;
       break;

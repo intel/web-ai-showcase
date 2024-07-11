@@ -161,7 +161,7 @@ function model_progress_cb_handler(message) {
       }
       break;
 
-    case "done":
+    case "done": {
       if (!PROGRESS.classList.contains("hidden")) {
         PROGRESS.classList.add("hidden");
       }
@@ -189,6 +189,7 @@ function model_progress_cb_handler(message) {
         size = 0;
       }
       break;
+    }
   }
 }
 
