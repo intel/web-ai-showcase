@@ -65,5 +65,5 @@ jobs:
         - name: Install tool dependencies
           run: npm install
   
-        - name: Linting Check
+        - name: Build production
           run: npm run prod:github
