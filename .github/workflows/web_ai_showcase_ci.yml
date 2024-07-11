@@ -40,7 +40,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # This workflow contains a single job called "greet"
   linting_check:
       runs-on: ubuntu-20.04
       steps:
@@ -54,3 +53,17 @@ jobs:
   
         - name: Linting Check
           run: npm run lint
+          
+  build_prod_4_gh_pages:
+      runs-on: ubuntu-20.04
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v3
+          with:
+            fetch-depth: 5
+  
+        - name: Install tool dependencies
+          run: npm install
+  
+        - name: Linting Check
+          run: npm run prod:github
