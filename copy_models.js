@@ -5,7 +5,6 @@
  *-----------------------------------------------------------------------------------------------*/
 
 import { execSync } from "child_process";
-import { USE_REMOTE_MODELS } from "./config.js";
 import os from "os";
 import fs from "fs";
 import * as path from "path";

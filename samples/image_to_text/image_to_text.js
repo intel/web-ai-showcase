@@ -66,7 +66,7 @@ for (const [param, value] of Object.entries(defaultParams)) {
 
 function getParams() {
   let parametersObj = {};
-  for (const [param, value] of Object.entries(defaultParams)) {
+  for (const [param, _value] of Object.entries(defaultParams)) {
     const ele = document.getElementById(param);
 
     if (ele && ele.value !== undefined) {
@@ -221,7 +221,7 @@ worker.addEventListener("message", (event) => {
         );
 
         switch (message.data.status) {
-          case "progress":
+          case "progress": {
             if (!message.data.file || !NEEDED_RESOURCES[message.data.file]) {
               break;
             }
@@ -270,8 +270,9 @@ worker.addEventListener("message", (event) => {
               }
             }
             break;
+          }
 
-          case "done":
+          case "done": {
             if (!message.data.file || !NEEDED_RESOURCES[message.data.file]) {
               break;
             }
@@ -305,11 +306,13 @@ worker.addEventListener("message", (event) => {
               size = 0;
             }
             break;
+          }
         }
       }
 
       break;
-    case "update": // for generation
+    case "update": {
+      // for generation
       let target = message.target;
       let elem = document.getElementById(target);
       elem.value = message.data;
@@ -318,7 +321,7 @@ worker.addEventListener("message", (event) => {
         timeoutId = setTimeout(checkForChanges, 1500);
       }
       break;
-
+    }
     case "complete":
       document.getElementById(message.target).value = message.data;
       break;

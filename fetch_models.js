@@ -4,6 +4,8 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
+/* eslint-disable no-undef */
+
 import {
   ALL_NEEDED_MODEL_RESOURCES,
   TRANSFORMER_LOCAL_MODEL_PATH
@@ -63,25 +65,25 @@ function constructUrlDestMapping(modelName) {
 function downloadFile(url, dest) {
   return new Promise((resolve, reject) => {
     fetch(url)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Failed to download ${url}: ${response.statusText}`);
-      }
-      return response.arrayBuffer();
-    })
-    .then(arrayBuffer => {
-      const buffer = Buffer.from(arrayBuffer);
-      fs.writeFile(dest, buffer, err => {
-        if (err) throw new Error(`Failed to save file: ${err.message}`);
-        console.log(`File saved to ${dest}`);
-        resolve();
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to download ${url}: ${response.statusText}`);
+        }
+        return response.arrayBuffer();
       })
-    })
-    .catch(error => {
-      console.error(error);
-      reject();
-    })
-  })
+      .then((arrayBuffer) => {
+        const buffer = Buffer.from(arrayBuffer);
+        fs.writeFile(dest, buffer, (err) => {
+          if (err) throw new Error(`Failed to save file: ${err.message}`);
+          console.log(`File saved to ${dest}`);
+          resolve();
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        reject();
+      });
+  });
 }
 
 function cleanUp() {
@@ -99,13 +101,17 @@ async function main() {
 
   // loop to download all resources into destination
   try {
-    console.warn(">>> Downloading required model files(~3GB), this may take a while ...");
+    console.warn(
+      ">>> Downloading required model files(~3GB), this may take a while ..."
+    );
 
     const keys = Object.keys(RESOURCE_URL_DEST_MAPPING);
     for (var i = 0; i < keys.length; i++) {
       const url = keys[i];
       if (fs.existsSync(RESOURCE_URL_DEST_MAPPING[url])) {
-        console.warn(`[+] Already downloaded ${url} ${RESOURCE_URL_DEST_MAPPING[url]}`);
+        console.warn(
+          `[+] Already downloaded ${url} ${RESOURCE_URL_DEST_MAPPING[url]}`
+        );
         continue;
       }
       console.warn(`[+] Downloading ${url} ...`);
