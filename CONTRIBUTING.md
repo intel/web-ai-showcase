@@ -1,8 +1,33 @@
 # Contributing
 
-### License
+We encourage public contributions! Actually without tremendous great efforts from projects like ONNX Runtime, Transformers.js, TensorFlow.js, MediaPipe, TVM and so on, we couldn't be here with so many great demos.
 
-<PROJECT NAME> is licensed under the terms in [LICENSE]<link to license file in repo>. By contributing to the project, you agree to the license and copyright terms therein and release your contribution under these terms.
+Especially we want to thank Joshua Lochner, author of Transformers.js, for his full permission to freely use his images, videos and demos related to Transformers.js project. Please connect the related great stuff to his contributions to this project.
+
+## License
+
+Web-AI-Showcase is licensed under the terms in [LICENSE](LICENSE). By contributing to the project, you agree to the license and copyright terms therein and release your contribution under these terms.
+
+## How to contribute
+
+We welcome contributions to Web-AI-Showcase. You can:
+
+- Log a bug or provide feedback with an [issue].
+- Submit your changes directly with a [pull request].
+
+### Pull requests
+
+This project follows a simple workflow with contributions delivered as PRs against the main branch.
+To submit your change:
+
+- Make sure your code is in line with our coding conventions by running `npm run lint` to format the
+  code.
+- Create an [issue] describing the bug the PR fixes or the feature you intend to implement.
+- Submit a [pull request] into the main branch.
+
+Your PR will then be reviewed by one or more maintainers. Your PR will be automatically merged
+(assuming no conflicts) with one approving review. Maintainers may suggest changes to a PR before
+approving.
 
 ### Sign your work
 
@@ -55,3 +80,6 @@ Use your real name (sorry, no pseudonyms or anonymous contributions.)
 
 If you set your `user.name` and `user.email` git configs, you can sign your
 commit automatically with `git commit -s`.
+
+[issue]: https://github.com/intel/web-ai-showcase/issues
+[pull request]: https://github.com/intel/web-ai-showcase/pulls
