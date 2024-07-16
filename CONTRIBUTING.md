@@ -1,5 +1,9 @@
 # Contributing
 
+We encourage public contributions! Actually without tremendous great efforts from projects like ONNX Runtime, Transformers.js, TensorFlow.js, MediaPipe, TVM and so on, we couldn't be here with so many great demos.
+
+Especially we want to thank Joshua Lochner, author of Transformers.js, for his full permission to freely use his images, videos and demos related to Transformers.js project. Please connect the related great stuff to his contributions to this project.
+
 ## License
 
 Web-AI-Showcase is licensed under the terms in [LICENSE](LICENSE). By contributing to the project, you agree to the license and copyright terms therein and release your contribution under these terms.
