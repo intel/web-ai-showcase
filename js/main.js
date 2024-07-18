@@ -115,6 +115,18 @@ let SAMPLES = [
     update: "2024-06-27"
   },
   {
+    id: "webgpu_gemini",
+    title: "Google Gemini Nano",
+    desc: "Google Gemini Nano integration with Chrome Canary",
+    sampleUrl: "https://huggingface.co/spaces/Xenova/experimental-built-in-ai-chat",
+    models: ["Gemini Nano"],
+    tasks: "Multimodal",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-07-18"
+  },
+  {
     id: "webgpu_llm_gemma",
     title: "Gemma",
     desc: "LLM-Gemma",
@@ -211,6 +223,18 @@ let SAMPLES = [
     framework: "ONNX Runtime Web",
     devices: [DEVICES.GPU],
     update: "2024-06-08"
+  },
+  {
+    id: "webgpu_smollm",
+    title: "SmolLM",
+    desc: "A blazingly fast and powerful SLM",
+    sampleUrl: "https://huggingface.co/spaces/HuggingFaceTB/SmolLM-360M-Instruct-WebGPU",
+    models: ["SmolLM"],
+    tasks: "SLM",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-07-18"
   },
   {
     id: "webgpu_webllm",
