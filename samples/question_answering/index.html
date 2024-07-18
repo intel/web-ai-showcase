@@ -31,102 +31,121 @@
   <body>
     <div id="naviBar" class="sticky top-0 z-50"></div>
 
-    <div class="container mx-auto 2xl:my-8 w-full px-8 lg:px-20">
-      <div>
+    <div class="container mx-auto w-full px-8 lg:px-20">
+      <div class="2xl:py-8 py-2">
         <h1 class="text-shadow-sm">
           <span
-            class="font-sans block font-extrabold md:text-4xl lg:text-5xl text-stone-50 text-center"
+            class="font-sans block text-4xl font-extrabold 2xl:text-5xl text-stone-50 text-center"
             >Question Answering
           </span>
         </h1>
       </div>
 
-      <section id="modelStatusPanel" class="grid grid-rows mt-1">
-        <div
-          class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono mt-1 2xl:mt-10 2xl:gap-4 gap-2"
+      <div>
+        <section
+          id="modelStatusPanel"
+          class="grid grid-rows 2xl:gap-2 gap-0.5 my-2 2xl:my-4"
         >
-          <div class="text-lg text-stone-50 font-semibold">Model Status</div>
-          <div class="flex flex-wrap items-center gap-1">
-            <div class="flex items-center justify-between imageDisplayEle">
-              <span
-                class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-              >
-                model_quantized.onnx</span
-              >
-
-              <span
-                id="model_quantizedStatusBar"
-                class="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                >unload
-              </span>
-            </div>
-          </div>
-        </div>
-
-        <div
-          id="loadModelPromptContent"
-          class="justify-self-center italic p-2 text-stone-200/80 text-md font-semibold"
-        >
-          [ Models will be loaded on first inference ]
-        </div>
-
-        <div class="w-full flex gap-4 items-center mt-5">
-          <div class="relative">
-            <button
-              id="loadModelBtn"
-              class="w-[150px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
-            >
-              Load Models
-            </button>
-            <div
-              id="modelPopover"
-              class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[80px] left-[160px] backdrop-blur-xl"
-            >
-              <div
-                id="modelPanelWrapper"
-                class="w-screen max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
-              ></div>
-            </div>
-          </div>
           <div
-            id="progressBar"
-            class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
-          ></div>
-        </div>
-      </section>
-
-      <section class="w-full min-h-[50px] mt-1 2xl:mt-10">
-        <div class="my-1 2xl:my-4">
-          <span
-            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
-            >Context:</span
+            class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono gap-2 2xl:gap-4"
           >
-        </div>
+            <div class="text-sm 2xl:text-md text-stone-50 font-semibold">
+              Model Status
+            </div>
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div
+                class="flex items-center justify-between imageDisplayEle text-xs 2xl:text-sm"
+              >
+                <span
+                  class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  model_quantized.onnx</span
+                >
+
+                <span
+                  id="model_quantizedStatusBar"
+                  class="rounded-r-md bg-neutral-400 2xl:min-h-[28px] 2xl:min-w-[68px] px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >unload
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="loadModelPromptContent"
+            class="justify-self-center italic text-stone-200/80 2xl:text-sm font-semibold text-xs"
+          >
+            [ Models will be loaded on first inference ]
+          </div>
+
+          <div class="w-full flex gap-4 items-center">
+            <div class="relative">
+              <button
+                id="loadModelBtn"
+                class="2xl:w-[110px] w-[100px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold px-2 py-1 rounded-md text-xs 2xl:text-base"
+              >
+                Load Models
+              </button>
+              <div
+                id="modelPopover"
+                class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[80px] left-[110px] backdrop-blur-xl"
+              >
+                <div
+                  id="modelPanelWrapper"
+                  class="w-screen max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                ></div>
+              </div>
+            </div>
+            <div
+              id="progressBar"
+              class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+            ></div>
+          </div>
+        </section>
         <div
-          id="inputContext"
-          class="relative flex bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-3xl p-4"
+          id="loadingModelText"
+          class="hidden relative max-w-[280px] 2xl:my-2 min-h-[24px]"
         >
-          <textarea
-            class="w-full h-[140px] 2xl:h-[300px] font-sans lg:text-lg"
-            rows="4"
-            id="contextInput"
-            style="
-              resize: none;
-              border-width: 0px;
-              background-color: transparent;
-            "
-          >
-The Amazon rainforest (Portuguese: Floresta Amazônica or Amazônia; Spanish: Selva Amazónica, Amazonía or usually Amazonia; French: Forêt amazonienne; Dutch: Amazoneregenwoud), also known in English as Amazonia or the Amazon Jungle, is a moist broadleaf forest that covers most of the Amazon basin of South America. This basin encompasses 7,000,000 square kilometres (2,700,000 sq mi), of which 5,500,000 square kilometres (2,100,000 sq mi) are covered by the rainforest. This region includes territory belonging to nine nations. The majority of the forest is contained within Brazil, with 60% of the rainforest, followed by Peru with 13%, Colombia with 10%, and with minor amounts in Venezuela, Ecuador, Bolivia, Guyana, Suriname and French Guiana. States or departments in four nations contain "Amazonas" in their names. The Amazon represents over half of the planet's remaining rainforests, and comprises the largest and most biodiverse tract of tropical rainforest in the world, with an estimated 390 billion individual trees divided into 16,000 species.</textarea
+          <div class="absolute bottom-0 left-0">
+            <span
+              class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+              >Downloading models ... (only once)</span
+            >
+          </div>
+        </div>
+        <div id="progress" class="grid items-center"></div>
+      </div>
+
+      <div
+        class="relative w-full 2xl:min-h-[32px] min-h-[24px] pl-2 2xl:mb-4 mb-2"
+      >
+        <div class="absolute bottom-0 left-0">
+          <span
+            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+            >Context</span
           >
         </div>
+      </div>
+      <section
+        id="inputSection"
+        class="relative flex bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 2xl:rounded-3xl rounded-2xl p-4"
+      >
+        <textarea
+          class="w-full h-[80px] 2xl:h-[160px] font-sans 2xl:text-base text-xs/5"
+          rows="4"
+          id="contextInput"
+          style="resize: none; border-width: 0px; background-color: transparent"
+        >
+The Amazon rainforest (Portuguese: Floresta Amazônica or Amazônia; Spanish: Selva Amazónica, Amazonía or usually Amazonia; French: Forêt amazonienne; Dutch: Amazoneregenwoud), also known in English as Amazonia or the Amazon Jungle, is a moist broadleaf forest that covers most of the Amazon basin of South America. This basin encompasses 7,000,000 square kilometres (2,700,000 sq mi), of which 5,500,000 square kilometres (2,100,000 sq mi) are covered by the rainforest. This region includes territory belonging to nine nations. The majority of the forest is contained within Brazil, with 60% of the rainforest, followed by Peru with 13%, Colombia with 10%, and with minor amounts in Venezuela, Ecuador, Bolivia, Guyana, Suriname and French Guiana. States or departments in four nations contain "Amazonas" in their names. The Amazon represents over half of the planet's remaining rainforests, and comprises the largest and most biodiverse tract of tropical rainforest in the world, with an estimated 390 billion individual trees divided into 16,000 species.</textarea
+        >
       </section>
 
-      <div class="relative w-full min-h-[50px] my-1 2xl:my-5">
+      <div class="relative w-full 2xl:min-h-[32px] min-h-[24px] my-4 2xl:my-6">
         <div class="absolute_center">
           <button
             id="triggerBtn"
             type="button"
-            class="transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold p-2 rounded-md"
+            class="transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold px-2 py-1 rounded-md text-xs 2xl:text-base"
           >
             Generate
           </button>
@@ -141,8 +160,8 @@ The Amazon rainforest (Portuguese: Floresta Amazônica or Amazônia; Spanish: Se
           >
             <div>
               <span
-                class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
-                >Question:</span
+                class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+                >Question</span
               >
             </div>
 
@@ -150,7 +169,7 @@ The Amazon rainforest (Portuguese: Floresta Amazônica or Amazônia; Spanish: Se
               class="w-full relative w-1/2 bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-3xl p-4"
             >
               <textarea
-                class="w-full h-[40px] 2xl:h-[160px] font-sans lg:text-lg"
+                class="w-full h-[50px] 2xl:h-[100px] font-sans font-sans 2xl:text-base text-xs/5"
                 rows="4"
                 id="questionInput"
                 style="
@@ -170,16 +189,16 @@ What is the drainage area of the Amazon rainforest?</textarea
           >
             <div>
               <span
-                class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
-                >Answer:</span
+                class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+                >Answer</span
               >
             </div>
             <div
-              class="w-full relative w-1/2 bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-3xl p-4"
+              class="w-full relative w-1/2 bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 rounded-3xl p-4 font-sans 2xl:text-base text-xs/5"
             >
               <textarea
                 readonly
-                class="w-full h-[40px] 2xl:h-[160px] font-sans lg:text-lg"
+                class="w-full h-[50px] 2xl:h-[100px] font-sans lg:text-lg"
                 rows="4"
                 id="answerOutput"
                 style="
@@ -192,19 +211,6 @@ What is the drainage area of the Amazon rainforest?</textarea
           </section>
         </div>
       </section>
-
-      <div
-        id="loadingModelText"
-        class="relative hidden w-full min-h-[50px] mt-5"
-      >
-        <div class="absolute bottom-0 left-0 pl-2 -mb-3">
-          <span
-            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 text-base font-semibold text-stone-500 ring-1 ring-inset ring-stone-500/10"
-            >Downloading models ... (only once)</span
-          >
-        </div>
-      </div>
-      <div id="progress" class="mt-6"></div>
     </div>
   </body>
 
