@@ -89,17 +89,17 @@ worker.addEventListener("message", (event) => {
         removeHiddenClass(LOADING_MODELS_TEXT, PROGRESS);
         PROGRESS.appendChild(
           htmlToElement(`<div model="${message.data.name}" file="${message.data.file}"
-      class="relative my-4 rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
-    >
-  <div class="relative px-2 z-20" name="statusText"></div>
-  <div class="relative px-2 z-20">
-    <span name="progressVal">0%</span>
-  </div>
-  <div
-    name="progressBar"
-    class="absolute top-0 rounded-2xl z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
-  ></div>
-  </div>`)
+       class="relative 2xl:my-2 my-1 2xl:rounded-2xl rounded-lg w-full 2xl:min-h-[30px] min-h-[20px] bg-stone-200/40 flex items-center justify-between font-mono"
+      >
+    <div class="relative px-2 z-20 2xl:text-sm text-xs" name="statusText"></div>
+    <div class="relative px-2 z-20 2xl:text-sm text-xs">
+      <span name="progressVal">0%</span>
+    </div>
+    <div
+      name="progressBar"
+      class="absolute top-0 2xl:rounded-2xl rounded-lg z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 2xl:min-h-[30px] min-h-[20px] "
+    ></div>
+    </div>`)
         );
       } else {
         if (message.data.status === "ready") {
@@ -154,7 +154,7 @@ worker.addEventListener("message", (event) => {
 
                   // update existing bar
                   if (!progressBarElem.style.height) {
-                    progressBarElem.style.height = "30px";
+                    progressBarElem.style.height = "100";
                   }
                   progressBarElem.style.width =
                     message.data.progress.toFixed(2) + "%";
