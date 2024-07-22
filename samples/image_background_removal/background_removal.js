@@ -98,15 +98,15 @@ function model_progress_cb_handler(message) {
 
         PROGRESS.appendChild(
           htmlToElement(`<div model="${message.name}" file="${message.file}"
-        class="relative my-4 rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
+         class="relative 2xl:my-2 my-1 2xl:rounded-2xl rounded-lg w-full 2xl:min-h-[30px] min-h-[20px] bg-stone-200/40 flex items-center justify-between font-mono"
       >
-    <div class="relative px-2 z-20" name="statusText"></div>
-    <div class="relative px-2 z-20">
+    <div class="relative px-2 z-20 2xl:text-sm text-xs" name="statusText"></div>
+    <div class="relative px-2 z-20 2xl:text-sm text-xs">
       <span name="progressVal">0%</span>
     </div>
     <div
       name="progressBar"
-      class="absolute top-0 rounded-2xl z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+      class="absolute top-0 2xl:rounded-2xl rounded-lg z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 2xl:min-h-[30px] min-h-[20px] "
     ></div>
     </div>`)
         );
@@ -148,7 +148,7 @@ function model_progress_cb_handler(message) {
 
             // update existing bar
             if (!progressBarElem.style.height) {
-              progressBarElem.style.height = "30px";
+              progressBarElem.style.height = "100%";
             }
             progressBarElem.style.width = message.progress.toFixed(2) + "%";
             progressValElem.textContent = message.progress.toFixed(2) + "%";
@@ -251,13 +251,13 @@ function bindEventListener() {
               removeHiddenClass(PROGRESS_BAR);
 
               PROGRESS_BAR.innerHTML = `
-            <div class="relative px-2 z-20" id="StatusText"></div>
-            <div class="relative px-2 z-20">
+            <div class="relative px-2 z-20 2xl:text-sm text-xs" id="StatusText"></div>
+            <div class="relative px-2 z-20 2xl:text-sm text-xs">
               <span id="ProgressVal">0%</span>
             </div>
             <div
               id="ProgressBar"
-              class="absolute top-0 rounded-2xl z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+              class="absolute top-0 rounded-2xl 2xl:text-sm text-xs z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
             ></div>
          `;
 
@@ -271,7 +271,7 @@ function bindEventListener() {
               statusText.textContent = `Uploading model ...`;
 
               if (!progressEle.style.height) {
-                progressEle.style.height = "30px";
+                progressEle.style.height = "100%";
               }
               progressEle.style.width = `${progress}%`;
               progressValEle.textContent = `${formatBytes(
@@ -377,7 +377,17 @@ async function predict(url) {
 
     // Set container width and height depending on the image aspect ratio
     const ar = image.width / image.height;
-    const [cw, ch] = ar > 720 / 480 ? [720, 720 / ar] : [480 * ar, 480];
+    let [cw, ch] = [0, 0];
+
+    // if the window.innerWidth >= 1536px set the width and height to
+    // 720px and 480px, else set the width and height to 480px and
+    // 320px respectively
+    if (window.innerWidth >= 1536) {
+      [cw, ch] = ar > 720 / 480 ? [720, 720 / ar] : [480 * ar, 480];
+    } else {
+      [cw, ch] = ar > 480 / 320 ? [480, 480 / ar] : [320 * ar, 320];
+    }
+
     imageContainer.style.width = `${cw}px`;
     imageContainer.style.height = `${ch}px`;
 
