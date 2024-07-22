@@ -88,32 +88,34 @@
               </button>
               <div
                 id="modelPopover"
-                class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[80px] left-[110px] backdrop-blur-xl"
+                class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[40px] left-[110px] 2xl:left-[120px] backdrop-blur-xl"
               >
                 <div
                   id="modelPanelWrapper"
-                  class="w-screen max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                  class="w-screen max-w-[360px] 2xl:max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
                 ></div>
               </div>
             </div>
-            <div
-              id="progressBar"
-              class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
-            ></div>
           </div>
+
+          <div
+            id="loadingModelText"
+            class="hidden relative max-w-[280px] 2xl:my-2 min-h-[24px]"
+          >
+            <div class="absolute bottom-0 left-0">
+              <span
+                class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+                >Downloading models ... (only once)</span
+              >
+            </div>
+          </div>
+          <div id="progress" class="grid items-center"></div>
+
+          <div
+            id="progressBar"
+            class="flex items-center justify-between font-mono justify-self-center relative hidden 2xl:rounded-2xl rounded-lg w-full 2xl:min-h-[30px] min-h-[20px] bg-stone-200/40"
+          ></div>
         </section>
-        <div
-          id="loadingModelText"
-          class="hidden relative max-w-[280px] 2xl:my-2 min-h-[24px]"
-        >
-          <div class="absolute bottom-0 left-0">
-            <span
-              class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
-              >Downloading models ... (only once)</span
-            >
-          </div>
-        </div>
-        <div id="progress" class="grid items-center"></div>
       </div>
 
       <div
