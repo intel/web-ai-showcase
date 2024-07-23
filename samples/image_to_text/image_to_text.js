@@ -358,13 +358,13 @@ function bindEventListener() {
               removeHiddenClass(PROGRESS_BAR);
 
               PROGRESS_BAR.innerHTML = `
-            <div class="relative px-2 z-20" id="StatusText"></div>
-            <div class="relative px-2 z-20">
+              <div class="relative px-2 z-20 2xl:text-sm text-xs" id="StatusText"></div>
+            <div class="relative px-2 z-20 2xl:text-sm text-xs">
               <span id="ProgressVal">0%</span>
             </div>
             <div
               id="ProgressBar"
-              class="absolute top-0 rounded-2xl z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+              class="absolute top-0 rounded-2xl 2xl:text-sm text-xs z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
             ></div>
          `;
 
@@ -378,7 +378,7 @@ function bindEventListener() {
               statusText.textContent = `Uploading model ...`;
 
               if (!progressEle.style.height) {
-                progressEle.style.height = "30px";
+                progressEle.style.height = "100%";
               }
               progressEle.style.width = `${progress}%`;
               progressValEle.textContent = `${formatBytes(

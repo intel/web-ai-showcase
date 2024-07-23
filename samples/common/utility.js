@@ -86,7 +86,7 @@ export function constructLoadModelsPanel(modelName, targetElement) {
         ALL_NEEDED_MODEL_RESOURCES[modelName].linkPathPrefix + resource;
 
       return `  <div
-      class="flex min-h-[40px] bg-stone-200 rounded-md text-sm items-center justify-between gap-2 font-mono p-1 m-1"
+      class="flex 2xl:min-h-[40px] min-h-[30px] bg-stone-200 rounded-md  items-center justify-between gap-2 font-mono p-1 m-1 text-xs 2xl:text-sm"
     >
       <a
         class="text-gray-900 font-semibold text-indigo-600 px-1"
@@ -95,7 +95,7 @@ export function constructLoadModelsPanel(modelName, targetElement) {
         >${text}
         <span
           id="${elementId}StatusFlag"
-          class="hidden text-lg text-green-600"
+          class="hidden  text-green-600"
           >√</span
         ></a
       >
@@ -117,7 +117,7 @@ export function constructLoadModelsPanel(modelName, targetElement) {
     })
     .join("");
 
-  const tag = `  <span class="font-semibold text-md p-2 italic"
+  const tag = `  <span class="font-semibold p-2 italic text-xs 2xl:text-sm"
     >Required files</span
   >`;
 

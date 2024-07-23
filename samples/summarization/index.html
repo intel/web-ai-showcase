@@ -97,18 +97,14 @@
                 </button>
                 <div
                   id="modelPopover"
-                  class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[80px] left-[110px] backdrop-blur-xl"
+                  class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[60px] left-[120px] 2xl:left-[130px] backdrop-blur-xl"
                 >
                   <div
                     id="modelPanelWrapper"
-                    class="w-screen max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                    class="w-screen max-w-[360px] 2xl:max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
                   ></div>
                 </div>
               </div>
-              <div
-                id="progressBar"
-                class="relative hidden rounded-2xl w-full min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono"
-              ></div>
             </div>
           </section>
           <section
@@ -232,6 +228,10 @@
             </div>
           </div>
           <div id="progress" class="grid items-center"></div>
+          <div
+            id="progressBar"
+            class="flex 2xl:my-2 my-1 items-center justify-between font-mono justify-self-center relative hidden 2xl:rounded-2xl rounded-lg w-full 2xl:min-h-[30px] min-h-[20px] bg-stone-200/40"
+          ></div>
         </div>
 
         <div

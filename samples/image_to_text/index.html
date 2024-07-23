@@ -210,6 +210,11 @@
         </div>
 
         <div
+          id="progressBar"
+          class="flex items-center justify-between font-mono justify-self-center relative hidden 2xl:rounded-2xl rounded-lg w-[720px] 2xl:min-h-[30px] min-h-[20px] bg-stone-200/40"
+        ></div>
+
+        <div
           class="2xl:grid justify-self-center 2xl:justify-normal justify-between flex justify-items-center 2xl:gap-6"
         >
           <div
@@ -233,7 +238,7 @@
                     >
                       <div
                         id="modelPanelWrapper"
-                        class="w-screen max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                        class="w-screen max-w-[360px] 2xl:max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
                       ></div>
                     </div>
                   </div>
@@ -262,7 +267,7 @@
                 </div>
               </div>
               <div
-                class="hidden rounded-md bg-stone-50/60 text-base font-semibold text-stone-500 mt-2 2xl:mt-0"
+                class="hidden rounded-md bg-stone-50/60 text-base font-semibold text-stone-500 mt-2 2xl:mt-0 text-xs 2xl:text-base"
               >
                 <button id="status" class="p-2 w-[120px]" disabled></button>
               </div>
