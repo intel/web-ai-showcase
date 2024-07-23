@@ -5,6 +5,7 @@
 #
 
 name: Web AI Showcase CI
+permissions: read-all
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
@@ -20,19 +21,19 @@ on:
       - "SECURITY.md"
       - "ATTRIBUTIONS.md"
   pull_request:
-      types:
-        - opened
-        - synchronize
-      paths-ignore:
-        - "README.md"
-        - "CODE_OF_CONDUCT.md"
-        - "CONTRIBUTING.md"
-        - "LICENSE"
-        - "SECURITY.md"
-        - "ATTRIBUTIONS.md"
+    types:
+      - opened
+      - synchronize
+    paths-ignore:
+      - "README.md"
+      - "CODE_OF_CONDUCT.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE"
+      - "SECURITY.md"
+      - "ATTRIBUTIONS.md"
   # allow to be triggered manually
   workflow_dispatch:
-        
+
 # Cancel any in-flight jobs for the same PR/branch so there's only one active
 # at a time
 concurrency:
@@ -41,29 +42,29 @@ concurrency:
 
 jobs:
   linting_check:
-      runs-on: ubuntu-20.04
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 5
-  
-        - name: Install tool dependencies
-          run: npm install
-  
-        - name: Linting Check
-          run: npm run lint
-          
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 5
+
+      - name: Install tool dependencies
+        run: npm install
+
+      - name: Linting Check
+        run: npm run lint
+
   build_prod_4_gh_pages:
-      runs-on: ubuntu-20.04
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v3
-          with:
-            fetch-depth: 5
-  
-        - name: Install tool dependencies
-          run: npm install
-  
-        - name: Build production
-          run: npm run prod:github
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 5
+
+      - name: Install tool dependencies
+        run: npm install
+
+      - name: Build production
+        run: npm run prod:github
