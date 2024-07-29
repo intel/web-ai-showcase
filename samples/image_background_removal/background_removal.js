@@ -3,6 +3,8 @@
  *     https://github.com/xenova/transformers.js/blob/main/examples/remove-background-client/main.js
  */
 
+/* eslint-disable no-undef */
+
 import { AutoModel, AutoProcessor, env, RawImage } from "@xenova/transformers";
 
 import { setupNavigBar } from "../../js/navbar.js";
@@ -18,7 +20,6 @@ import {
   removeHiddenClass
 } from "../common/utility.js";
 import {
-  USE_REMOTE_MODELS,
   ALL_NEEDED_MODEL_RESOURCES,
   TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH
 } from "../../config.js";
@@ -29,14 +30,14 @@ import exampleImg from "/assets/person.avif";
 setupNavigBar("../..");
 
 // Since we will download the model from the Hugging Face Hub, we can skip the local model check
-env.allowLocalModels = USE_REMOTE_MODELS ? false : true;
-env.allowRemoteModels = USE_REMOTE_MODELS ? true : false;
+env.allowLocalModels = VITE_ENV_USE_REMOTE_MODELS ? false : true;
+env.allowRemoteModels = VITE_ENV_USE_REMOTE_MODELS ? true : false;
 
 // Proxy the WASM backend to prevent the UI from freezing
 env.backends.onnx.wasm.proxy = false;
 
 // set up local wasm paths for hosting mode
-if (!USE_REMOTE_MODELS) {
+if (!VITE_ENV_USE_REMOTE_MODELS) {
   env.backends.onnx.wasm.wasmPaths = TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH;
 }
 
