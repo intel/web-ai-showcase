@@ -13,14 +13,12 @@
 /***************************************************************
  *                                                             *
  * ONLY_USE_LOCAL_MODELS (offline | hugging face inaccessible) *
- *     USE_REMOTE_MODELS = false                               *
+ *     VITE_ENV_USE_REMOTE_MODELS = false                      *
  *                                                             *
  * ONLY_USE_REMOTE_MODELS (hugging face accessible)            *
- *     USE_REMOTE_MODELS = true                                *
+ *     VITE_ENV_USE_REMOTE_MODELS = true                       *
  *                                                             *
  ***************************************************************/
-
-export const USE_REMOTE_MODELS = false;
 
 export const TRANSFORMER_LOCAL_MODEL_PATH = "/models/";
 

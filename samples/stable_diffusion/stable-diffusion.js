@@ -14,12 +14,12 @@ import {
   initModelsPanelHandler,
   removeHiddenClass
 } from "../common/utility.js";
-import { USE_REMOTE_MODELS, ALL_NEEDED_MODEL_RESOURCES } from "../../config.js";
+import { ALL_NEEDED_MODEL_RESOURCES } from "../../config.js";
 
 // load navigation bar
 setupNavigBar("../..");
 
-if (USE_REMOTE_MODELS) {
+if (VITE_ENV_USE_REMOTE_MODELS) {
   env.allowLocalModels = false;
   env.allowRemoteModels = true;
 } else {

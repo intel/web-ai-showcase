@@ -8,15 +8,16 @@
 // Needed to ensure the UI thread is not blocked when running  //
 /////////////////////////////////////////////////////////////////
 
+/* eslint-disable no-undef */
+
 import { pipeline, env } from "@xenova/transformers";
 
 import {
   TRANSFORMER_LOCAL_MODEL_PATH,
-  USE_REMOTE_MODELS,
   TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH
 } from "../../config.js";
 
-if (USE_REMOTE_MODELS) {
+if (VITE_ENV_USE_REMOTE_MODELS) {
   env.allowLocalModels = false;
   env.allowRemoteModels = true;
 } else {
@@ -49,7 +50,7 @@ self.addEventListener("message", async (event) => {
     env.localModelPath = new URL(baseURI).origin + TRANSFORMER_LOCAL_MODEL_PATH;
 
     // set up local wasm paths for hosting mode
-    if (!USE_REMOTE_MODELS) {
+    if (!VITE_ENV_USE_REMOTE_MODELS) {
       env.backends.onnx.wasm.wasmPaths =
         new URL(baseURI).origin + TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH;
     }

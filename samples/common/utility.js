@@ -6,7 +6,6 @@
 
 import {
   ALL_NEEDED_MODEL_RESOURCES,
-  USE_REMOTE_MODELS,
   TRANSFORMER_LOCAL_MODEL_PATH
 } from "../../config.js";
 
@@ -60,7 +59,8 @@ export function defineResourcesObject(modelName) {
 }
 
 export function getRequestPrefix(modelName) {
-  return USE_REMOTE_MODELS
+  // eslint-disable-next-line no-undef
+  return VITE_ENV_USE_REMOTE_MODELS
     ? ALL_NEEDED_MODEL_RESOURCES[modelName].linkPathPrefix
     : TRANSFORMER_LOCAL_MODEL_PATH +
         ALL_NEEDED_MODEL_RESOURCES[modelName].localFolderPathPrefix +
