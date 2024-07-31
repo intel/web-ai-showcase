@@ -117,5 +117,26 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
       "https://huggingface.co/Xenova/Phi-3-mini-4k-instruct_fp16/resolve/main/",
     localFolderPathPrefix: "Xenova/",
     resources: ["onnx/model_q4.onnx", "onnx/model_q4.onnx_data"]
+  },
+
+  // ort web wasm
+  "ort-web@1_18_0": {
+    linkPathPrefix: "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/",
+    localFolderPathPrefix: "wasm/",
+    resources: ["ort-wasm-simd.jsep.wasm"]
+  },
+
+  "ort-web@1_17_1": {
+    linkPathPrefix: "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.17.1/dist/",
+    localFolderPathPrefix: "wasm/",
+    resources: ["ort-wasm-simd.jsep.wasm"]
+  },
+
+  // mediapipe
+  wasm: {
+    linkPathPrefix:
+      "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-genai@0.10.14/wasm/",
+    localFolderPathPrefix: "mediapipe/tasks-genai/",
+    resources: [" genai_wasm_internal.wasm"]
   }
 };
