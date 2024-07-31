@@ -137,11 +137,11 @@ async function load() {
     data: `Loading model and initializing`
   });
 
-  let baseUrl = "/";
+  let baseUrl = "";
 
   if (location.href.toLowerCase().indexOf("github.io") > -1) {
     // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
-    baseUrl = "/web-ai-showcase/";
+    baseUrl = "/web-ai-showcase";
   }
 
   // transformers will first fetch from local model path
