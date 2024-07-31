@@ -29,7 +29,7 @@ export const TRANSFORMER_LOCAL_MODEL_PATH = "/models/";
 //  We keep these 2 wasm files temporally and may unify them later.
 
 export const TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH =
-  "/models/wasm/ort-web@1_17_1/";
+  "/models/frameworks/ort-web/ort-web@1_17_1/";
 
 export const MEDIAPIPE_WASM_FILE_PATH = "/models/mediapipe/tasks-genai/wasm";
 
@@ -122,21 +122,21 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
   // ort web wasm
   "ort-web@1_18_0": {
     linkPathPrefix: "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/",
-    localFolderPathPrefix: "wasm/",
+    localFolderPathPrefix: "frameworks/ort-web/",
     resources: ["ort-wasm-simd.jsep.wasm"]
   },
 
   "ort-web@1_17_1": {
     linkPathPrefix: "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.17.1/dist/",
-    localFolderPathPrefix: "wasm/",
+    localFolderPathPrefix: "frameworks/ort-web/",
     resources: ["ort-wasm-simd.jsep.wasm"]
   },
 
   // mediapipe
-  wasm: {
+  "tasks-genai": {
     linkPathPrefix:
       "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-genai@0.10.14/wasm/",
-    localFolderPathPrefix: "mediapipe/tasks-genai/",
-    resources: [" genai_wasm_internal.wasm"]
+    localFolderPathPrefix: "frameworks/mediapipe/",
+    resources: ["genai_wasm_internal.wasm"]
   }
 };

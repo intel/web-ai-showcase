@@ -479,7 +479,9 @@ if (VITE_ENV_USE_REMOTE_MODELS) {
   );
   console.log("ONNX Runtime Web script loaded successfully.");
 } else {
-  await loadScript("../../models/wasm/ort-web@1_18_0/ort.webgpu.min.js");
+  await loadScript(
+    "../../models/frameworks/ort-web/ort-web@1_18_0/ort.webgpu.min.js"
+  );
   console.log("Loaded ORT Web locally successfully.");
 }
 
