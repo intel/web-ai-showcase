@@ -149,6 +149,11 @@ async function load() {
   env.localModelPath = `${baseUrl}/models/`;
   env.allowLocalModels = true;
 
+  // eslint-disable-next-line no-undef
+  if (!VITE_ENV_USE_REMOTE_MODELS) {
+    env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@1_18_0/`;
+  }
+
   // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
     // We also add a progress callback to the pipeline so that we can
