@@ -7,4 +7,4 @@ node_modules
 dist
 *.log
 .vscode
-.wasm
+*.wasm
