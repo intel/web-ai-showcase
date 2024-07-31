@@ -14,7 +14,7 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const resources = ["models", "samples/common/3rdparty"];
+const resources = ["models"];
 
 const REMOTE_DEMOS_DIST = {
   "samples/phi3-webgpu/dist/assets": "/assets",
