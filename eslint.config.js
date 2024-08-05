@@ -15,7 +15,6 @@ export default [
   },
   {
     ignores: [
-      "samples/common/3rdparty/**/*.js",
       "dist/**/*.js",
       "samples/phi3-webgpu/node_modules/**/*.js",
       "samples/phi3-webgpu/dist/**/*.js",

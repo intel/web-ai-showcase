@@ -37,7 +37,15 @@ const MODEL_NAME = (await hasFp16())
   ? "Phi-3-mini-4k-instruct_fp16"
   : "Phi-3-mini-4k-instruct";
 
+let baseUrl = "";
+
+if (location.href.toLowerCase().indexOf("github.io") > -1) {
+  // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
+  baseUrl = "/web-ai-showcase";
+}
+
 const LOCAL_REQUEST_PREFIX =
+  baseUrl +
   TRANSFORMER_LOCAL_MODEL_PATH +
   ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].localFolderPathPrefix +
   MODEL_NAME +

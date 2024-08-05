@@ -47,6 +47,13 @@ export default ({ mode }) => {
 
   return defineConfig({
     base: env.VITE_BASE,
-    plugins: [react(), basicSsl(), resourceHandlerPlugin(), topLevelAwait()]
+    plugins: [react(), basicSsl(), resourceHandlerPlugin(), topLevelAwait()],
+    define: {
+      VITE_ENV_USE_REMOTE_MODELS: process.argv
+        .slice(2)
+        .includes(`use-remote-models`)
+        ? true
+        : false
+    }
   });
 };

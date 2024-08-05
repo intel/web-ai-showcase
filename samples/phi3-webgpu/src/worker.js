@@ -137,19 +137,22 @@ async function load() {
     data: `Loading model and initializing`
   });
 
-  let baseUrl = "/";
+  let baseUrl = "";
 
   if (location.href.toLowerCase().indexOf("github.io") > -1) {
     // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
-    baseUrl = "/web-ai-showcase/";
+    baseUrl = "/web-ai-showcase";
   }
 
   // transformers will first fetch from local model path
   // then from remote model path if not found locally
-  env.localModelPath = "/models/";
+  env.localModelPath = `${baseUrl}/models/`;
   env.allowLocalModels = true;
-  // set up the path to use local wasm files for the onnx backend
-  env.backends.onnx.wasm.wasmPaths = `${baseUrl}models/wasm/ort-web@1_18_0/`;
+
+  // eslint-disable-next-line no-undef
+  if (!VITE_ENV_USE_REMOTE_MODELS) {
+    env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@1_18_0/`;
+  }
 
   // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
