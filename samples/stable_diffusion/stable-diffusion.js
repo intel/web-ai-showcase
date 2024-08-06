@@ -225,26 +225,48 @@ function getConfig() {
     model: getRequestPrefix(modelName),
     provider: "webgpu",
     device: "gpu",
-    threads: "1",
-    images: "1"
+    threads: 1,
+    images: 1
   };
 
-  const query = window.location.search
-    ? window.location.search.substring(1)
-    : "";
+  // Define a whitelist of allowed configuration keys
+  const allowedConfigKeys = new Set([
+    "model",
+    "provider",
+    "device",
+    "threads",
+    "images"
+  ]);
 
+  // Parse the query string
+  const query = window.location.search.substring(1);
   const vars = query.split("&");
 
   for (var i = 0; i < vars.length; i++) {
     let pair = vars[i].split("=");
-    if (pair[0] in config) {
-      config[pair[0]] = decodeURIComponent(pair[1]);
+
+    // Check if the key is in the whitelist
+    if (allowedConfigKeys.has(pair[0])) {
+      let key = pair[0];
+      let value = decodeURIComponent(pair[1]);
+
+      // Additional validation for numeric values
+      if (key === "threads" || key === "images") {
+        value = parseInt(value);
+        if (isNaN(value) || value < 1) {
+          throw new Error(
+            `Invalid value for ${key}: must be a positive integer`
+          );
+        }
+      }
+
+      // Assign the validated value to the config object
+      config[key] = value;
     } else if (pair[0].length > 0) {
-      throw new Error("unknown argument: " + pair[0]);
+      throw new Error("Unknown argument: " + pair[0]);
     }
   }
-  config.threads = parseInt(config.threads);
-  config.images = parseInt(config.images);
+
   return config;
 }
 

@@ -233,14 +233,28 @@ worker.addEventListener("message", (event) => {
               if (NEEDED_RESOURCES[name].cached) {
                 statusBarElement.textContent = "loading";
                 changeClass4StatusBar("loading", statusBarElement);
-                NEEDED_RESOURCES[name].size = message.data.total;
+                // Validate message.data.total before assigning
+                if (
+                  typeof message.data.total === "number" &&
+                  !isNaN(message.data.total) &&
+                  message.data.total > 0
+                ) {
+                  NEEDED_RESOURCES[name].size = message.data.total;
+                }
                 break;
               }
               // means the resource has not been cached, should download and update the progress bar
               else {
                 statusBarElement.textContent = "downloading";
                 changeClass4StatusBar("loading", statusBarElement);
-                NEEDED_RESOURCES[name].size = message.data.total;
+                // Validate message.data.total before assigning
+                if (
+                  typeof message.data.total === "number" &&
+                  !isNaN(message.data.total) &&
+                  message.data.total > 0
+                ) {
+                  NEEDED_RESOURCES[name].size = message.data.total;
+                }
                 if (barElem !== null) {
                   const statusTextElem = barElem.querySelector(
                     "div[name='statusText']"
