@@ -484,6 +484,29 @@ async function load_models(models) {
   document.getElementById("progressDisplaySection").classList.add("disappear");
 }
 
+const loadScript = (src) => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => resolve();
+    script.onerror = (err) =>
+      reject(new Error(`Failed to load script ${src}: ${err.message}`));
+    document.head.appendChild(script);
+  });
+};
+
+if (VITE_ENV_USE_REMOTE_MODELS) {
+  await loadScript(
+    "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.webgpu.min.js"
+  );
+  console.log("ONNX Runtime Web script loaded successfully.");
+} else {
+  await loadScript(
+    "../../models/frameworks/ort-web/ort-web@1_18_0/ort.webgpu.min.js"
+  );
+  console.log("Loaded ORT Web locally successfully.");
+}
+
 if (config.provider == "webgpu") {
   ort.env.wasm.numThreads = 1;
   ort.env.wasm.simd = true;
