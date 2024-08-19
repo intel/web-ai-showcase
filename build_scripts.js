@@ -30,8 +30,9 @@ function buildSubProjects(args) {
   }
 }
 
-function copyModelsIntoDist() {
-  const RESOURCES_ARRAY = ["models"];
+function copyResourcesIntoDist(args) {
+  // ignore the models resources deployed with `remote` mode
+  const RESOURCES_ARRAY = args === "--use-remote-models" ? [] : ["models"];
 
   const REMOTE_DEMOS_DIST = {
     "samples/phi3-webgpu/dist/assets": "/assets",
@@ -206,8 +207,8 @@ switch (command) {
   case "fetch-models":
     fetchResources();
     break;
-  case "copy-models":
-    copyModelsIntoDist();
+  case "copy-resources":
+    copyResourcesIntoDist(subArgs);
     break;
   default:
     break;
