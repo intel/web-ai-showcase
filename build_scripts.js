@@ -22,7 +22,12 @@ const __dirname = path.dirname(__filename);
 
 function buildSubProjects(args) {
   const PROJECT_ARRAY = ["phi3-webgpu"];
-  const buildCmd = args === "--github" ? "build:github" : "build";
+  const buildCmd =
+    args === "--github"
+      ? "build:github"
+      : args === "--use-remote-models"
+        ? "build:use-remote-models"
+        : "build";
   for (let project of PROJECT_ARRAY) {
     execSync(`cd ./samples/${project} && npm install && npm run ${buildCmd}`, {
       stdio: "inherit"
@@ -30,8 +35,9 @@ function buildSubProjects(args) {
   }
 }
 
-function copyModelsIntoDist() {
-  const RESOURCES_ARRAY = ["models"];
+function copyResourcesIntoDist(args) {
+  // ignore the models resources deployed with `remote` mode
+  const RESOURCES_ARRAY = args === "--use-remote-models" ? [] : ["models"];
 
   const REMOTE_DEMOS_DIST = {
     "samples/phi3-webgpu/dist/assets": "/assets",
@@ -198,17 +204,35 @@ async function fetchResources() {
   }
 }
 
-const [command, subArgs] = process.argv.slice(2);
-switch (command) {
-  case "build-sub-projects":
-    buildSubProjects(subArgs);
+function build4Github() {
+  buildSubProjects("--github");
+  copyResourcesIntoDist("--use-remote-models");
+}
+
+function build4RemoteMode() {
+  buildSubProjects("--use-remote-models");
+  copyResourcesIntoDist("--use-remote-models");
+}
+
+function build4LocalMode() {
+  fetchResources();
+  buildSubProjects();
+  copyResourcesIntoDist();
+}
+
+const MODE = process.argv.slice(2)[0];
+switch (MODE) {
+  case "--github":
+    // build for deployment on github
+    // Remote mode + different base url
+    build4Github();
     break;
-  case "fetch-models":
-    fetchResources();
-    break;
-  case "copy-models":
-    copyModelsIntoDist();
+  case "--use-remote-models":
+    // build for Remote mode
+    build4RemoteMode();
     break;
   default:
+    // build for Hoisting mode by default
+    build4LocalMode();
     break;
 }
