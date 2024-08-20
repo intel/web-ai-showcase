@@ -22,7 +22,12 @@ const __dirname = path.dirname(__filename);
 
 function buildSubProjects(args) {
   const PROJECT_ARRAY = ["phi3-webgpu"];
-  const buildCmd = args === "--github" ? "build:github" : "build";
+  const buildCmd =
+    args === "--github"
+      ? "build:github"
+      : args === "--use-remote-models"
+        ? "build:use-remote-models"
+        : "build";
   for (let project of PROJECT_ARRAY) {
     execSync(`cd ./samples/${project} && npm install && npm run ${buildCmd}`, {
       stdio: "inherit"

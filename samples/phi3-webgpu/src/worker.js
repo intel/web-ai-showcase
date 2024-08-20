@@ -147,7 +147,15 @@ async function load() {
   // transformers will first fetch from local model path
   // then from remote model path if not found locally
   env.localModelPath = `${baseUrl}/models/`;
-  env.allowLocalModels = true;
+
+  // eslint-disable-next-line no-undef
+  if (VITE_ENV_USE_REMOTE_MODELS) {
+    env.allowLocalModels = false;
+    env.allowRemoteModels = true;
+  } else {
+    env.allowLocalModels = true;
+    env.allowRemoteModels = false;
+  }
 
   // eslint-disable-next-line no-undef
   if (!VITE_ENV_USE_REMOTE_MODELS) {
