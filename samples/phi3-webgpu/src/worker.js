@@ -144,22 +144,15 @@ async function load() {
     baseUrl = "/web-ai-showcase";
   }
 
-  // transformers will first fetch from local model path
-  // then from remote model path if not found locally
-  env.localModelPath = `${baseUrl}/models/`;
-
-  // eslint-disable-next-line no-undef
-  if (VITE_ENV_USE_REMOTE_MODELS) {
-    env.allowLocalModels = false;
-    env.allowRemoteModels = true;
-  } else {
-    env.allowLocalModels = true;
-    env.allowRemoteModels = false;
-  }
-
   // eslint-disable-next-line no-undef
   if (!VITE_ENV_USE_REMOTE_MODELS) {
     env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@1_18_0/`;
+    env.allowLocalModels = true;
+    env.allowRemoteModels = false;
+    env.localModelPath = `${baseUrl}/models/`;
+  } else {
+    env.allowLocalModels = false;
+    env.allowRemoteModels = true;
   }
 
   // Load the pipeline and save it for future use.
