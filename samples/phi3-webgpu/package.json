@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:github": "vite build --mode github -- use-remote-models",
+    "build:use-remote-models": "vite build -- use-remote-models",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

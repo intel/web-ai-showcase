@@ -22,7 +22,12 @@ const __dirname = path.dirname(__filename);
 
 function buildSubProjects(args) {
   const PROJECT_ARRAY = ["phi3-webgpu"];
-  const buildCmd = args === "--github" ? "build:github" : "build";
+  const buildCmd =
+    args === "--github"
+      ? "build:github"
+      : args === "--use-remote-models"
+        ? "build:use-remote-models"
+        : "build";
   for (let project of PROJECT_ARRAY) {
     execSync(`cd ./samples/${project} && npm install && npm run ${buildCmd}`, {
       stdio: "inherit"
@@ -30,8 +35,9 @@ function buildSubProjects(args) {
   }
 }
 
-function copyModelsIntoDist() {
-  const RESOURCES_ARRAY = ["models"];
+function copyResourcesIntoDist(args) {
+  // ignore the models resources deployed with `remote` mode
+  const RESOURCES_ARRAY = args === "--use-remote-models" ? [] : ["models"];
 
   const REMOTE_DEMOS_DIST = {
     "samples/phi3-webgpu/dist/assets": "/assets",
@@ -206,8 +212,8 @@ switch (command) {
   case "fetch-models":
     fetchResources();
     break;
-  case "copy-models":
-    copyModelsIntoDist();
+  case "copy-resources":
+    copyResourcesIntoDist(subArgs);
     break;
   default:
     break;
