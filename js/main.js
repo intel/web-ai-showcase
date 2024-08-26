@@ -179,7 +179,7 @@ let SAMPLES = [
   {
     id: "webgpu_phi3_mini",
     title: "Phi-3",
-    desc: "A private and powerful AI chatbot that runs locally in your browser",
+    desc: "Language model released in Apr 2024 by Microsoft",
     sampleUrl: "./samples/phi3-webgpu/index.html",
     models: ["Phi 3 Mini 4k Instruct"],
     tasks: "Text Generation",
@@ -187,6 +187,18 @@ let SAMPLES = [
     framework: "Transformers.js",
     devices: [DEVICES.GPU],
     update: "2024-06-09"
+  },
+  {
+    id: "webgpu_phi35_mini",
+    title: "Phi-3.5",
+    desc: "Language model released in Aug 2024 by Microsoft",
+    sampleUrl: "https://huggingface.co/spaces/webml-community/phi-3.5-webgpu",
+    models: ["Phi 3.5 Mini"],
+    tasks: "Text Generation",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-08-25"
   },
   {
     id: "webgpu_qwen2",
