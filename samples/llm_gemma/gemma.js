@@ -24,7 +24,10 @@ import {
   formatBytes
 } from "../common/utility.js";
 import { setupNavigBar } from "../../js/navbar.js";
-import { MEDIAPIPE_WASM_FILE_PATH } from "../../config.js";
+import {
+  MEDIAPIPE_WASM_FILE_PATH,
+  ALL_NEEDED_MODEL_RESOURCES
+} from "../../config.js";
 
 const input = document.getElementById("input");
 const output = document.getElementById("output");
@@ -46,8 +49,15 @@ if (location.href.toLowerCase().indexOf("github.io") > -1) {
 }
 
 let llmInference;
+
 const genaiFileset = await FilesetResolver.forGenAiTasks(
-  baseUrl + MEDIAPIPE_WASM_FILE_PATH
+  // eslint-disable-next-line no-undef
+  VITE_ENV_USE_REMOTE_MODELS
+    ? ALL_NEEDED_MODEL_RESOURCES["tasks-genai"].linkPathPrefix.replace(
+        /\/$/,
+        ""
+      )
+    : baseUrl + MEDIAPIPE_WASM_FILE_PATH
 );
 
 const STATUS = {

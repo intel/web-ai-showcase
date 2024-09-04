@@ -204,17 +204,17 @@ async function fetchResources() {
   }
 }
 
-function build4Github() {
+function buildForGithub() {
   buildSubProjects("--github");
   copyResourcesIntoDist("--use-remote-models");
 }
 
-function build4RemoteMode() {
+function buildForRemoteMode() {
   buildSubProjects("--use-remote-models");
   copyResourcesIntoDist("--use-remote-models");
 }
 
-function build4LocalMode() {
+function buildForLocalMode() {
   fetchResources();
   buildSubProjects();
   copyResourcesIntoDist();
@@ -225,14 +225,14 @@ switch (MODE) {
   case "--github":
     // build for deployment on github
     // Remote mode + different base url
-    build4Github();
+    buildForGithub();
     break;
   case "--use-remote-models":
     // build for Remote mode
-    build4RemoteMode();
+    buildForRemoteMode();
     break;
   default:
     // build for Hoisting mode by default
-    build4LocalMode();
+    buildForLocalMode();
     break;
 }
