@@ -46,8 +46,11 @@ if (location.href.toLowerCase().indexOf("github.io") > -1) {
 }
 
 let llmInference;
+
 const genaiFileset = await FilesetResolver.forGenAiTasks(
-  baseUrl + MEDIAPIPE_WASM_FILE_PATH
+  VITE_ENV_USE_REMOTE_MODELS
+    ? "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-genai@0.10.14/wasm"
+    : baseUrl + MEDIAPIPE_WASM_FILE_PATH
 );
 
 const STATUS = {

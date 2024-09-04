@@ -31,7 +31,8 @@ export const TRANSFORMER_LOCAL_MODEL_PATH = "/models/";
 export const TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH =
   "/models/frameworks/ort-web/ort-web@1_17_1/";
 
-export const MEDIAPIPE_WASM_FILE_PATH = "/models/mediapipe/tasks-genai/wasm";
+export const MEDIAPIPE_WASM_FILE_PATH =
+  "/models/frameworks/mediapipe/tasks-genai";
 
 /**
  * Example:
