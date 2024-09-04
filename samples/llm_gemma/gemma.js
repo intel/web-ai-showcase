@@ -51,6 +51,7 @@ if (location.href.toLowerCase().indexOf("github.io") > -1) {
 let llmInference;
 
 const genaiFileset = await FilesetResolver.forGenAiTasks(
+  // eslint-disable-next-line no-undef
   VITE_ENV_USE_REMOTE_MODELS
     ? ALL_NEEDED_MODEL_RESOURCES["tasks-genai"].linkPathPrefix.replace(
         /\/$/,
