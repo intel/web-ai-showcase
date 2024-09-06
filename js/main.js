@@ -66,18 +66,6 @@ let SAMPLES = [
 
   // WebGPU
   {
-    id: "webgpu_background_removal",
-    title: "RMBG",
-    desc: "Remove the background of an image",
-    sampleUrl: "./samples/image_background_removal/index.html",
-    models: ["RMBG v1.4"],
-    tasks: "Image Segmentation",
-    webApis: [BACKENDS.WEBGPU],
-    framework: "Transformers.js",
-    devices: [DEVICES.GPU],
-    update: "2024-06-08"
-  },
-  {
     id: "webgpu_benchmark",
     title: "Benchmark",
     desc: "Benchmark to compare perf of WebGPU vs Wasm",
@@ -118,7 +106,8 @@ let SAMPLES = [
     id: "webgpu_gemini",
     title: "Google Gemini Nano",
     desc: "Google Gemini Nano integration with Chrome Canary",
-    sampleUrl: "https://huggingface.co/spaces/Xenova/experimental-built-in-ai-chat",
+    sampleUrl:
+      "https://huggingface.co/spaces/Xenova/experimental-built-in-ai-chat",
     models: ["Gemini Nano"],
     tasks: "Multimodal",
     webApis: [BACKENDS.WEBGPU],
@@ -240,7 +229,8 @@ let SAMPLES = [
     id: "webgpu_smollm",
     title: "SmolLM",
     desc: "A blazingly fast and powerful SLM",
-    sampleUrl: "https://huggingface.co/spaces/HuggingFaceTB/SmolLM-360M-Instruct-WebGPU",
+    sampleUrl:
+      "https://huggingface.co/spaces/HuggingFaceTB/SmolLM-360M-Instruct-WebGPU",
     models: ["SmolLM"],
     tasks: "SLM",
     webApis: [BACKENDS.WEBGPU],
