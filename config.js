@@ -80,9 +80,10 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
   },
 
   // background-removal
-  "RMBG-1.4": {
-    linkPathPrefix: "https://huggingface.co/briaai/RMBG-1.4/resolve/main/",
-    localFolderPathPrefix: "briaai/",
+  BiRefNet_T: {
+    linkPathPrefix:
+      "https://huggingface.co/onnx-community/BiRefNet_T/blob/main/",
+    localFolderPathPrefix: "onnx-community/",
     resources: ["onnx/model.onnx"]
   },
 
