@@ -1267,6 +1267,10 @@ video {
   width: 720px;
 }
 
+.w-\[98\%\] {
+  width: 98%;
+}
+
 .w-\[this-is\\\\\] {
   width: this-is\\;
 }
@@ -1594,6 +1598,10 @@ video {
 
 .list-outside {
   list-style-position: outside;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .appearance-none {
@@ -2438,6 +2446,10 @@ video {
   border-top-width: 1px;
 }
 
+.border-t-\[1px\] {
+  border-top-width: 1px;
+}
+
 .border-solid {
   border-style: solid;
 }
@@ -2460,6 +2472,10 @@ video {
 
 .border-none {
   border-style: none;
+}
+
+.border-stone-200\/30 {
+  border-color: rgb(231 229 228 / 0.3);
 }
 
 .bg-\[rgb\(255\2c 0\2c 0\)\] {
@@ -2569,6 +2585,10 @@ video {
   background-color: rgb(87 83 78 / 0.8);
 }
 
+.bg-stone-800\/20 {
+  background-color: rgb(41 37 36 / 0.2);
+}
+
 .bg-stone-900\/40 {
   background-color: rgb(28 25 23 / 0.4);
 }
@@ -2583,6 +2603,10 @@ video {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-stone-700\/30 {
+  background-color: rgb(68 64 60 / 0.3);
 }
 
 .bg-opacity-\[92\%\] {
@@ -2799,6 +2823,10 @@ video {
   padding-left: 1rem;
 }
 
+.pl-8 {
+  padding-left: 2rem;
+}
+
 .pt-3 {
   padding-top: 0.75rem;
 }
@@ -2865,6 +2893,10 @@ video {
 
 .font-sans {
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.font-serif {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 .text-2xl {
@@ -3013,6 +3045,10 @@ video {
 .stacked-fractions {
   --tw-numeric-fraction: stacked-fractions;
   font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
+}
+
+.tracking-wide {
+  letter-spacing: 0.025em;
 }
 
 .text-\[\#336699\]\/\[\.35\] {
@@ -3709,6 +3745,14 @@ video {
   font-weight: 700;
 }
 
+.hover\:underline:hover {
+  text-decoration-line: underline;
+}
+
+.hover\:underline-offset-4:hover {
+  text-underline-offset: 4px;
+}
+
 .before\:hover\:text-center:hover::before {
   content: var(--tw-content);
   text-align: center;
@@ -3883,6 +3927,10 @@ video {
 
   .\32xl\:mb-1 {
     margin-bottom: 0.25rem;
+  }
+
+  .\32xl\:mb-16 {
+    margin-bottom: 4rem;
   }
 
   .\32xl\:mb-2 {
@@ -4105,6 +4153,8 @@ video {
 
   .\32xl\:p-4 {
     padding: 1rem;
+  .\32xl\:p-16 {
+    padding: 4rem;
   }
 
   .\32xl\:px-2 {
