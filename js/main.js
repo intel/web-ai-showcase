@@ -81,7 +81,8 @@ let SAMPLES = [
     id: "webgpu_whisper_large",
     title: "Whisper Large V3 Turbo",
     desc: "Automatic speech recognition (ASR) with OpenAI Whisper Large V3 Turbo",
-    sampleUrl: "https://huggingface.co/spaces/webml-community/whisper-large-v3-turbo-webgpu",
+    sampleUrl:
+      "https://huggingface.co/spaces/webml-community/whisper-large-v3-turbo-webgpu",
     models: ["Encoder", "Decoder"],
     tasks: "Automatic Speech Recognition",
     webApis: [BACKENDS.WEBGPU],
@@ -490,40 +491,43 @@ function constructSampleHTML(samples) {
 
                 <div class="flex 2xl:font-medium rounded-2xl bg-fuchsia-600/60 px-2 text-stone-50 w-auto">${sample.tasks}</div>
 
-              ${sample.models.length > 0
-          ? ` ${sample.models
-            .map(
-              (model) =>
-                `<div class="flex 2xl:font-medium rounded-2xl bg-stone-600/80 px-2 text-stone-50 w-auto">${model}</div>`
-            )
-            .join("")}`
-          : ``
-        }
+              ${
+                sample.models.length > 0
+                  ? ` ${sample.models
+                      .map(
+                        (model) =>
+                          `<div class="flex 2xl:font-medium rounded-2xl bg-stone-600/80 px-2 text-stone-50 w-auto">${model}</div>`
+                      )
+                      .join("")}`
+                  : ``
+              }
 
                   <div
                     class="flex 2xl:font-medium rounded-2xl bg-teal-600/80 px-2 text-stone-50">${sample.framework}
                   </div>
 
-                  ${sample.webApis.length > 0
-          ? `
+                  ${
+                    sample.webApis.length > 0
+                      ? `
                  ${sample.webApis
-            .map(
-              (api) =>
-                `<div class="flex 2xl:font-medium rounded-2xl bg-indigo-600/80 px-2 text-stone-50">${api}</div>`
-            )
-            .join("")}`
-          : ``
-        }
+                   .map(
+                     (api) =>
+                       `<div class="flex 2xl:font-medium rounded-2xl bg-indigo-600/80 px-2 text-stone-50">${api}</div>`
+                   )
+                   .join("")}`
+                      : ``
+                  }
 
-                  ${sample.devices.length > 0
-          ? `${sample.devices
-            .map(
-              (device) =>
-                `<div class="flex 2xl:font-medium rounded-2xl bg-sky-600/80 px-2 text-stone-50">${device}</div>`
-            )
-            .join("")}`
-          : ``
-        }
+                  ${
+                    sample.devices.length > 0
+                      ? `${sample.devices
+                          .map(
+                            (device) =>
+                              `<div class="flex 2xl:font-medium rounded-2xl bg-sky-600/80 px-2 text-stone-50">${device}</div>`
+                          )
+                          .join("")}`
+                      : ``
+                  }
               </div>
 
                     </div>
