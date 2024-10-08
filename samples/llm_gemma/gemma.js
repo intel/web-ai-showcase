@@ -135,6 +135,8 @@ function setUpStatus(status) {
     if (!promptInputSection.classList.contains("running-mode")) {
       promptInputSection.classList.add("running-mode");
     }
+
+    promptInputSection.querySelector("textarea").setAttribute("readonly", true);
   } else if (status === STATUS.DEFAULT) {
     promptInspireBtn.disabled = false;
     submitBtn.disabled = false;
@@ -144,6 +146,8 @@ function setUpStatus(status) {
     if (promptInputSection.classList.contains("running-mode")) {
       promptInputSection.classList.remove("running-mode");
     }
+
+    promptInputSection.querySelector("textarea").removeAttribute("readonly");
   } else if (status === STATUS.UPLOADING) {
     promptInspireBtn.disabled = false;
     submitBtn.disabled = false;
@@ -153,6 +157,7 @@ function setUpStatus(status) {
     if (!promptInputSection.classList.contains("running-mode")) {
       promptInputSection.classList.add("running-mode");
     }
+    promptInputSection.querySelector("textarea").setAttribute("readonly", true);
   }
 }
 
