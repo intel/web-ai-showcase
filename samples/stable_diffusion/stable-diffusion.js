@@ -7,7 +7,7 @@
 /* eslint-disable no-unused-vars */
 
 import { AutoTokenizer, env } from "@xenova/transformers";
-import { setupNavigBar } from "../../js/navbar.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
 import {
   changeClass4StatusBar,
   getRequestPrefix,
@@ -16,8 +16,9 @@ import {
 } from "../common/utility.js";
 import { ALL_NEEDED_MODEL_RESOURCES } from "../../config.js";
 
-// load navigation bar
+// load navigation bar & footer
 setupNavigBar("../..");
+setupFooter("../..");
 
 if (VITE_ENV_USE_REMOTE_MODELS) {
   env.allowLocalModels = false;

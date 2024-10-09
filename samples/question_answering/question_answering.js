@@ -4,7 +4,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
-import { setupNavigBar } from "../../js/navbar.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
 import {
   changeClass4StatusBar,
   getElementId4Resource,
@@ -20,6 +20,7 @@ import Worker from "../common/worker.js?worker&inline";
 import { ALL_NEEDED_MODEL_RESOURCES } from "../../config.js";
 
 setupNavigBar("../..");
+setupFooter("../..");
 
 const worker = new Worker();
 

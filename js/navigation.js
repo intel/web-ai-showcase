@@ -66,4 +66,16 @@ class="flex items-center bg-stone-950/30 backdrop-blur-xl text-stone-50 p-2 w-fu
 </div>`;
 }
 
-export { setupNavigBar };
+function setupFooter(relativePath) {
+  document.getElementById("footer").innerHTML = `<a
+        href="${relativePath}/terms.html"
+        class="text-stone-50/80 hover:text-stone-50 hover:underline hover:underline-offset-4 font-serif font-medium"
+        >Terms of Use</a
+      >`;
+  // add `<div class="divider"></div>` element above the `id=footer` element
+  document
+    .getElementById("footer")
+    .insertAdjacentHTML("beforebegin", `<div class="divider"></div>`);
+}
+
+export { setupNavigBar, setupFooter };

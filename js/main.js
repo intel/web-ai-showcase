@@ -4,7 +4,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
-import { setupNavigBar } from "./navbar.js";
+import { setupNavigBar, setupFooter } from "./navigation.js";
 
 // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
 const baseUrl =
@@ -767,3 +767,4 @@ bindFilterChangeEventHandler();
 changeFilterHandler();
 setupVideos();
 setupNavigBar(".");
+setupFooter(".");

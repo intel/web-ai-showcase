@@ -945,6 +945,10 @@ video {
   -webkit-line-clamp: none;
 }
 
+.\!block {
+  display: block !important;
+}
+
 .block {
   display: block;
 }
@@ -1066,12 +1070,16 @@ video {
   height: 2rem;
 }
 
-.h-\[250px\] {
-  height: 250px;
+.h-\[245px\] {
+  height: 245px;
 }
 
-.h-\[256px\] {
-  height: 256px;
+.h-\[24px\] {
+  height: 24px;
+}
+
+.h-\[250px\] {
+  height: 250px;
 }
 
 .h-\[300px\] {
@@ -1098,6 +1106,10 @@ video {
   height: 512px;
 }
 
+.h-\[64px\] {
+  height: 64px;
+}
+
 .h-\[80px\] {
   height: 80px;
 }
@@ -1113,38 +1125,6 @@ video {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-\[200px\] {
-  height: 200px;
-}
-
-.h-auto {
-  height: auto;
-}
-
-.h-\[100px\] {
-  height: 100px;
-}
-
-.h-\[72px\] {
-  height: 72px;
-}
-
-.h-\[64px\] {
-  height: 64px;
-}
-
-.h-\[24px\] {
-  height: 24px;
-}
-
-.h-\[260px\] {
-  height: 260px;
-}
-
-.h-\[245px\] {
-  height: 245px;
 }
 
 .max-h-\[200px\] {
@@ -1239,6 +1219,10 @@ video {
   width: 200px;
 }
 
+.w-\[24px\] {
+  width: 24px;
+}
+
 .w-\[450px\] {
   width: 450px;
 }
@@ -1299,14 +1283,6 @@ video {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-3\/5 {
-  width: 60%;
-}
-
-.w-\[24px\] {
-  width: 24px;
 }
 
 .min-w-6 {
@@ -1594,6 +1570,10 @@ video {
 
 .list-outside {
   list-style-position: outside;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .appearance-none {
@@ -2569,6 +2549,10 @@ video {
   background-color: rgb(87 83 78 / 0.8);
 }
 
+.bg-stone-700\/30 {
+  background-color: rgb(68 64 60 / 0.3);
+}
+
 .bg-stone-900\/40 {
   background-color: rgb(28 25 23 / 0.4);
 }
@@ -2742,10 +2726,6 @@ video {
   padding: 2rem;
 }
 
-.p-16 {
-  padding: 4rem;
-}
-
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -2797,6 +2777,10 @@ video {
 
 .pl-4 {
   padding-left: 1rem;
+}
+
+.pl-8 {
+  padding-left: 2rem;
 }
 
 .pt-3 {
@@ -2865,6 +2849,10 @@ video {
 
 .font-sans {
   font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.font-serif {
+  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 .text-2xl {
@@ -3015,6 +3003,10 @@ video {
   font-variant-numeric: var(--tw-ordinal) var(--tw-slashed-zero) var(--tw-numeric-figure) var(--tw-numeric-spacing) var(--tw-numeric-fraction);
 }
 
+.tracking-wide {
+  letter-spacing: 0.025em;
+}
+
 .text-\[\#336699\]\/\[\.35\] {
   color: rgb(51 102 153 / .35);
 }
@@ -3106,6 +3098,10 @@ video {
 .text-stone-50 {
   --tw-text-opacity: 1;
   color: rgb(250 250 249 / var(--tw-text-opacity));
+}
+
+.text-stone-50\/80 {
+  color: rgb(250 250 249 / 0.8);
 }
 
 .text-stone-500 {
@@ -3709,6 +3705,19 @@ video {
   font-weight: 700;
 }
 
+.hover\:text-stone-50:hover {
+  --tw-text-opacity: 1;
+  color: rgb(250 250 249 / var(--tw-text-opacity));
+}
+
+.hover\:underline:hover {
+  text-decoration-line: underline;
+}
+
+.hover\:underline-offset-4:hover {
+  text-underline-offset: 4px;
+}
+
 .before\:hover\:text-center:hover::before {
   content: var(--tw-content);
   text-align: center;
@@ -3885,6 +3894,10 @@ video {
     margin-bottom: 0.25rem;
   }
 
+  .\32xl\:mb-16 {
+    margin-bottom: 4rem;
+  }
+
   .\32xl\:mb-2 {
     margin-bottom: 0.5rem;
   }
@@ -3911,10 +3924,6 @@ video {
 
   .\32xl\:mt-3 {
     margin-top: 0.75rem;
-  }
-
-  .\32xl\:mt-4 {
-    margin-top: 1rem;
   }
 
   .\32xl\:mt-6 {
@@ -3961,8 +3970,16 @@ video {
     height: 220px;
   }
 
+  .\32xl\:h-\[30px\] {
+    height: 30px;
+  }
+
   .\32xl\:h-\[360px\] {
     height: 360px;
+  }
+
+  .\32xl\:h-\[36px\] {
+    height: 36px;
   }
 
   .\32xl\:h-\[40px\] {
@@ -3975,22 +3992,6 @@ video {
 
   .\32xl\:h-\[512px\] {
     height: 512px;
-  }
-
-  .\32xl\:h-auto {
-    height: auto;
-  }
-
-  .\32xl\:h-\[200px\] {
-    height: 200px;
-  }
-
-  .\32xl\:h-\[36px\] {
-    height: 36px;
-  }
-
-  .\32xl\:h-\[30px\] {
-    height: 30px;
   }
 
   .\32xl\:min-h-\[28px\] {
@@ -4025,20 +4026,20 @@ video {
     width: 287px;
   }
 
-  .\32xl\:w-\[720px\] {
-    width: 720px;
-  }
-
-  .\32xl\:w-full {
-    width: 100%;
+  .\32xl\:w-\[30px\] {
+    width: 30px;
   }
 
   .\32xl\:w-\[36px\] {
     width: 36px;
   }
 
-  .\32xl\:w-\[30px\] {
-    width: 30px;
+  .\32xl\:w-\[720px\] {
+    width: 720px;
+  }
+
+  .\32xl\:w-full {
+    width: 100%;
   }
 
   .\32xl\:min-w-\[68px\] {
@@ -4103,8 +4104,8 @@ video {
     border-radius: 1.5rem;
   }
 
-  .\32xl\:p-4 {
-    padding: 1rem;
+  .\32xl\:p-16 {
+    padding: 4rem;
   }
 
   .\32xl\:px-2 {

@@ -23,7 +23,7 @@ import {
   removeHiddenClass,
   formatBytes
 } from "../common/utility.js";
-import { setupNavigBar } from "../../js/navbar.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
 import {
   MEDIAPIPE_WASM_FILE_PATH,
   ALL_NEEDED_MODEL_RESOURCES
@@ -258,3 +258,4 @@ document.getElementById("upload").addEventListener("change", function (event) {
 });
 
 setupNavigBar("../..");
+setupFooter("../..");

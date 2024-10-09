@@ -4,7 +4,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
-import { setupNavigBar } from "../../js/navbar.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
 import {
   changeClass4StatusBar,
   defineResourcesObject,
@@ -23,6 +23,7 @@ import { ALL_NEEDED_MODEL_RESOURCES } from "../../config.js";
 import Worker from "../common/worker.js?worker&inline";
 
 setupNavigBar("../..");
+setupFooter("../..");
 
 const worker = new Worker();
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
