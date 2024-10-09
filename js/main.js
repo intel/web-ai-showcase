@@ -66,6 +66,31 @@ let SAMPLES = [
 
   // WebGPU
   {
+    id: "webgpu_llama32",
+    title: "Llama 3.2 1B",
+    desc: "Lightweight text-only model by Meta",
+    sampleUrl: "https://huggingface.co/spaces/webml-community/llama-3.2-webgpu",
+    models: ["llama"],
+    tasks: "Text Generation",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-10-02"
+  },
+  {
+    id: "webgpu_whisper_large",
+    title: "Whisper Large V3 Turbo",
+    desc: "Automatic speech recognition (ASR) with OpenAI Whisper Large V3 Turbo",
+    sampleUrl:
+      "https://huggingface.co/spaces/webml-community/whisper-large-v3-turbo-webgpu",
+    models: ["Encoder", "Decoder"],
+    tasks: "Automatic Speech Recognition",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-10-02"
+  },
+  {
     id: "webgpu_benchmark",
     title: "Benchmark",
     desc: "Benchmark to compare perf of WebGPU vs Wasm",
@@ -251,7 +276,7 @@ let SAMPLES = [
     update: "2024-06-09"
   },
   {
-    id: "webgpu_whisper",
+    id: "webgpu_whisper_base",
     title: "Whisper Base",
     desc: "Real-time speech recognition with OpenAI Whisper across 100 different languages",
     sampleUrl: "https://huggingface.co/spaces/Xenova/realtime-whisper-webgpu",
