@@ -1,5 +1,7 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import eslintConfigPrettier from "eslint-config-prettier";
 
 export default [
   { languageOptions: { globals: globals.browser } },
@@ -26,5 +28,7 @@ export default [
       "models/**/*.mjs"
     ]
   },
-  pluginJs.configs.recommended
+  pluginJs.configs.recommended,
+  eslintPluginPrettierRecommended,
+  eslintConfigPrettier
 ];
