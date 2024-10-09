@@ -4,6 +4,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
+/* eslint-disable no-undef */
 import { defineConfig } from "vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import { existsSync } from "fs";

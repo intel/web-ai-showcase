@@ -24,7 +24,7 @@ export default [
         "error",
         { destructuredArrayIgnorePattern: "^_", argsIgnorePattern: "^_" }
       ],
-      "prettier/prettier":["error", prettierConfig]
+      "prettier/prettier": ["error", prettierConfig]
     }
   },
   {
