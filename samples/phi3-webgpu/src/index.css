@@ -29,17 +29,4 @@
   .overflow-wrap-anywhere {
     overflow-wrap: anywhere;
   }
-
-  .absolute_center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  body {
-    background: rgba(0, 7, 52, 1) url("/assets/bg.png") center / cover no-repeat
-      fixed;
-    overflow-x: hidden;
-  }
 }

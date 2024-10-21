@@ -21,289 +21,281 @@
     <title>Web AI - Summarization</title>
   </head>
   <body>
-    <div>
-      <div id="naviBar" class="sticky top-0 z-50"></div>
+    <div id="naviBar" class="sticky top-0 z-50"></div>
 
-      <div class="container mx-auto w-full px-8 lg:px-20">
-        <div class="2xl:py-8 py-2">
-          <h1 class="text-shadow-sm">
-            <span
-              class="font-sans block text-4xl font-extrabold 2xl:text-5xl text-stone-50 text-center"
-              >Summarization
-            </span>
-          </h1>
-        </div>
-
-        <div>
-          <section
-            id="modelStatusPanel"
-            class="grid grid-rows 2xl:gap-2 gap-0.5 my-2 2xl:my-4"
-          >
-            <div
-              class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono gap-2 2xl:gap-4"
-            >
-              <div class="text-sm 2xl:text-md text-stone-50 font-semibold">
-                Model Status
-              </div>
-              <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
-                <div
-                  class="flex items-center justify-between imageDisplayEle text-xs 2xl:text-sm"
-                >
-                  <span
-                    class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    encoder_model_quantized.onnx</span
-                  >
-
-                  <span
-                    id="encoder_model_quantizedStatusBar"
-                    class="rounded-r-md bg-neutral-400 2xl:min-h-[28px] 2xl:min-w-[68px] px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                    >unload
-                  </span>
-                </div>
-
-                <div
-                  class="flex items-center justify-between imageDisplayEle text-xs 2xl:text-sm"
-                >
-                  <span
-                    class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    decoder_model_merged_quantized.onnx</span
-                  >
-
-                  <span
-                    id="decoder_model_merged_quantizedStatusBar"
-                    class="rounded-r-md bg-neutral-400 2xl:min-h-[28px] 2xl:min-w-[68px] px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                    >unload
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            <div
-              id="loadModelPromptContent"
-              class="justify-self-center italic text-stone-200/80 2xl:text-sm font-semibold text-xs"
-            >
-              [ Models will be loaded on first inference ]
-            </div>
-
-            <div class="w-full flex gap-4 items-center">
-              <div class="relative">
-                <button
-                  id="loadModelBtn"
-                  class="2xl:w-[110px] w-[100px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold px-2 py-1 rounded-md text-xs 2xl:text-base"
-                >
-                  Load Models
-                </button>
-                <div
-                  id="modelPopover"
-                  class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[60px] left-[120px] 2xl:left-[130px] backdrop-blur-xl"
-                >
-                  <div
-                    id="modelPanelWrapper"
-                    class="w-screen max-w-[360px] 2xl:max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section
-            id="modelsParams"
-            class="grid grid-rows 2xl:gap-2 gap-0.5 -mt-2 2xl:mt-0"
-          >
-            <div
-              class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono gap-2 2xl:gap-4"
-            >
-              <div class="text-stone-50 font-semibold 2xl:text-md text-sm">
-                Parameters
-              </div>
-
-              <div
-                class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
-              >
-                <div class="flex items-center justify-between">
-                  <span
-                    class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    Max length</span
-                  >
-
-                  <input
-                    id="max_new_tokens"
-                    type="number"
-                    class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
-                  />
-                </div>
-              </div>
-
-              <div
-                class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
-              >
-                <div class="flex items-center justify-between">
-                  <span
-                    class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    No.beams
-                  </span>
-
-                  <input
-                    id="num_beams"
-                    type="number"
-                    class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
-                  />
-                </div>
-              </div>
-
-              <div
-                class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
-              >
-                <div class="flex items-center justify-between">
-                  <span
-                    class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    Temp.
-                  </span>
-
-                  <input
-                    id="temperature"
-                    type="number"
-                    class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
-                  />
-                </div>
-              </div>
-              <div
-                class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
-              >
-                <div class="flex items-center justify-between">
-                  <span
-                    class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    Top K
-                  </span>
-
-                  <input
-                    id="top_k"
-                    type="number"
-                    class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
-                  />
-                </div>
-              </div>
-              <div
-                class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
-              >
-                <div class="flex items-center justify-between">
-                  <span
-                    class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    Sample</span
-                  >
-
-                  <select
-                    id="do_sample"
-                    class="w-[150px] bg-stone-50/60 px-1 2xl:px-2 2xl:py-1 rounded-r-md 2xl:min-h-[28px] min-h-[24px] max-w-[50px] 2xl:max-w-[80px] ring-1 ring-inset ring-stone-500/10 text-stone-800"
-                  >
-                    <option value="false">No</option>
-                    <option value="true">Yes</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div
-              id="paramsPromptContent"
-              class="justify-self-center italic text-stone-200/80 2xl:text-sm font-semibold text-xs"
-            >
-              [ You can directly use the default values ]
-            </div>
-          </section>
-
-          <div
-            id="loadingModelText"
-            class="hidden relative max-w-[280px] 2xl:my-2 min-h-[24px]"
-          >
-            <div class="absolute bottom-0 left-0">
-              <span
-                class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
-                >Downloading models ... (only once)</span
-              >
-            </div>
-          </div>
-          <div id="progress" class="grid items-center"></div>
-          <div
-            id="progressBar"
-            class="flex 2xl:my-2 my-1 items-center justify-between font-mono justify-self-center relative hidden 2xl:rounded-2xl rounded-lg w-full 2xl:min-h-[30px] min-h-[20px] bg-stone-200/40"
-          ></div>
-        </div>
-
-        <div
-          class="relative w-full 2xl:min-h-[32px] min-h-[24px] pl-2 2xl:mb-4 mb-2"
-        >
-          <div class="absolute bottom-0 left-0">
-            <span
-              class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
-              >Context</span
-            >
-          </div>
-        </div>
-        <section
-          id="inputSection"
-          class="relative flex bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 2xl:rounded-3xl rounded-2xl p-4"
-        >
-          <textarea
-            class="w-full h-[80px] 2xl:h-[150px] font-sans 2xl:text-base text-xs/5"
-            rows="4"
-            id="summarizationInput"
-            style="
-              resize: none;
-              border-width: 0px;
-              background-color: transparent;
-            "
-          >
-The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure to reach a height of 300 metres. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.</textarea
-          >
-        </section>
-        <div
-          class="relative w-full 2xl:min-h-[32px] min-h-[24px] mt-[16px] -mb-[16px] 2xl:mt-[40px] 2xl:mb-0"
-        >
-          <div class="absolute_center">
-            <button
-              id="triggerBtn"
-              type="button"
-              class="transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold px-2 py-1 rounded-md text-xs 2xl:text-base"
-            >
-              Generate
-            </button>
-          </div>
-        </div>
-
-        <div
-          class="relative w-max 2xl:min-h-[32px] min-h-[24px] pl-2 2xl:mb-4 mb-2"
-        >
-          <div class="absolute bottom-0 left-0">
-            <span
-              id="summarizeStatus"
-              class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
-              >Summarization</span
-            >
-          </div>
-        </div>
-
-        <section
-          class="relative bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 2xl:rounded-3xl rounded-2xl p-4"
-        >
-          <textarea
-            readonly
-            class="w-full h-[40px] 2xl:h-[100px] font-sans 2xl:text-base text-xs/5"
-            rows="4"
-            id="summarizationOutput"
-            style="
-              resize: none;
-              border-width: 0px;
-              background-color: transparent;
-            "
-          ></textarea>
-        </section>
+    <div class="main-content container mx-auto w-full px-8 lg:px-20">
+      <div class="2xl:py-8 py-2">
+        <h1 class="text-shadow-sm">
+          <span
+            class="font-sans block text-4xl font-extrabold 2xl:text-5xl text-stone-50 text-center"
+            >Summarization
+          </span>
+        </h1>
       </div>
+
+      <div>
+        <section
+          id="modelStatusPanel"
+          class="grid grid-rows 2xl:gap-2 gap-0.5 my-2 2xl:my-4"
+        >
+          <div
+            class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono gap-2 2xl:gap-4"
+          >
+            <div class="text-sm 2xl:text-md text-stone-50 font-semibold">
+              Model Status
+            </div>
+            <div class="flex flex-wrap items-center gap-2 2xl:gap-4">
+              <div
+                class="flex items-center justify-between imageDisplayEle text-xs 2xl:text-sm"
+              >
+                <span
+                  class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  encoder_model_quantized.onnx</span
+                >
+
+                <span
+                  id="encoder_model_quantizedStatusBar"
+                  class="rounded-r-md bg-neutral-400 2xl:min-h-[28px] 2xl:min-w-[68px] px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >unload
+                </span>
+              </div>
+
+              <div
+                class="flex items-center justify-between imageDisplayEle text-xs 2xl:text-sm"
+              >
+                <span
+                  class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  decoder_model_merged_quantized.onnx</span
+                >
+
+                <span
+                  id="decoder_model_merged_quantizedStatusBar"
+                  class="rounded-r-md bg-neutral-400 2xl:min-h-[28px] 2xl:min-w-[68px] px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >unload
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="loadModelPromptContent"
+            class="justify-self-center italic text-stone-200/80 2xl:text-sm font-semibold text-xs"
+          >
+            [ Models will be loaded on first inference ]
+          </div>
+
+          <div class="w-full flex gap-4 items-center">
+            <div class="relative">
+              <button
+                id="loadModelBtn"
+                class="2xl:w-[110px] w-[100px] control-entry bg-stone-500/70 hover:bg-stone-500 duration-200 text-stone-50 font-semibold px-2 py-1 rounded-md text-xs 2xl:text-base"
+              >
+                Load Models
+              </button>
+              <div
+                id="modelPopover"
+                class="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[60px] left-[120px] 2xl:left-[130px] backdrop-blur-xl"
+              >
+                <div
+                  id="modelPanelWrapper"
+                  class="w-screen max-w-[360px] 2xl:max-w-[420px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section
+          id="modelsParams"
+          class="grid grid-rows 2xl:gap-2 gap-0.5 -mt-2 2xl:mt-0"
+        >
+          <div
+            class="text-nowrap justify-self-center flex items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono gap-2 2xl:gap-4"
+          >
+            <div class="text-stone-50 font-semibold 2xl:text-md text-sm">
+              Parameters
+            </div>
+
+            <div
+              class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Max length</span
+                >
+
+                <input
+                  id="max_new_tokens"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+
+            <div
+              class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-1 2xl:px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  No.beams
+                </span>
+
+                <input
+                  id="num_beams"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+
+            <div
+              class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Temp.
+                </span>
+
+                <input
+                  id="temperature"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+            <div
+              class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Top K
+                </span>
+
+                <input
+                  id="top_k"
+                  type="number"
+                  class="rounded-r-md text-center bg-stone-50/60 2xl:min-h-[28px] max-w-[40px] 2xl:max-w-[60px] px-1 2xl:px-2 py-1 text-stone-800 ring-1 ring-inset ring-stone-500/10"
+                />
+              </div>
+            </div>
+            <div
+              class="flex flex-wrap items-center gap-2 2xl:gap-4 2xl:text-sm text-xs"
+            >
+              <div class="flex items-center justify-between">
+                <span
+                  class="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                >
+                  Sample</span
+                >
+
+                <select
+                  id="do_sample"
+                  class="w-[150px] bg-stone-50/60 px-1 2xl:px-2 2xl:py-1 rounded-r-md 2xl:min-h-[28px] min-h-[24px] max-w-[50px] 2xl:max-w-[80px] ring-1 ring-inset ring-stone-500/10 text-stone-800"
+                >
+                  <option value="false">No</option>
+                  <option value="true">Yes</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            id="paramsPromptContent"
+            class="justify-self-center italic text-stone-200/80 2xl:text-sm font-semibold text-xs"
+          >
+            [ You can directly use the default values ]
+          </div>
+        </section>
+
+        <div
+          id="loadingModelText"
+          class="hidden relative max-w-[280px] 2xl:my-2 min-h-[24px]"
+        >
+          <div class="absolute bottom-0 left-0">
+            <span
+              class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+              >Downloading models ... (only once)</span
+            >
+          </div>
+        </div>
+        <div id="progress" class="grid items-center"></div>
+        <div
+          id="progressBar"
+          class="flex 2xl:my-2 my-1 items-center justify-between font-mono justify-self-center relative hidden 2xl:rounded-2xl rounded-lg w-full 2xl:min-h-[30px] min-h-[20px] bg-stone-200/40"
+        ></div>
+      </div>
+
+      <div
+        class="relative w-full 2xl:min-h-[32px] min-h-[24px] pl-2 2xl:mb-4 mb-2"
+      >
+        <div class="absolute bottom-0 left-0">
+          <span
+            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+            >Context</span
+          >
+        </div>
+      </div>
+      <section
+        id="inputSection"
+        class="relative flex bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 2xl:rounded-3xl rounded-2xl p-4"
+      >
+        <textarea
+          class="w-full h-[80px] 2xl:h-[150px] font-sans 2xl:text-base text-xs/5"
+          rows="4"
+          id="summarizationInput"
+          style="resize: none; border-width: 0px; background-color: transparent"
+        >
+The tower is 324 metres (1,063 ft) tall, about the same height as an 81-storey building, and the tallest structure in Paris. Its base is square, measuring 125 metres (410 ft) on each side. During its construction, the Eiffel Tower surpassed the Washington Monument to become the tallest man-made structure in the world, a title it held for 41 years until the Chrysler Building in New York City was finished in 1930. It was the first structure to reach a height of 300 metres. Due to the addition of a broadcasting aerial at the top of the tower in 1957, it is now taller than the Chrysler Building by 5.2 metres (17 ft). Excluding transmitters, the Eiffel Tower is the second tallest free-standing structure in France after the Millau Viaduct.</textarea
+        >
+      </section>
+      <div
+        class="relative w-full 2xl:min-h-[32px] min-h-[24px] mt-[16px] -mb-[16px] 2xl:mt-[40px] 2xl:mb-0"
+      >
+        <div class="absolute_center">
+          <button
+            id="triggerBtn"
+            type="button"
+            class="transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:bg-indigo-500 duration-200 text-stone-50 font-semibold px-2 py-1 rounded-md text-xs 2xl:text-base"
+          >
+            Generate
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="relative w-max 2xl:min-h-[32px] min-h-[24px] pl-2 2xl:mb-4 mb-2"
+      >
+        <div class="absolute bottom-0 left-0">
+          <span
+            id="summarizeStatus"
+            class="inline-flex items-center rounded-md bg-stone-50/60 px-2 py-1 font-semibold text-stone-700 ring-1 ring-inset ring-stone-500/10 text-xs 2xl:text-base"
+            >Summarization</span
+          >
+        </div>
+      </div>
+
+      <section
+        class="relative bg-stone-900/40 backdrop-blur-md font-mono text-stone-50 2xl:rounded-3xl rounded-2xl p-4"
+      >
+        <textarea
+          readonly
+          class="w-full h-[40px] 2xl:h-[100px] font-sans 2xl:text-base text-xs/5"
+          rows="4"
+          id="summarizationOutput"
+          style="resize: none; border-width: 0px; background-color: transparent"
+        ></textarea>
+      </section>
     </div>
+
+    <footer id="footer"></footer>
   </body>
 
   <script type="module" src="./summarization.js"></script>

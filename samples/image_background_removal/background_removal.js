@@ -7,7 +7,7 @@
 
 import { AutoModel, AutoProcessor, env, RawImage } from "@xenova/transformers";
 
-import { setupNavigBar } from "../../js/navbar.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
 import {
   changeClass4StatusBar,
   getRequestPrefix,
@@ -26,8 +26,9 @@ import {
 
 import exampleImg from "/assets/person.avif";
 
-// load navigation bar
+// load navigation bar & footer
 setupNavigBar("../..");
+setupFooter("../..");
 
 // Since we will download the model from the Hugging Face Hub, we can skip the local model check
 env.allowLocalModels = VITE_ENV_USE_REMOTE_MODELS ? false : true;

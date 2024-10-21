@@ -4,7 +4,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
-import { setupNavigBar } from "../../js/navbar.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
 import {
   changeClass4StatusBar,
   getElementId4Resource,
@@ -21,6 +21,7 @@ import { ALL_NEEDED_MODEL_RESOURCES } from "../../config.js";
 
 // load navigation bar
 setupNavigBar("../..");
+setupFooter("../..");
 
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
 const MODEL_NAME = "distilbart-cnn-6-6";
