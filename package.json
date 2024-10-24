@@ -41,7 +41,7 @@
     "marked": "12.0.1"
   },
   "lint-staged": {
-    "*.{js, css}": [
+    "*.js": [
       "prettier --write",
       "eslint --cache --fix"
     ]
