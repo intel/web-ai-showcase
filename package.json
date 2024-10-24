@@ -12,7 +12,7 @@
     "startup": "cd ./dist && http-server -S -C ../cert.pem -K ../key.pem -o",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
-    "prepare": "husky"
+    "prepare": "husky && husky install"
   },
   "type": "module",
   "devDependencies": {
@@ -38,5 +38,11 @@
     "dompurify": "3.1.3",
     "highlight.js": "11.9.0",
     "marked": "12.0.1"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ]
   }
 }
