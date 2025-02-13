@@ -107,6 +107,7 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
     resources: []
   },
 
+  // used by Phi-3
   "Phi-3-mini-4k-instruct": {
     linkPathPrefix:
       "https://huggingface.co/Xenova/Phi-3-mini-4k-instruct/resolve/main/",
@@ -119,6 +120,14 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
       "https://huggingface.co/Xenova/Phi-3-mini-4k-instruct_fp16/resolve/main/",
     localFolderPathPrefix: "Xenova/",
     resources: ["onnx/model_q4.onnx", "onnx/model_q4.onnx_data"]
+  },
+
+  // used by DeepSeek-R1
+  "DeepSeek-R1-Distill-Qwen-1.5B-ONNX": {
+    linkPathPrefix:
+      "https://huggingface.co/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/resolve/main/",
+    localFolderPathPrefix: "onnx-community/",
+    resources: ["onnx/model_q4.onnx", "onnx/model_q4f16.onnx"]
   },
 
   // ort web wasm
