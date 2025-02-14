@@ -24,7 +24,7 @@ const STICKY_SCROLL_THRESHOLD = 120;
 
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
 
-const MODEL_NAME = "Phi-3-mini-4k-instruct_fp16";
+const MODEL_NAME = "DeepSeek-R1-Distill-Qwen-1.5B-ONNX";
 
 let baseUrl = "";
 
@@ -646,11 +646,11 @@ function App() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10">
-                    model_q4.onnx_data
+                    model_q4f16.onnx
                   </span>
 
                   <span
-                    id="model_q4-onnx_dataStatusBar"
+                    id="model_q4f16-onnxStatusBar"
                     className="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
                   >
                     unload
