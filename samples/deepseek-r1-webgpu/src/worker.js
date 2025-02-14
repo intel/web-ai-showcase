@@ -18,7 +18,6 @@ async function check() {
     if (!adapter.features.has("shader-f16")) {
       throw new Error("WebGPU feature `shader-f16` is not supported");
     }
-    throw new Error("No error");
   } catch (e) {
     self.postMessage({
       status: "error",
@@ -163,7 +162,7 @@ async function load() {
 
   self.postMessage({
     status: "loading",
-    data: "Compiling shaders and warming up model...",
+    data: "Warming up model...",
   });
 
   // Run model with dummy input to compile shaders

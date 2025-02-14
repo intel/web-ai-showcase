@@ -22,6 +22,12 @@ import logoImg from "/assets/logo-deepseek-r1.png";
 const IS_WEBGPU_AVAILABLE = !!navigator.gpu;
 const STICKY_SCROLL_THRESHOLD = 120;
 
+const EXAMPLES = [
+  "Solve the equation x^2 - 3x + 2 = 0",
+  "Lily is three times older than her son. In 15 years, she will be twice as old as him. How old is she now?",
+  "Write python code to compute the nth fibonacci number.",
+];
+
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
 
 const MODEL_NAME = "DeepSeek-R1-Distill-Qwen-1.5B-ONNX";
@@ -652,18 +658,6 @@ function App() {
               <div className="flex flex-wrap items-center gap-2 2xl:gap-4">
                 <div className="flex items-center justify-between">
                   <span className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10">
-                    model_q4.onnx
-                  </span>
-
-                  <span
-                    id="model_q4-onnxStatusBar"
-                    className="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
-                  >
-                    unload
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10">
                     model_q4f16.onnx
                   </span>
 
@@ -797,6 +791,19 @@ function App() {
           className="overflow-y-auto scrollbar-thin w-full flex flex-col items-center h-full"
         >
           <Chat messages={[...historyMessages, ...dialogMessages]} />
+          {historyMessages.length === 0 && dialogMessages.length === 0 && (
+            <div>
+              {EXAMPLES.map((msg, i) => (
+                <div
+                  key={i}
+                  className="m-1 border border-gray-300 dark:border-gray-600 rounded-md p-2 bg-gray-100 dark:bg-gray-700 cursor-pointer"
+                  onClick={() => onEnter(msg)}
+                >
+                  {msg}
+                </div>
+              ))}
+            </div>
+          )}
           <p className="text-center text-sm min-h-6 text-stone-300 dark:text-gray-300">
             {tps && dialogMessages.length > 0 && (
               <>

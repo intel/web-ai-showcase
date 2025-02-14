@@ -127,7 +127,7 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
     linkPathPrefix:
       "https://huggingface.co/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/resolve/main/",
     localFolderPathPrefix: "onnx-community/",
-    resources: ["onnx/model_q4.onnx", "onnx/model_q4f16.onnx"]
+    resources: ["onnx/model_q4f16.onnx"]
   },
 
   // ort web wasm
