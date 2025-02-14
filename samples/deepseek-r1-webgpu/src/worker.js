@@ -3,19 +3,22 @@ import {
   AutoModelForCausalLM,
   TextStreamer,
   InterruptableStoppingCriteria,
+  env,
 } from "@huggingface/transformers";
 
 /**
  * Helper function to perform feature detection for WebGPU
  */
-// let fp16_supported = false;
 async function check() {
   try {
     const adapter = await navigator.gpu.requestAdapter();
     if (!adapter) {
       throw new Error("WebGPU is not supported (no adapter found)");
     }
-    // fp16_supported = adapter.features.has("shader-f16")
+    if (!adapter.features.has("shader-f16")) {
+      throw new Error("WebGPU feature `shader-f16` is not supported");
+    }
+    throw new Error("No error");
   } catch (e) {
     self.postMessage({
       status: "error",
@@ -132,6 +135,24 @@ async function load() {
     status: "loading",
     data: "Loading model...",
   });
+
+  let baseUrl = "";
+
+  if (location.href.toLowerCase().indexOf("github.io") > -1) {
+    // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
+    baseUrl = "/web-ai-showcase";
+  }
+
+  // eslint-disable-next-line no-undef
+  if (!VITE_ENV_USE_REMOTE_MODELS) {
+   // env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@1_18_0/`;
+    env.allowLocalModels = true;
+    env.allowRemoteModels = false;
+    env.localModelPath = `${baseUrl}/models/`;
+  } else {
+    env.allowLocalModels = false;
+    env.allowRemoteModels = true;
+  }
 
   // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {

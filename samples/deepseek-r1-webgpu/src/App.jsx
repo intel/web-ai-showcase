@@ -52,6 +52,7 @@ function App() {
 
   // Model loading and progress
   const [status, setStatus] = useState(null);
+  const [error, setError] = useState(null);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [progressItems, setProgressItems] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
@@ -470,6 +471,7 @@ function App() {
       worker.current = new Worker(new URL("./worker.js", import.meta.url), {
         type: "module"
       });
+      worker.current.postMessage({ type: "check" }); // Do a feature check
     }
 
     // Create a callback function for dialogMessages from the worker thread.
@@ -546,16 +548,21 @@ function App() {
           {
             // Generation update: update the output text.
             // Parse dialogMessages
-            const { output, tps, numTokens } = e.data;
+            const { output, tps, numTokens, state } = e.data;
             setTps(tps);
             setNumTokens(numTokens);
             setDialogMessages((prev) => {
               const cloned = [...prev];
               const last = cloned.at(-1);
-              cloned[cloned.length - 1] = {
+              const data = {
                 ...last,
-                content: last.content + output
+                content: last.content + output,
               };
+              if (data.answerIndex === undefined && state === "answering") {
+                // When state changes to answering, we set the answerIndex
+                data.answerIndex = last.content.length;
+              }
+              cloned[cloned.length - 1] = data;
               return cloned;
             });
           }
@@ -565,8 +572,18 @@ function App() {
           // Generation complete: re-enable the "Generate" button
           setIsRunning(false);
           break;
+
+        case "error":
+          setError(e.data.data);
+          break;
       }
     };
+
+    const onErrorReceived = (e) => {
+      console.error("Worker error:", e);
+    };
+
+    worker.current.addEventListener("error", onErrorReceived);
 
     // Attach the callback function as an event listener.
     worker.current.addEventListener("message", onMessageReceived);
@@ -574,6 +591,7 @@ function App() {
     // Define a cleanup function for when the component is unmounted.
     return () => {
       worker.current.removeEventListener("message", onMessageReceived);
+      worker.current.addEventListener("error", onErrorReceived);
     };
   }, []);
 
@@ -711,17 +729,25 @@ function App() {
                       Load Model Locally
                     </span>
                   </button>
-                  <div
-                    id="modelPopover"
-                    className="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[40px] left-[160px] backdrop-blur-xl"
-                  >
+                    <div
+                      id="modelPopover"
+                      className="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[40px] left-[160px] backdrop-blur-xl"
+                    >
                     <div
                       id="modelPanelWrapper"
                       className="w-screen max-w-[280px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
                     ></div>
                   </div>
                 </div>
-                <div>
+              <div>
+              {error && (
+                <div className="text-red-500 text-center mb-2">
+                  <p className="mb-1">
+                    Unable to load model due to the following error:
+                  </p>
+                  <p className="text-sm">{error}</p>
+                </div>
+               )}
                   <button
                     id="loadModelBtn"
                     className="w-[100px] 2xl:w-[120px] cursor-pointer control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:translate-x-0 hover:bg-indigo-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold p-2 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
