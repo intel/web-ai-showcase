@@ -8,3 +8,4 @@ dist
 *.log
 .vscode
 *.wasm
+/models/frameworks/ort-web/*

@@ -17,7 +17,7 @@ import {
   ALL_NEEDED_MODEL_RESOURCES
 } from "../../../config.js";
 
-import logoImg from "/assets/logo.png";
+import logoImg from "/assets/logo-phi3.png";
 
 const IS_WEBGPU_AVAILABLE = !!navigator.gpu;
 const STICKY_SCROLL_THRESHOLD = 120;

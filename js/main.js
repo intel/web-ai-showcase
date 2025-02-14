@@ -116,6 +116,18 @@ let SAMPLES = [
     update: "2024-06-08"
   },
   {
+    id: "webgpu_deepseek_r1",
+    title: "DeepSeek-R1",
+    desc: "Language model released in Jan 2025 by DeepSeek",
+    sampleUrl: "./samples/deepseek-r1-webgpu/index.html",
+    models: ["DeepSeek R1 Distill Qwen 1.5B"],
+    tasks: "Text Generation",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2025-02-13"
+  },
+  {
     id: "webgpu_florence2",
     title: "Microsoft Florence2",
     desc: "Vision Foundation Model by Microsoft",
@@ -421,12 +433,12 @@ let SAMPLES = [
   }
 ];
 
-// the phi3 project only available in `production` mode
-// TODO: enable phi3 sample under development mode, maybe
-//       host another server for phi3 project since it is
+// the phi3 and deepseek-r1 projects only available in `production` mode
+// TODO: enable phi3 and deepseek-r1 samples under development mode, maybe
+//       host another server for phi3 and deepseek-r1 project since they are
 //       a standalone react + vite project
 if (import.meta.env.MODE === "development") {
-  SAMPLES = SAMPLES.filter((sample) => sample.id !== "webgpu_phi3_mini");
+  SAMPLES = SAMPLES.filter((sample) => sample.id !== "webgpu_phi3_mini" || sample.id !== "webgpu_deepseek_r1");
 }
 
 SAMPLES = SAMPLES.sort((a, b) => (a.update > b.update ? -1 : 1));
