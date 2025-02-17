@@ -228,9 +228,8 @@ function App() {
     }
     if (!modelsAllReady) return;
 
-    const LOAD_MODELS_BUTTON = document.getElementById("loadModelBtn");
-
-    LOAD_MODELS_BUTTON.textContent = "Trigger";
+    worker.current.postMessage({ type: "load" });
+    setStatus("loading");
   }
 
   function setupNavigBar(relativePath) {
@@ -652,7 +651,7 @@ function App() {
           <div className="grid grid-rows">
             <div className="text-nowrap justify-self-center flex gap-2 2xl:gap-4 items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono 2xl:mt-10 mt-4">
               <div className="text-md text-stone-50 font-semibold">
-                Models Status
+                Model Status
               </div>
 
               <div className="flex flex-wrap items-center gap-2 2xl:gap-4">
@@ -742,17 +741,6 @@ function App() {
                   <p className="text-sm">{error}</p>
                 </div>
                )}
-                  <button
-                    id="loadModelBtn"
-                    className="w-[100px] 2xl:w-[120px] cursor-pointer control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:translate-x-0 hover:bg-indigo-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold p-2 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
-                    onClick={() => {
-                      worker.current.postMessage({ type: "load" });
-                      setStatus("loading");
-                    }}
-                    disabled={status !== null}
-                  >
-                    Load model
-                  </button>
                 </div>
               </div>
 
