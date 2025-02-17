@@ -680,7 +680,7 @@ function App() {
                 <br />
                 You are about to load{" "}
                 <a
-                  href="https://huggingface.co/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX"
+                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/files"
                   target="_blank"
                   rel="noreferrer"
                   className="font-medium underline text-amber-300 dark:text-amber-200"
