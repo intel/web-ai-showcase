@@ -690,7 +690,7 @@ function App() {
                 , a 1.5B parameter reasoning LLM optimized for in-browser
                 inference. Everything runs entirely in your browser with{" "}
                 <a
-                  href="https://huggingface.co/docs/transformers.js"
+                  href="https://github.com/huggingface/transformers.js/blob/main/README.md"
                   target="_blank"
                   rel="noreferrer"
                   className="underline"
