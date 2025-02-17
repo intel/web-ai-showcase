@@ -718,9 +718,9 @@ function App() {
                     className="w-[180px] cursor-pointer control-entry transition ease-in-out bg-stone-500/70 hover:-translate-y-1 hover:translate-x-0 hover:bg-stone-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold p-2 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
                     disabled={status !== null}
                   >
-                    <span title="load models from your local file system">
+                    <span title="upload model from your local file system">
                       {" "}
-                      Load Model Locally
+                      Upload model from local
                     </span>
                   </button>
                     <div
