@@ -48,7 +48,13 @@ export default ({ mode }) => {
 
   return defineConfig({
     base: env.VITE_BASE,
-    plugins: [tailwindcss(), react(), basicSsl(), resourceHandlerPlugin(), topLevelAwait()],
+    plugins: [
+      tailwindcss(),
+      react(),
+      basicSsl(),
+      resourceHandlerPlugin(),
+      topLevelAwait()
+    ],
     define: {
       VITE_ENV_USE_REMOTE_MODELS: process.argv
         .slice(2)

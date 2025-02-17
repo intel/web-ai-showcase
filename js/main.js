@@ -438,7 +438,10 @@ let SAMPLES = [
 //       host another server for phi3 and deepseek-r1 project since they are
 //       a standalone react + vite project
 if (import.meta.env.MODE === "development") {
-  SAMPLES = SAMPLES.filter((sample) => sample.id !== "webgpu_phi3_mini" || sample.id !== "webgpu_deepseek_r1");
+  SAMPLES = SAMPLES.filter(
+    (sample) =>
+      sample.id !== "webgpu_phi3_mini" || sample.id !== "webgpu_deepseek_r1"
+  );
 }
 
 SAMPLES = SAMPLES.sort((a, b) => (a.update > b.update ? -1 : 1));

@@ -3,7 +3,7 @@ import {
   AutoModelForCausalLM,
   TextStreamer,
   InterruptableStoppingCriteria,
-  env,
+  env
 } from "@huggingface/transformers";
 
 /**
@@ -21,7 +21,7 @@ async function check() {
   } catch (e) {
     self.postMessage({
       status: "error",
-      data: e.toString(),
+      data: e.toString()
     });
   }
 }
@@ -34,13 +34,13 @@ class TextGenerationPipeline {
 
   static async getInstance(progress_callback = null) {
     this.tokenizer ??= AutoTokenizer.from_pretrained(this.model_id, {
-      progress_callback,
+      progress_callback
     });
 
     this.model ??= AutoModelForCausalLM.from_pretrained(this.model_id, {
       dtype: "q4f16",
       device: "webgpu",
-      progress_callback,
+      progress_callback
     });
 
     return Promise.all([this.tokenizer, this.model]);
@@ -56,14 +56,14 @@ async function generate(messages) {
 
   const inputs = tokenizer.apply_chat_template(messages, {
     add_generation_prompt: true,
-    return_dict: true,
+    return_dict: true
   });
 
   // 151648: <think>
   // 151649: </think>
   const [START_THINKING_TOKEN_ID, END_THINKING_TOKEN_ID] = tokenizer.encode(
     "<think></think>",
-    { add_special_tokens: false },
+    { add_special_tokens: false }
   );
 
   let state = "thinking"; // 'thinking' or 'answering'
@@ -86,7 +86,7 @@ async function generate(messages) {
       output,
       tps,
       numTokens,
-      state,
+      state
     });
   };
 
@@ -94,7 +94,7 @@ async function generate(messages) {
     skip_prompt: true,
     skip_special_tokens: true,
     callback_function,
-    token_callback_function,
+    token_callback_function
   });
 
   // Tell the main thread we are starting
@@ -114,25 +114,25 @@ async function generate(messages) {
     max_new_tokens: 2048,
     streamer,
     stopping_criteria,
-    return_dict_in_generate: true,
+    return_dict_in_generate: true
   });
   past_key_values_cache = past_key_values;
 
   const decoded = tokenizer.batch_decode(sequences, {
-    skip_special_tokens: true,
+    skip_special_tokens: true
   });
 
   // Send the output back to the main thread
   self.postMessage({
     status: "complete",
-    output: decoded,
+    output: decoded
   });
 }
 
 async function load() {
   self.postMessage({
     status: "loading",
-    data: "Loading model...",
+    data: "Loading model..."
   });
 
   let baseUrl = "";
@@ -162,7 +162,7 @@ async function load() {
 
   self.postMessage({
     status: "loading",
-    data: "Warming up model...",
+    data: "Warming up model..."
   });
 
   // Run model with dummy input to compile shaders
