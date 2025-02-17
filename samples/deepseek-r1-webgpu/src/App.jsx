@@ -23,9 +23,9 @@ const IS_WEBGPU_AVAILABLE = !!navigator.gpu;
 const STICKY_SCROLL_THRESHOLD = 120;
 
 const EXAMPLES = [
-  "Solve the equation x^2 - 3x + 2 = 0",
-  "Lily is three times older than her son. In 15 years, she will be twice as old as him. How old is she now?",
-  "Write python code to compute the nth fibonacci number.",
+  "求方程 x^2 - 3x + 2 = 0 的解。",
+  "小李今年的年龄是她孩子的3倍, 15年后她的年龄将会是她孩子的2倍, 那她今年几岁呢?",
+  "请用Python写一个程序来计算第n个斐波那契数。",
 ];
 
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
