@@ -43,7 +43,7 @@ function copyResourcesIntoDist(args) {
     "samples/phi3-webgpu/dist/assets": "/assets",
     "samples/phi3-webgpu/dist/index.html": "samples/phi3-webgpu/",
     "samples/deepseek-r1-webgpu/dist/assets": "/assets",
-    "samples/deepseek-r1-webgpu/dist/index.html": "samples/deepseek-r1-webgpu/",
+    "samples/deepseek-r1-webgpu/dist/index.html": "samples/deepseek-r1-webgpu/"
   };
 
   console.log(">>> Copy resources into distribution package...");

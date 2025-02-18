@@ -738,7 +738,7 @@ function App() {
               {error && (
                 <div className="text-red-500 text-center mb-2">
                   <p className="mb-1">
-                    上传模型文件失败。原因:
+                    上传模型文件失败。错误信息:
                   </p>
                   <p className="text-sm">{error}</p>
                 </div>
