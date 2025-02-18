@@ -24,7 +24,7 @@ const STICKY_SCROLL_THRESHOLD = 120;
 
 const EXAMPLES = [
   "求方程 x^2 - 3x + 2 = 0 的解。",
-  "小李今年的年龄是她孩子的3倍, 15年后她的年龄将会是她孩子的2倍, 那她今年几岁呢?",
+  "小李今年的年龄是小王的3倍, 15年后她的年龄将是小王的2倍, 那小李今年几岁呢？",
   "请用Python写一个程序来计算第n个斐波那契数。"
 ];
 
@@ -659,7 +659,7 @@ function App() {
                 >
                   🤗&nbsp;Transformers.js
                 </a>{" "}
-                和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成,
+                和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成，
                 推理过程中不会向服务器端传递任何数据。
                 在网页加载完毕后，即使是离线情况下您也能通过该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
                 这样下次使用时将不再需要重复加载模型文件。本项目的源代码基于{" "}
@@ -759,7 +759,7 @@ function App() {
               <>
                 {!isRunning && (
                   <span>
-                    一共生成 {numTokens} tokens 用时{" "}
+                    一共生成 {numTokens} tokens，用时{" "}
                     {(numTokens / tps).toFixed(2)}秒&nbsp;&#40;
                   </span>
                 )}
