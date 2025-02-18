@@ -699,7 +699,7 @@ function App() {
                 </a>{" "}
                 和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成, 推理过程中不会向服务器端传递任何数据。
                 在网页加载完毕后，即使是离线情况下您也能通过该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
-                这样下次使用时将不再需要重复加载模型文件。本项目中的源代码主要参考了
+                这样下次使用时将不再需要重复加载模型文件。本项目的源代码基于
                 {" "}
                 <a
                   href="https://github.com/huggingface/transformers.js-examples/tree/main/deepseek-r1-webgpu"
@@ -709,7 +709,7 @@ function App() {
                 >
                   GitHub
                 </a>
-                代码仓库的实现。
+                改编而成。
               </p>
 
               <div className="w-full flex justify-between 2xl:mt-20 mt-4">
