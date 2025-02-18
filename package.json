@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "format": "prettier --log-level warn --write \"./{js,samples,styles}/**/*.{js,css}\"",
+    "format": "prettier --log-level warn --write \"./{js,samples,styles}/**/*.{js,css,jsx,html}\"",
     "build": "vite build",
     "build:use-remote-models": "vite build -- use-remote-models",
     "dev": "vite --port 9999 --host -- use-remote-models",

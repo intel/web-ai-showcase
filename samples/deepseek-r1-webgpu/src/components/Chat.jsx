@@ -17,8 +17,8 @@ function render(text) {
   const result = DOMPurify.sanitize(
     marked.parse(text, {
       async: false,
-      breaks: true,
-    }),
+      breaks: true
+    })
   );
   return result;
 }
@@ -63,7 +63,7 @@ function Message({ role, content, answerIndex }) {
                         <span
                           className="markdown"
                           dangerouslySetInnerHTML={{
-                            __html: render(thinking),
+                            __html: render(thinking)
                           }}
                         />
                       </MathJax>
@@ -74,7 +74,7 @@ function Message({ role, content, answerIndex }) {
                       <span
                         className="markdown"
                         dangerouslySetInnerHTML={{
-                          __html: render(answer),
+                          __html: render(answer)
                         }}
                       />
                     </MathJax>

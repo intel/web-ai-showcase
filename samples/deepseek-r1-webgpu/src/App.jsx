@@ -25,7 +25,7 @@ const STICKY_SCROLL_THRESHOLD = 120;
 const EXAMPLES = [
   "求方程 x^2 - 3x + 2 = 0 的解。",
   "小李今年的年龄是她孩子的3倍, 15年后她的年龄将会是她孩子的2倍, 那她今年几岁呢?",
-  "请用Python写一个程序来计算第n个斐波那契数。",
+  "请用Python写一个程序来计算第n个斐波那契数。"
 ];
 
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
@@ -482,9 +482,9 @@ function App() {
         case "loading":
           // Model file start load: add a new progress item to the list.
           setStatus("loading");
-          if (e.data.data === 'Loading') {
+          if (e.data.data === "Loading") {
             setLoadingMessage("模型文件加载中...");
-          } else if (e.data.data === 'Warming up') {
+          } else if (e.data.data === "Warming up") {
             setLoadingMessage("模型初始化中...");
           }
 
@@ -563,7 +563,7 @@ function App() {
               const last = cloned.at(-1);
               const data = {
                 ...last,
-                content: last.content + output,
+                content: last.content + output
               };
               if (data.answerIndex === undefined && state === "answering") {
                 // When state changes to answering, we set the answerIndex
@@ -646,8 +646,8 @@ function App() {
           ></img>
           <h1 className="text-4xl font-bold 2xl:mb-1">DeepSeek-R1 WebGPU</h1>
           <h2 className="font-semibold hidden 2xl:block">
-            A next-generation reasoning model that runs locally in your
-            browser with WebGPU acceleration.
+            A next-generation reasoning model that runs locally in your browser
+            with WebGPU acceleration.
           </h2>
 
           <div className="grid grid-rows">
@@ -697,10 +697,10 @@ function App() {
                 >
                   🤗&nbsp;Transformers.js
                 </a>{" "}
-                和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成, 推理过程中不会向服务器端传递任何数据。
+                和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成,
+                推理过程中不会向服务器端传递任何数据。
                 在网页加载完毕后，即使是离线情况下您也能通过该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
-                这样下次使用时将不再需要重复加载模型文件。本项目的源代码基于
-                {" "}
+                这样下次使用时将不再需要重复加载模型文件。本项目的源代码基于{" "}
                 <a
                   href="https://github.com/huggingface/transformers.js-examples/tree/main/deepseek-r1-webgpu"
                   target="_blank"
@@ -724,25 +724,23 @@ function App() {
                       上传模型文件
                     </span>
                   </button>
-                    <div
-                      id="modelPopover"
-                      className="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[40px] left-[160px] backdrop-blur-xl"
-                    >
+                  <div
+                    id="modelPopover"
+                    className="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute -top-[40px] left-[160px] backdrop-blur-xl"
+                  >
                     <div
                       id="modelPanelWrapper"
                       className="w-screen max-w-[280px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
                     ></div>
                   </div>
                 </div>
-              <div>
-              {error && (
-                <div className="text-red-500 text-center mb-2">
-                  <p className="mb-1">
-                    上传模型文件失败。错误信息:
-                  </p>
-                  <p className="text-sm">{error}</p>
-                </div>
-               )}
+                <div>
+                  {error && (
+                    <div className="text-red-500 text-center mb-2">
+                      <p className="mb-1">上传模型文件失败。错误信息:</p>
+                      <p className="text-sm">{error}</p>
+                    </div>
+                  )}
                 </div>
               </div>
 
