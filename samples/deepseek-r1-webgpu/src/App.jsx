@@ -128,7 +128,7 @@ function App() {
       .join("");
 
     const tag = `<span class="font-semibold text-md p-2 italic"
-      >Required files</span
+      >模型文件</span
     >`;
 
     targetElement.innerHTML = tag + resourcesPanelHTML;
@@ -193,10 +193,10 @@ function App() {
       if (!cacheResponse || !cacheResponse.ok) {
         // not cached
         status = "unload";
-        textContent = "unload";
+        textContent = "未加载";
       } else {
         status = "cached";
-        textContent = "cache available";
+        textContent = "已缓存";
         // update the status flag of this resource
         removeHiddenClass(
           document.getElementById(`${getElementId4Resource(name)}StatusFlag`)
@@ -207,21 +207,18 @@ function App() {
         statusBarElement.textContent = textContent;
       }
 
-      changeTextForLoadBtn();
+      changeTextForLoadBtn(status);
     }
   }
 
   // change the `Load model` when onnx & onnx_data have been loaded
-  function changeTextForLoadBtn() {
+  function changeTextForLoadBtn(status) {
     let modelsAllReady = true;
     for (const name of ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].resources) {
       const statusBarElement = document.getElementById(
         `${name.split(".")[0].split("/")[1]}-${name.split(".")[1]}StatusBar`
       );
-      if (
-        statusBarElement &&
-        statusBarElement.textContent !== "cache available"
-      ) {
+      if (statusBarElement && status !== "cached") {
         modelsAllReady = false;
         break;
       }
@@ -376,7 +373,7 @@ function App() {
                 const progressValEle = document.getElementById(`ProgressVal`);
 
                 let progress = (loaded / total) * 100;
-                statusText.textContent = `Uploading model ...`;
+                statusText.textContent = `模型文件上传中 ...`;
 
                 if (!progressEle.style.height) {
                   progressEle.style.height = "30px";
@@ -485,7 +482,12 @@ function App() {
         case "loading":
           // Model file start load: add a new progress item to the list.
           setStatus("loading");
-          setLoadingMessage(e.data.data);
+          if (e.data.data === 'Loading') {
+            setLoadingMessage("模型文件加载中...");
+          } else if (e.data.data === 'Warming up') {
+            setLoadingMessage("模型初始化中...");
+          }
+
           break;
 
         case "initiate":
@@ -511,7 +513,7 @@ function App() {
           );
           if (statusBarElement) {
             changeClass4StatusBar("loaded", statusBarElement);
-            statusBarElement.textContent = "loaded";
+            statusBarElement.textContent = "上传完毕";
           }
 
           setProgressItems((prev) =>
@@ -651,7 +653,7 @@ function App() {
           <div className="grid grid-rows">
             <div className="text-nowrap justify-self-center flex gap-2 2xl:gap-4 items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono 2xl:mt-10 mt-4">
               <div className="text-md text-stone-50 font-semibold">
-                Model Status
+                模型文件
               </div>
 
               <div className="flex flex-wrap items-center gap-2 2xl:gap-4">
@@ -664,7 +666,7 @@ function App() {
                     id="model_q4f16-onnxStatusBar"
                     className="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
                   >
-                    unload
+                    未加载
                   </span>
                 </div>
               </div>
@@ -677,7 +679,7 @@ function App() {
             <div className="flex flex-col items-center px-4">
               <p className="max-w-[514px] mb-4 text-sm 2xl:text-base">
                 <br />
-                You are about to load{" "}
+                您将通过本网页在浏览器内使用一个拥有15亿参数的大预言模型{" "}
                 <a
                   href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/files"
                   target="_blank"
@@ -686,8 +688,7 @@ function App() {
                 >
                   DeepSeek-R1-Distill-Qwen-1.5B
                 </a>
-                , a 1.5B parameter reasoning LLM optimized for in-browser
-                inference. Everything runs entirely in your browser with{" "}
+                。全部推理过程都将通过{" "}
                 <a
                   href="https://github.com/huggingface/transformers.js/blob/main/README.md"
                   target="_blank"
@@ -696,9 +697,10 @@ function App() {
                 >
                   🤗&nbsp;Transformers.js
                 </a>{" "}
-                and ONNX Runtime Web, meaning no data is sent to a server. Once
-                loaded, it can even be used offline. The source code for the demo
-                is available on{" "}
+                和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成, 推理过程中不会向服务器端传递任何数据。
+                在网页加载完毕后，即使是离线情况下您也能通过该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
+                这样下次使用时将不再需要重复加载模型文件。本项目中的源代码主要参考了
+                {" "}
                 <a
                   href="https://github.com/huggingface/transformers.js-examples/tree/main/deepseek-r1-webgpu"
                   target="_blank"
@@ -707,7 +709,7 @@ function App() {
                 >
                   GitHub
                 </a>
-                .
+                代码仓库的实现。
               </p>
 
               <div className="w-full flex justify-between 2xl:mt-20 mt-4">
@@ -719,7 +721,7 @@ function App() {
                   >
                     <span title="upload model from your local file system">
                       {" "}
-                      Upload model from local
+                      上传模型文件
                     </span>
                   </button>
                     <div
@@ -736,7 +738,7 @@ function App() {
               {error && (
                 <div className="text-red-500 text-center mb-2">
                   <p className="mb-1">
-                    Unable to load model due to the following error:
+                    上传模型文件失败。原因:
                   </p>
                   <p className="text-sm">{error}</p>
                 </div>
@@ -797,8 +799,8 @@ function App() {
               <>
                 {!isRunning && (
                   <span>
-                    Generated {numTokens} tokens in{" "}
-                    {(numTokens / tps).toFixed(2)} seconds&nbsp;&#40;
+                    一共生成 {numTokens} tokens 用时{" "}
+                    {(numTokens / tps).toFixed(2)}秒&nbsp;&#40;
                   </span>
                 )}
                 {
@@ -807,7 +809,7 @@ function App() {
                       {tps.toFixed(2)}
                     </span>
                     <span className="text-stone-300 dark:text-gray-300">
-                      tokens/second
+                      tokens/秒
                     </span>
                   </>
                 }
@@ -821,7 +823,7 @@ function App() {
                         setDialogMessages([]);
                       }}
                     >
-                      Reset
+                      重置上下文
                     </span>
                   </>
                 )}
@@ -834,12 +836,12 @@ function App() {
         <textarea
           ref={textareaRef}
           className="scrollbar-thin w-[550px] dark:bg-gray-700 px-3 py-4 rounded-lg bg-transparent border-none outline-none text-stone-200 disabled:text-gray-400 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400 disabled:placeholder-gray-200 resize-none disabled:cursor-not-allowed"
-          placeholder="Type your message..."
+          placeholder="输入您的问题..."
           type="text"
           rows={1}
           value={input}
           disabled={status !== "ready"}
-          title={status === "ready" ? "Model is ready" : "Model not loaded yet"}
+          title={status === "ready" ? "模型加载成功" : "尚未加载模型"}
           onKeyDown={(e) => {
             if (
               input.length > 0 &&
@@ -872,14 +874,14 @@ function App() {
         )}
       </div>
       <p className="text-xs text-gray-400 text-center mb-3">
-        Disclaimer: Generated content may be inaccurate or false.
+        免责声明：生成的内容可能是假的或是不准确的。
       </p>
     </div>
   ) : (
     <div className="fixed w-screen h-screen bg-black z-10 bg-opacity-[92%] text-white text-2xl font-semibold flex justify-center items-center text-center">
-      WebGPU is not supported
+      WebGPU无法在
       <br />
-      by this browser :&#40;
+      本浏览器上运行 :&#40;
     </div>
   );
 }

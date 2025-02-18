@@ -49,7 +49,7 @@ function Message({ role, content, answerIndex }) {
                         className={doneThinking ? "" : "animate-pulse"}
                       />
                       <span>
-                        {doneThinking ? "View reasoning." : "Thinking..."}
+                        {doneThinking ? "查看思考过程." : "思考中..."}
                       </span>
                       <span className="ml-auto text-gray-700">
                         {showThinking ? "▲" : "▼"}
@@ -111,7 +111,7 @@ export default function Chat({ messages }) {
     >
       <MathJaxContext>
         {empty ? (
-          <div className="text-xl">Ready!</div>
+          <div className="text-xl">准备就绪！</div>
         ) : (
           messages.map((msg, i) => <Message key={`message-${i}`} {...msg} />)
         )}

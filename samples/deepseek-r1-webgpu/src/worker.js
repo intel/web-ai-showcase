@@ -132,7 +132,7 @@ async function generate(messages) {
 async function load() {
   self.postMessage({
     status: "loading",
-    data: "Loading model..."
+    data: "Loading"
   });
 
   let baseUrl = "";
@@ -162,7 +162,7 @@ async function load() {
 
   self.postMessage({
     status: "loading",
-    data: "Warming up model..."
+    data: "Warming up"
   });
 
   // Run model with dummy input to compile shaders
