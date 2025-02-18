@@ -34,7 +34,7 @@ function Message({ role, content, answerIndex }) {
     <div className="flex items-start space-x-4">
       {role === "assistant" ? (
         <>
-          <BotIcon className="h-6 w-6 min-h-6 min-w-6 my-3 text-gray-500 dark:text-gray-300" />
+          <BotIcon className="h-6 w-6 min-h-6 min-w-6 my-3 text-gray-500 text-stone-50" />
           <div className="bg-gray-200 dark:bg-gray-700 rounded-lg p-4">
             <div className="min-h-6 text-gray-800 dark:text-gray-200 overflow-wrap-anywhere">
               {thinking.length > 0 ? (
@@ -92,7 +92,7 @@ function Message({ role, content, answerIndex }) {
         </>
       ) : (
         <>
-          <UserIcon className="h-6 w-6 min-h-6 min-w-6 my-3 text-gray-500 dark:text-gray-300" />
+          <UserIcon className="h-6 w-6 min-h-6 min-w-6 my-3 text-gray-500 text-stone-50" />
           <div className="bg-blue-500 text-white rounded-lg p-4">
             <p className="min-h-6 overflow-wrap-anywhere">{content}</p>
           </div>
@@ -107,14 +107,12 @@ export default function Chat({ messages }) {
 
   return (
     <div
-      className={`flex-1 p-6 max-w-[960px] w-full ${empty ? "flex flex-col items-center justify-end" : "space-y-4"}`}
+      className={`${empty ? "flex flex-col items-center justify-end" : "flex-1 p-6 max-w-[960px] w-full space-y-4"}`}
     >
       <MathJaxContext>
-        {empty ? (
-          <div className="text-xl">准备就绪！</div>
-        ) : (
-          messages.map((msg, i) => <Message key={`message-${i}`} {...msg} />)
-        )}
+        {messages.map((msg, i) => (
+          <Message key={`message-${i}`} {...msg} />
+        ))}
       </MathJaxContext>
     </div>
   );
