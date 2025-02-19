@@ -100,7 +100,7 @@ async function generate(messages) {
   // Tell the main thread we are starting
   self.postMessage({ status: "start" });
 
-  const { past_key_values, sequences } = await model.generate({
+  const generateResult = await model.generate({
     ...inputs,
     // TODO: Add back when fixed
     // past_key_values: past_key_values_cache,
@@ -116,6 +116,7 @@ async function generate(messages) {
     stopping_criteria,
     return_dict_in_generate: true
   });
+  const sequences = generateResult.sequences;
 
   const decoded = tokenizer.batch_decode(sequences, {
     skip_special_tokens: true
