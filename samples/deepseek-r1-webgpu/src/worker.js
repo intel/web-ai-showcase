@@ -142,9 +142,8 @@ async function load() {
     baseUrl = "/web-ai-showcase";
   }
 
-  env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@transformers_js_3_3_1/`;
   env.allowLocalModels = true;
-  env.allowRemoteModels = false;
+  env.allowRemoteModels = true;
   env.localModelPath = `${baseUrl}/models/`;
 
   // Load the pipeline and save it for future use.

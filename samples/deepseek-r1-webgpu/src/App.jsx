@@ -6,7 +6,6 @@ import StopIcon from "./components/icons/StopIcon";
 import Progress from "./components/Progress";
 
 import {
-  initModelsPanelHandler,
   getElementId4Resource,
   removeHiddenClass,
   formatBytes
@@ -82,56 +81,6 @@ function App() {
     setTps(null);
     setIsRunning(true);
     setInput("");
-  }
-
-  function constructLoadModelsPanel(modelName, targetElement) {
-    const resourcesPanelHTML = ALL_NEEDED_MODEL_RESOURCES[modelName].resources
-      .map((resource) => {
-        const elementId = getElementId4Resource(resource);
-
-        const text =
-          resource.indexOf("/") > 0 ? resource.split("/")[1] : resource;
-
-        const url =
-          "https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/files";
-
-        return `<div
-        class="flex min-h-[40px] bg-stone-200 rounded-md text-sm items-center justify-between gap-2 font-mono p-1 m-1"
-      >
-        <a
-          class="text-gray-900 font-semibold text-indigo-600 px-1"
-          href="${url}"
-          target="_blank"
-          >${text}
-          <span
-            id="${elementId}StatusFlag"
-            class="hidden text-lg text-green-600"
-            >√</span
-          ></a
-        >
-
-        <button
-          class="px-2 mx-2 rounded-md text-stone-50 outline outline-1 bg-stone-500/50 hover:bg-stone-500/90"
-        >
-          <label class="cursor-pointer" for="uploadInput4${elementId}"
-            >Load</label
-          >
-          <input
-            style="display: none"
-            type="file"
-            id="uploadInput4${elementId}"
-            multiple
-          />
-        </button>
-      </div>`;
-      })
-      .join("");
-
-    const tag = `<span class="font-semibold text-md p-2 italic"
-      >模型文件</span
-    >`;
-
-    targetElement.innerHTML = tag + resourcesPanelHTML;
   }
 
   function changeClass4StatusBar(status, targetElement) {
@@ -293,31 +242,28 @@ function App() {
 
   function bindEventListener() {
     const PROGRESS_BAR = document.getElementById(`progressBar`);
+    const resource = "onnx/model_q4f16.onnx";
+    const inputElement = document.getElementById(`uploadModel`);
+    if (inputElement) {
+      inputElement.addEventListener("change", async function (event) {
+        const files = event.target.files;
+        if (!files.length) {
+          return;
+        }
 
-    ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].resources.map((resource) => {
-      const elementId = getElementId4Resource(resource);
+        const cache = await caches.open(DEFAULT_CACHE_STORAGE_NAME);
 
-      const inputElement = document.getElementById(`uploadInput4${elementId}`);
-      if (inputElement) {
-        inputElement.addEventListener("change", async function (event) {
-          const files = event.target.files;
-          if (!files.length) {
-            return;
-          }
+        for (const file of files) {
+          const reader = new FileReader();
 
-          const cache = await caches.open(DEFAULT_CACHE_STORAGE_NAME);
+          reader.onprogress = function (progressEvent) {
+            if (progressEvent.lengthComputable) {
+              const loaded = progressEvent.loaded;
+              const total = progressEvent.total;
+              // show the progress bar
+              removeHiddenClass(PROGRESS_BAR);
 
-          for (const file of files) {
-            const reader = new FileReader();
-
-            reader.onprogress = function (progressEvent) {
-              if (progressEvent.lengthComputable) {
-                const loaded = progressEvent.loaded;
-                const total = progressEvent.total;
-                // show the progress bar
-                removeHiddenClass(PROGRESS_BAR);
-
-                PROGRESS_BAR.innerHTML = `
+              PROGRESS_BAR.innerHTML = `
                     <div class="relative px-2 z-20" id="StatusText"></div>
                     <div class="relative px-2 z-20">
                       <span id="ProgressVal">0%</span>
@@ -328,80 +274,69 @@ function App() {
                     ></div>
                  `;
 
-                const statusText = document.getElementById(`StatusText`);
-                // show the progress of downloading
-                const progressEle = document.getElementById(`ProgressBar`);
-                // show the progress value
-                const progressValEle = document.getElementById(`ProgressVal`);
+              const statusText = document.getElementById(`StatusText`);
+              // show the progress of downloading
+              const progressEle = document.getElementById(`ProgressBar`);
+              // show the progress value
+              const progressValEle = document.getElementById(`ProgressVal`);
 
-                let progress = (loaded / total) * 100;
-                statusText.textContent = `模型文件上传中 ...`;
+              let progress = (loaded / total) * 100;
+              statusText.textContent = `模型文件上传中 ...`;
 
-                if (!progressEle.style.height) {
-                  progressEle.style.height = "30px";
-                }
-                progressEle.style.width = `${progress}%`;
-                progressValEle.textContent = `${formatBytes(
-                  loaded
-                )}/${formatBytes(total)}`;
+              if (!progressEle.style.height) {
+                progressEle.style.height = "30px";
               }
-            };
+              progressEle.style.width = `${progress}%`;
+              progressValEle.textContent = `${formatBytes(
+                loaded
+              )}/${formatBytes(total)}`;
+            }
+          };
 
-            reader.onload = async function (fileEvent) {
-              const arrayBuffer = fileEvent.target.result;
-              const blob = new Blob([arrayBuffer]);
-              const fileExt =
-                file.name.split(".").length > 0 ? file.name.split(".")[1] : "";
-              const contentType =
-                fileExt === "json"
-                  ? "text/plain; charset=utf-8"
-                  : "binary/octet-stream";
-              const response = new Response(blob, {
-                headers: {
-                  "Content-Length": blob.size.toString(),
-                  "Accept-Ranges": "bytes",
-                  "Content-Type": contentType
-                }
-              });
-              // construct the url for this cached resource.
-              const cacheKey = LOCAL_REQUEST_PREFIX + resource;
-              const cacheResponse = await cache.match(cacheKey);
-              if (!cacheResponse) {
-                cache
-                  .put(cacheKey, response)
-                  .then(() => {
-                    console.log(`cache ${resource} successfully.`);
-                    scanCacheStorage();
-                  })
-                  .catch((error) => {
-                    console.error(`cache ${resource} failed:`, error);
-                  });
+          reader.onload = async function (fileEvent) {
+            const arrayBuffer = fileEvent.target.result;
+            const blob = new Blob([arrayBuffer]);
+            const fileExt =
+              file.name.split(".").length > 0 ? file.name.split(".")[1] : "";
+            const contentType =
+              fileExt === "json"
+                ? "text/plain; charset=utf-8"
+                : "binary/octet-stream";
+            const response = new Response(blob, {
+              headers: {
+                "Content-Length": blob.size.toString(),
+                "Accept-Ranges": "bytes",
+                "Content-Type": contentType
               }
+            });
+            // construct the url for this cached resource.
+            const cacheKey = LOCAL_REQUEST_PREFIX + resource;
+            const cacheResponse = await cache.match(cacheKey);
+            if (!cacheResponse) {
+              cache
+                .put(cacheKey, response)
+                .then(() => {
+                  console.log(`cache ${resource} successfully.`);
+                  scanCacheStorage();
+                })
+                .catch((error) => {
+                  console.error(`cache ${resource} failed:`, error);
+                });
+            }
 
-              if (!PROGRESS_BAR.classList.contains("hidden")) {
-                PROGRESS_BAR.classList.add("hidden");
-              }
-            };
+            if (!PROGRESS_BAR.classList.contains("hidden")) {
+              PROGRESS_BAR.classList.add("hidden");
+            }
+          };
 
-            reader.readAsArrayBuffer(file);
-          }
-        });
-      }
-    });
+          reader.readAsArrayBuffer(file);
+        }
+      });
+    }
   }
 
   useEffect(() => {
-    const LOAD_MODELS_LOCALLY_BUTTON = document.getElementById(
-      "loadModelLocallyBtn"
-    );
-    const LOAD_MODELS_POPOVER = document.getElementById("modelPopover");
-    const MODEL_PANEL_WRAPPER = document.getElementById("modelPanelWrapper");
-
     setupNavigBar("../..");
-
-    constructLoadModelsPanel(MODEL_NAME, MODEL_PANEL_WRAPPER);
-
-    initModelsPanelHandler(LOAD_MODELS_LOCALLY_BUTTON, LOAD_MODELS_POPOVER);
 
     // bind event listener for loading models
     bindEventListener();
@@ -597,7 +532,7 @@ function App() {
 
       <div
         id="sampleInfoPanel"
-        className="h-full overflow-auto scrollbar-thin flex  items-center flex-col relative 2xl:mt-10 mt-2"
+        className="h-full overflow-auto scrollbar-thin flex items-center flex-col relative 2xl:mt-10 mt-2"
       >
         <div className="flex flex-col items-center mb-1 text-center">
           <img
@@ -619,8 +554,17 @@ function App() {
 
               <div className="flex flex-wrap items-center gap-2 2xl:gap-4">
                 <div className="flex items-center justify-between">
-                  <span className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10">
-                    model_q4f16.onnx
+                  <span
+                    title="点击下载模型"
+                    className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >
+                    <a
+                      href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/file/view/master?fileName=onnx%252Fmodel_q4f16.onnx&status=2"
+                      target="_blank"
+                    >
+                      {" "}
+                      model_q4f16.onnx
+                    </a>{" "}
                   </span>
 
                   <span
@@ -636,7 +580,7 @@ function App() {
         </div>
 
         {status === null && dialogMessages.length === 0 && (
-          <div className="flex 2xl:mt-20 mt-4 items-center flex-col relative">
+          <div className="flex 2xl:mt-15 mt-10 items-center flex-col relative">
             <div className="flex flex-col items-center px-4">
               <p className="max-w-[514px] mb-4 text-sm 2xl:text-base">
                 <br />
@@ -673,27 +617,23 @@ function App() {
                 开源项目改编而成。
               </p>
 
-              <div className="w-full flex justify-center items-center 2xl:mt-20 mt-4">
+              <div className="w-full flex justify-center items-center 2xl:mt-20 mt-10">
                 <div className="relative">
                   <button
                     id="loadModelLocallyBtn"
-                    className="w-[180px] 2xl:w-[200px] cursor-pointer control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:translate-x-0 hover:bg-stone-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold p-2 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
+                    className="w-[180px] 2xl:w-[200px] cursor-pointer control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:translate-x-0 hover:bg-indigo-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold p-2 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
                     disabled={status !== null}
                   >
-                    <span title="upload model from your local file system">
-                      {" "}
-                      上传模型文件
-                    </span>
+                    <label className="cursor-pointer" htmlFor="uploadModel">
+                      <span title="从本地文件系统上传模型"> 上传模型文件</span>
+                    </label>
+                    <input
+                      style={{ display: "none" }}
+                      type="file"
+                      id="uploadModel"
+                      multiple
+                    />
                   </button>
-                  <div
-                    id="modelPopover"
-                    className="transition-all ease-in-out delay-300 -z-50 opacity-0 absolute top-[43px]  backdrop-blur-xl"
-                  >
-                    <div
-                      id="modelPanelWrapper"
-                      className="w-screen max-w-[280px] flex flex-col overflow-hidden rounded-2xl bg-stone-50/30 p-2"
-                    ></div>
-                  </div>
                 </div>
                 <div>
                   {error && (
@@ -833,7 +773,7 @@ function App() {
         )}
       </div>
       <div className="flex justify-center items-center gap-8 mb-3">
-        <p className="text-xs text-gray-400 text-center">
+        <p className="text-xs text-white text-center">
           免责声明：生成的内容可能是假的或是不准确的。
         </p>
 
