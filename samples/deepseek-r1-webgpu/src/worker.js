@@ -142,16 +142,10 @@ async function load() {
     baseUrl = "/web-ai-showcase";
   }
 
-  // eslint-disable-next-line no-undef
-  if (!VITE_ENV_USE_REMOTE_MODELS) {
-    env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@transformers_js_3_3_1/`;
-    env.allowLocalModels = true;
-    env.allowRemoteModels = false;
-    env.localModelPath = `${baseUrl}/models/`;
-  } else {
-    env.allowLocalModels = false;
-    env.allowRemoteModels = true;
-  }
+  env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@transformers_js_3_3_1/`;
+  env.allowLocalModels = true;
+  env.allowRemoteModels = false;
+  env.localModelPath = `${baseUrl}/models/`;
 
   // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {

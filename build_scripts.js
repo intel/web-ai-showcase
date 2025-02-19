@@ -39,6 +39,11 @@ function copyResourcesIntoDist(args) {
   // ignore the models resources deployed with `remote` mode
   const RESOURCES_ARRAY = args === "--use-remote-models" ? [] : ["models"];
 
+  // Some demos won't be deployed with `remote` mode so we copy their resources unconditionally.
+  const EXTRA_RESOURCE_ARRAY = [
+    "models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX"
+  ];
+
   const REMOTE_DEMOS_DIST = {
     "samples/phi3-webgpu/dist/assets": "/assets",
     "samples/phi3-webgpu/dist/index.html": "samples/phi3-webgpu/",
@@ -49,6 +54,14 @@ function copyResourcesIntoDist(args) {
   console.log(">>> Copy resources into distribution package...");
   if (os.platform() === "win32") {
     for (let path of RESOURCES_ARRAY) {
+      if (path)
+        execSync(
+          `powershell -Command "Copy-Item -Path "${path}" -Destination "dist/${path}" -Recurse -Force"`,
+          { stdio: "inherit" }
+        );
+    }
+
+    for (let path of EXTRA_RESOURCE_ARRAY) {
       if (path)
         execSync(
           `powershell -Command "Copy-Item -Path "${path}" -Destination "dist/${path}" -Recurse -Force"`,
@@ -72,6 +85,11 @@ function copyResourcesIntoDist(args) {
     }
   } else {
     for (let path of RESOURCES_ARRAY) {
+      if (path)
+        execSync(`mkdir -p dist/${path} && cp -r ${path}/* dist/${path}`);
+    }
+
+    for (let path of EXTRA_RESOURCE_ARRAY) {
       if (path)
         execSync(`mkdir -p dist/${path} && cp -r ${path}/* dist/${path}`);
     }
