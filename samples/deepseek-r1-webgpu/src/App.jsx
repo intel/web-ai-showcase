@@ -608,8 +608,7 @@ function App() {
           ></img>
           <h1 className="text-4xl font-bold 2xl:mb-1">DeepSeek-R1 WebGPU</h1>
           <h2 className="font-semibold hidden 2xl:block">
-            A next-generation reasoning model that runs locally in your browser
-            with WebGPU acceleration.
+            在浏览器本地运行的下一代大语言模型
           </h2>
 
           <div className="grid grid-rows">
@@ -641,7 +640,7 @@ function App() {
             <div className="flex flex-col items-center px-4">
               <p className="max-w-[514px] mb-4 text-sm 2xl:text-base">
                 <br />
-                您将通过本网页在浏览器内使用一个拥有15亿参数的大预言模型{" "}
+                您将在浏览器内使用一个拥有15亿参数的大语言模型{" "}
                 <a
                   href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/files"
                   target="_blank"
@@ -650,7 +649,7 @@ function App() {
                 >
                   DeepSeek-R1-Distill-Qwen-1.5B
                 </a>
-                。全部推理过程都将通过{" "}
+                ，全部推理过程都将通过{" "}
                 <a
                   href="https://github.com/huggingface/transformers.js/blob/main/README.md"
                   target="_blank"
@@ -661,8 +660,8 @@ function App() {
                 </a>{" "}
                 和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成，
                 推理过程中不会向服务器端传递任何数据。
-                在网页加载完毕后，即使是离线情况下您也能通过该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
-                这样下次使用时将不再需要重复加载模型文件。本项目的源代码基于{" "}
+                网页加载完毕后，即使在离线情况下您也能使用该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
+                这样在您下次使用时将不再需要重复加载模型文件。本项目由{" "}
                 <a
                   href="https://github.com/huggingface/transformers.js-examples/tree/main/deepseek-r1-webgpu"
                   target="_blank"
@@ -671,7 +670,7 @@ function App() {
                 >
                   GitHub
                 </a>
-                改编而成。
+                开源项目改编而成。
               </p>
 
               <div className="w-full flex justify-center items-center 2xl:mt-20 mt-4">
