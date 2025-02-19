@@ -49,7 +49,6 @@ class TextGenerationPipeline {
 
 const stopping_criteria = new InterruptableStoppingCriteria();
 
-let past_key_values_cache = null;
 async function generate(messages) {
   // Retrieve the text-generation pipeline.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance();
@@ -61,10 +60,11 @@ async function generate(messages) {
 
   // 151648: <think>
   // 151649: </think>
-  const [START_THINKING_TOKEN_ID, END_THINKING_TOKEN_ID] = tokenizer.encode(
-    "<think></think>",
-    { add_special_tokens: false }
-  );
+  const encodeResult = tokenizer.encode("<think></think>", {
+    add_special_tokens: false
+  });
+
+  const END_THINKING_TOKEN_ID = encodeResult[1];
 
   let state = "thinking"; // 'thinking' or 'answering'
   let startTime;
@@ -116,7 +116,6 @@ async function generate(messages) {
     stopping_criteria,
     return_dict_in_generate: true
   });
-  past_key_values_cache = past_key_values;
 
   const decoded = tokenizer.batch_decode(sequences, {
     skip_special_tokens: true
@@ -186,7 +185,6 @@ self.addEventListener("message", async (e) => {
       break;
 
     case "reset":
-      past_key_values_cache = null;
       stopping_criteria.reset();
       break;
   }
