@@ -22,7 +22,8 @@ export default [
       "samples/deepseek-r1-webgpu/dist/**/*.js",
       "**/*.config.js",
       "**/*.config.cjs",
-      "models/**/*.js"
+      "models/**/*.js",
+      "models/**/*.mjs"
     ]
   },
   pluginJs.configs.recommended
