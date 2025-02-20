@@ -270,7 +270,7 @@ function App() {
                     </div>
                     <div
                       id="ProgressBar"
-                      class="absolute top-0 rounded-lg z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                      class="absolute top-0 rounded-lg z-10 text-left bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-sm font-mono"
                     ></div>
                  `;
 
@@ -284,7 +284,7 @@ function App() {
               statusText.textContent = `模型文件上传中 ...`;
 
               if (!progressEle.style.height) {
-                progressEle.style.height = "30px";
+                progressEle.style.height = "24px";
               }
               progressEle.style.width = `${progress}%`;
               progressValEle.textContent = `${formatBytes(
@@ -532,22 +532,22 @@ function App() {
 
       <div
         id="sampleInfoPanel"
-        className="h-full overflow-auto scrollbar-thin flex items-center flex-col relative 2xl:mt-10 mt-2"
+        className={`h-full overflow-auto scrollbar-thin flex ${dialogMessages.length === 0 ? "justify-evenly" : "2xl:mt-10 mt-4"} items-center flex-col relative`}
       >
-        <div className="flex flex-col items-center mb-1 text-center">
+        <div className="grid 2xl:gap-4 gap:2 justify-items-center text-center basis-1/4">
           <img
             src={logoImg}
             width="100%"
             height="auto"
             className="2xl:block max-w-[250px] hidden"
           ></img>
-          <h1 className="text-4xl font-bold 2xl:mb-1">DeepSeek-R1 WebGPU</h1>
+          <h1 className="text-4xl font-bold">DeepSeek-R1 WebGPU</h1>
           <h2 className="font-semibold hidden 2xl:block">
             在浏览器本地运行的下一代大语言模型
           </h2>
 
           <div className="grid grid-rows">
-            <div className="text-nowrap justify-self-center flex gap-2 2xl:gap-4 items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono 2xl:mt-10 mt-4">
+            <div className="text-nowrap justify-self-center flex gap-2 2xl:gap-4 items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono">
               <div className="text-md text-stone-50 font-semibold">
                 模型文件
               </div>
@@ -578,159 +578,174 @@ function App() {
             </div>
           </div>
         </div>
-
+        <div className="flex items-center flex-col relative justify-center 2xl:basis-3/8 basis-1/4">
+          <div className="flex flex-col items-center px-4">
+            <p className="max-w-[514px] text-sm 2xl:text-base">
+              <br />
+              您将在浏览器内使用一个拥有15亿参数的大语言模型{" "}
+              <a
+                href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/file/view/master?fileName=onnx%252Fmodel_q4f16.onnx&status=2"
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium underline text-amber-300 dark:text-amber-200"
+              >
+                DeepSeek-R1-Distill-Qwen-1.5B
+              </a>
+              ，全部推理过程都将通过{" "}
+              <a
+                href="https://github.com/huggingface/transformers.js/blob/main/README.md"
+                target="_blank"
+                rel="noreferrer"
+                className="underline"
+              >
+                🤗&nbsp;Transformers.js
+              </a>{" "}
+              和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成，
+              推理过程中不会向服务器端传递任何数据。
+              网页加载完毕后，即使在离线情况下您也能使用该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
+              这样在您下次使用时将不再需要重复加载模型文件。本项目由{" "}
+              <a
+                href="https://github.com/huggingface/transformers.js-examples/tree/main/deepseek-r1-webgpu"
+                target="_blank"
+                rel="noreferrer"
+                className="font-medium underline"
+              >
+                GitHub
+              </a>
+              开源项目改编而成。
+            </p>
+          </div>
+          <div></div>
+        </div>
         {status === null && dialogMessages.length === 0 && (
-          <div className="flex 2xl:mt-15 mt-10 items-center flex-col relative">
-            <div className="flex flex-col items-center px-4">
-              <p className="max-w-[514px] mb-4 text-sm 2xl:text-base">
-                <br />
-                您将在浏览器内使用一个拥有15亿参数的大语言模型{" "}
-                <a
-                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/files"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-medium underline text-amber-300 dark:text-amber-200"
+          <div className="flex items-center flex-col relative justify-center basis-1/4">
+            <div className="w-full flex justify-center items-center">
+              <div className="relative flex flex-row items-center">
+                <button
+                  id="loadModelLocallyBtn"
+                  className="w-[180px] 2xl:w-[200px] cursor-pointer control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:translate-x-0 hover:bg-indigo-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold p-2 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
+                  disabled={status !== null}
                 >
-                  DeepSeek-R1-Distill-Qwen-1.5B
-                </a>
-                ，全部推理过程都将通过{" "}
+                  <label className="cursor-pointer" htmlFor="uploadModel">
+                    <span title="从本地文件系统上传模型"> 上传模型文件</span>
+                  </label>
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    id="uploadModel"
+                    multiple
+                  />
+                </button>{" "}
                 <a
-                  href="https://github.com/huggingface/transformers.js/blob/main/README.md"
+                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/file/view/master?fileName=onnx%252Fmodel_q4f16.onnx&status=2"
                   target="_blank"
-                  rel="noreferrer"
-                  className="underline"
+                  className="ml-4 text-stone-50 underline flex flex-row"
                 >
-                  🤗&nbsp;Transformers.js
-                </a>{" "}
-                和ONNX Runtime Web调用浏览器提供的WebGPU API在本地完成，
-                推理过程中不会向服务器端传递任何数据。
-                网页加载完毕后，即使在离线情况下您也能使用该网页进行大语言模型的推理。模型加载完毕后将会缓存在浏览器中，
-                这样在您下次使用时将不再需要重复加载模型文件。本项目由{" "}
-                <a
-                  href="https://github.com/huggingface/transformers.js-examples/tree/main/deepseek-r1-webgpu"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="font-medium underline"
-                >
-                  GitHub
-                </a>
-                开源项目改编而成。
-              </p>
-
-              <div className="w-full flex justify-center items-center 2xl:mt-20 mt-10">
-                <div className="relative">
-                  <button
-                    id="loadModelLocallyBtn"
-                    className="w-[180px] 2xl:w-[200px] cursor-pointer control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:translate-x-0 hover:bg-indigo-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold p-2 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
-                    disabled={status !== null}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#FFFFFF"
                   >
-                    <label className="cursor-pointer" htmlFor="uploadModel">
-                      <span title="从本地文件系统上传模型"> 上传模型文件</span>
-                    </label>
-                    <input
-                      style={{ display: "none" }}
-                      type="file"
-                      id="uploadModel"
-                      multiple
-                    />
-                  </button>
-                </div>
-                <div>
-                  {error && (
-                    <div className="text-red-500 text-center mb-2">
-                      <p className="mb-1">上传模型文件失败。错误信息:</p>
-                      <p className="text-sm">{error}</p>
-                    </div>
-                  )}
-                </div>
+                    <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+                  </svg>
+                  下载模型
+                </a>
+              </div>
+              <div>
+                {error && (
+                  <div className="text-red-500 text-center mb-2">
+                    <p className="mb-1">上传模型文件失败。错误信息:</p>
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div
+              id="progressBar"
+              className="relative hidden rounded-lg w-[500px] min-h-[24px] bg-stone-200/40 flex items-center justify-between font-mono mt-4"
+            ></div>
+          </div>
+        )}
+        {(status === "loading" || status === "compiling") && (
+          <>
+            <div className="flex flex-col 2xl:gap-4 gap-2 w-full max-w-[500px] text-left mx-auto p-4 bottom-0 mt-auto justify-items-center 2xl:3/8 basis-1/4">
+              <div className="mx-auto w-auto 2xl:px-4 2xl:py-2 px-2 py-1 mb-2 flex items-center justify-center rounded-md bg-stone-50/60 2xl:text-base text-sm font-semibold text-stone-700">
+                {loadingMessage}
               </div>
 
-              <div
-                id="progressBar"
-                className="relative hidden rounded-lg w-[514px] min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono mt-4"
-              ></div>
+              {progressItems.map(({ file, progress, total }, i) => (
+                <Progress
+                  key={i}
+                  text={file}
+                  percentage={progress}
+                  total={total}
+                />
+              ))}
             </div>
+          </>
+        )}{" "}
+        {status === "ready" && (
+          <div
+            ref={chatContainerRef}
+            className="overflow-y-auto scrollbar-thin w-full flex flex-col items-center h-full basis-2/4 2xl:basis-1/4 justify-center"
+          >
+            <Chat messages={[...historyMessages, ...dialogMessages]} />
+            {historyMessages.length === 0 && dialogMessages.length === 0 && (
+              <div>
+                {EXAMPLES.map((msg, i) => (
+                  <div
+                    key={i}
+                    className="m-1 border border-gray-300 dark:border-gray-600 rounded-md p-2 dark:bg-gray-700 cursor-pointer"
+                    onClick={() => onEnter(msg)}
+                  >
+                    {msg}
+                  </div>
+                ))}
+              </div>
+            )}
+            <p className="text-center text-sm min-h-6 text-stone-300 dark:text-gray-300">
+              {tps && dialogMessages.length > 0 && (
+                <>
+                  {!isRunning && (
+                    <span>
+                      一共生成 {numTokens} tokens，用时{" "}
+                      {(numTokens / tps).toFixed(2)}秒&nbsp;&#40;
+                    </span>
+                  )}
+                  {
+                    <>
+                      <span className="font-medium text-center mr-1 text-sky-500 dark:text-white">
+                        {tps.toFixed(2)}
+                      </span>
+                      <span className="text-stone-300 dark:text-gray-300">
+                        tokens/秒
+                      </span>
+                    </>
+                  }
+                  {!isRunning && (
+                    <>
+                      <span className="mr-1">&#41;.</span>
+                      <span
+                        className="underline cursor-pointer text-amber-300"
+                        onClick={() => {
+                          worker.current.postMessage({ type: "reset" });
+                          setDialogMessages([]);
+                        }}
+                      >
+                        重置上下文
+                      </span>
+                    </>
+                  )}
+                </>
+              )}
+            </p>
           </div>
         )}
       </div>
-      {(status === "loading" || status === "compiling") && (
-        <>
-          <div className="w-full max-w-[500px] text-left mx-auto p-4 bottom-0 mt-auto">
-            <div className="relative mb-8">
-              {" "}
-              <div className="w-auto px-2 py-1 2xl:px-4 2xl:px-4 items-center mb-1 rounded-md bg-stone-50/60 2xl:text-base text-sm font-semibold text-stone-700 absolute_center">
-                {loadingMessage}
-              </div>
-            </div>
 
-            {progressItems.map(({ file, progress, total }, i) => (
-              <Progress
-                key={i}
-                text={file}
-                percentage={progress}
-                total={total}
-              />
-            ))}
-          </div>
-        </>
-      )}
-      {status === "ready" && (
-        <div
-          ref={chatContainerRef}
-          className="overflow-y-auto scrollbar-thin w-full flex flex-col items-center h-full"
-        >
-          <Chat messages={[...historyMessages, ...dialogMessages]} />
-          {historyMessages.length === 0 && dialogMessages.length === 0 && (
-            <div>
-              {EXAMPLES.map((msg, i) => (
-                <div
-                  key={i}
-                  className="m-1 border border-gray-300 dark:border-gray-600 rounded-md p-2 dark:bg-gray-700 cursor-pointer"
-                  onClick={() => onEnter(msg)}
-                >
-                  {msg}
-                </div>
-              ))}
-            </div>
-          )}
-          <p className="text-center text-sm min-h-6 text-stone-300 dark:text-gray-300">
-            {tps && dialogMessages.length > 0 && (
-              <>
-                {!isRunning && (
-                  <span>
-                    一共生成 {numTokens} tokens，用时{" "}
-                    {(numTokens / tps).toFixed(2)}秒&nbsp;&#40;
-                  </span>
-                )}
-                {
-                  <>
-                    <span className="font-medium text-center mr-1 text-sky-500 dark:text-white">
-                      {tps.toFixed(2)}
-                    </span>
-                    <span className="text-stone-300 dark:text-gray-300">
-                      tokens/秒
-                    </span>
-                  </>
-                }
-                {!isRunning && (
-                  <>
-                    <span className="mr-1">&#41;.</span>
-                    <span
-                      className="underline cursor-pointer text-amber-300"
-                      onClick={() => {
-                        worker.current.postMessage({ type: "reset" });
-                        setDialogMessages([]);
-                      }}
-                    >
-                      重置上下文
-                    </span>
-                  </>
-                )}
-              </>
-            )}
-          </p>
-        </div>
-      )}
       <div className="mt-2 border dark:bg-gray-700 rounded-lg w-[600px] max-w-[80%] max-h-[200px] mx-auto relative mb-3 flex">
         <textarea
           ref={textareaRef}
