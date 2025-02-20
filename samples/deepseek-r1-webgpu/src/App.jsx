@@ -270,7 +270,7 @@ function App() {
                     </div>
                     <div
                       id="ProgressBar"
-                      class="absolute top-0 rounded-lg z-10 text-right bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                      class="absolute top-0 rounded-lg z-10 text-left bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-sm font-mono"
                     ></div>
                  `;
 
@@ -284,7 +284,7 @@ function App() {
               statusText.textContent = `模型文件上传中 ...`;
 
               if (!progressEle.style.height) {
-                progressEle.style.height = "30px";
+                progressEle.style.height = "24px";
               }
               progressEle.style.width = `${progress}%`;
               progressValEle.textContent = `${formatBytes(
@@ -578,7 +578,7 @@ function App() {
             </div>
           </div>
         </div>
-        <div className="flex items-center flex-col relative justify-start 2xl:basis-3/8 basis-1/4">
+        <div className="flex items-center flex-col relative justify-center 2xl:basis-3/8 basis-1/4">
           <div className="flex flex-col items-center px-4">
             <p className="max-w-[514px] text-sm 2xl:text-base">
               <br />
@@ -618,7 +618,7 @@ function App() {
           <div></div>
         </div>
         {status === null && dialogMessages.length === 0 && (
-          <div className="flex items-center flex-col relative justify-start basis-1/4">
+          <div className="flex items-center flex-col relative justify-center basis-1/4">
             <div className="w-full flex justify-center items-center">
               <div className="relative flex flex-row items-center">
                 <button
@@ -665,7 +665,7 @@ function App() {
 
             <div
               id="progressBar"
-              className="relative hidden rounded-lg w-[514px] min-h-[30px] bg-stone-200/40 flex items-center justify-between font-mono mt-4"
+              className="relative hidden rounded-lg w-[500px] min-h-[24px] bg-stone-200/40 flex items-center justify-between font-mono mt-4"
             ></div>
           </div>
         )}
@@ -690,7 +690,7 @@ function App() {
         {status === "ready" && (
           <div
             ref={chatContainerRef}
-            className="overflow-y-auto scrollbar-thin w-full flex flex-col items-center h-full basis-2/4 2xl:basis-1/4 justify-start"
+            className="overflow-y-auto scrollbar-thin w-full flex flex-col items-center h-full basis-2/4 2xl:basis-1/4 justify-center"
           >
             <Chat messages={[...historyMessages, ...dialogMessages]} />
             {historyMessages.length === 0 && dialogMessages.length === 0 && (
