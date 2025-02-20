@@ -147,20 +147,12 @@ async function load() {
   env.localModelPath = `${baseUrl}/models/`;
 
   // Load the pipeline and save it for future use.
-  const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
+  await TextGenerationPipeline.getInstance((x) => {
     // We also add a progress callback to the pipeline so that we can
     // track model loading.
     self.postMessage(x);
   });
 
-  self.postMessage({
-    status: "loading",
-    data: "Warming up"
-  });
-
-  // Run model with dummy input to compile shaders
-  const inputs = tokenizer("a");
-  await model.generate({ ...inputs, max_new_tokens: 1 });
   self.postMessage({ status: "ready" });
 }
 // Listen for messages from the main thread
