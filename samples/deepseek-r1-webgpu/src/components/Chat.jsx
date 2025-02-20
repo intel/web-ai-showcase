@@ -105,7 +105,7 @@ export default function Chat({ messages }) {
 
   return (
     <div
-      className={`${empty ? "flex flex-col items-center justify-end" : "flex-1 p-6 max-w-[960px] w-full space-y-4"}`}
+      className={`overflow-y-auto scrollbar-thin ${empty ? "flex flex-col items-center justify-end" : "flex-1 p-6 max-w-[1280px] w-full space-y-4"}`}
     >
       <MathJaxContext>
         {messages.map((msg, i) => (
