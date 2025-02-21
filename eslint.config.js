@@ -18,9 +18,12 @@ export default [
       "dist/**/*.js",
       "samples/phi3-webgpu/node_modules/**/*.js",
       "samples/phi3-webgpu/dist/**/*.js",
+      "samples/deepseek-r1-webgpu/node_modules/**/*.js",
+      "samples/deepseek-r1-webgpu/dist/**/*.js",
       "**/*.config.js",
       "**/*.config.cjs",
-      "models/**/*.js"
+      "models/**/*.js",
+      "models/**/*.mjs"
     ]
   },
   pluginJs.configs.recommended

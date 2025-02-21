@@ -31,7 +31,8 @@ export const TRANSFORMER_LOCAL_MODEL_PATH = "/models/";
 export const TRANSFORMERS_V3_ORT_ENV_WASM_FILE_PATH =
   "/models/frameworks/ort-web/ort-web@1_17_1/";
 
-export const MEDIAPIPE_WASM_FILE_PATH = "/models/mediapipe/tasks-genai/wasm";
+export const MEDIAPIPE_WASM_FILE_PATH =
+  "/models/frameworks/mediapipe/tasks-genai";
 
 /**
  * Example:
@@ -79,9 +80,10 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
   },
 
   // background-removal
-  "RMBG-1.4": {
-    linkPathPrefix: "https://huggingface.co/briaai/RMBG-1.4/resolve/main/",
-    localFolderPathPrefix: "briaai/",
+  BiRefNet_T: {
+    linkPathPrefix:
+      "https://huggingface.co/onnx-community/BiRefNet_T/blob/main/",
+    localFolderPathPrefix: "onnx-community/",
     resources: ["onnx/model.onnx"]
   },
 
@@ -105,6 +107,7 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
     resources: []
   },
 
+  // used by Phi-3
   "Phi-3-mini-4k-instruct": {
     linkPathPrefix:
       "https://huggingface.co/Xenova/Phi-3-mini-4k-instruct/resolve/main/",
@@ -119,7 +122,21 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
     resources: ["onnx/model_q4.onnx", "onnx/model_q4.onnx_data"]
   },
 
+  // used by DeepSeek-R1
+  "DeepSeek-R1-Distill-Qwen-1.5B-ONNX": {
+    linkPathPrefix:
+      "https://huggingface.co/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/resolve/main/",
+    localFolderPathPrefix: "onnx-community/",
+    resources: ["onnx/model_q4f16.onnx"]
+  },
+
   // ort web wasm
+  "ort-web@transformers_js_3_3_1": {
+    linkPathPrefix: "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.1/dist/",
+    localFolderPathPrefix: "frameworks/ort-web/",
+    resources: ["ort-wasm-simd-threaded.jsep.wasm", "ort-wasm-simd-threaded.jsep.mjs"]
+  },
+
   "ort-web@1_18_0": {
     linkPathPrefix: "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/",
     localFolderPathPrefix: "frameworks/ort-web/",

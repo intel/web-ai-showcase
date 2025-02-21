@@ -24,6 +24,9 @@ body {
   background: rgba(0, 7, 52, 1) url("/assets/bg.png") center / cover no-repeat
     fixed;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .text-shadow-sm {
@@ -39,4 +42,22 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.divider {
+  width: 95%;
+  margin: 10px auto;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.main-content {
+  flex: 1;
+}
+
+footer {
+  padding: 0 10px 10px 10px;
+  margin: 0 auto;
+  text-align: center;
+  border-top: 1px solid transparent;
 }

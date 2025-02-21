@@ -4,7 +4,7 @@
  *  SPDX-License-Identifier: Apache-2.0
  *-----------------------------------------------------------------------------------------------*/
 
-import { setupNavigBar } from "./navbar.js";
+import { setupNavigBar, setupFooter } from "./navigation.js";
 
 // Used for release to public domain, so the project can be hosted on GitHub Pages or other static hosting services.
 const baseUrl =
@@ -66,16 +66,29 @@ let SAMPLES = [
 
   // WebGPU
   {
-    id: "webgpu_background_removal",
-    title: "RMBG",
-    desc: "Remove the background of an image",
-    sampleUrl: "./samples/image_background_removal/index.html",
-    models: ["RMBG v1.4"],
-    tasks: "Image Segmentation",
+    id: "webgpu_llama32",
+    title: "Llama 3.2 1B",
+    desc: "Lightweight text-only model by Meta",
+    sampleUrl: "https://huggingface.co/spaces/webml-community/llama-3.2-webgpu",
+    models: ["llama"],
+    tasks: "Text Generation",
     webApis: [BACKENDS.WEBGPU],
     framework: "Transformers.js",
     devices: [DEVICES.GPU],
-    update: "2024-06-08"
+    update: "2024-10-02"
+  },
+  {
+    id: "webgpu_whisper_large",
+    title: "Whisper Large V3 Turbo",
+    desc: "Automatic speech recognition (ASR) with OpenAI Whisper Large V3 Turbo",
+    sampleUrl:
+      "https://huggingface.co/spaces/webml-community/whisper-large-v3-turbo-webgpu",
+    models: ["Encoder", "Decoder"],
+    tasks: "Automatic Speech Recognition",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-10-02"
   },
   {
     id: "webgpu_benchmark",
@@ -103,6 +116,18 @@ let SAMPLES = [
     update: "2024-06-08"
   },
   {
+    id: "webgpu_deepseek_r1",
+    title: "DeepSeek-R1",
+    desc: "Language model released in Jan 2025 by DeepSeek",
+    sampleUrl: "./samples/deepseek-r1-webgpu/index.html",
+    models: ["DeepSeek R1 Distill Qwen 1.5B"],
+    tasks: "Text Generation",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2025-02-13"
+  },
+  {
     id: "webgpu_florence2",
     title: "Microsoft Florence2",
     desc: "Vision Foundation Model by Microsoft",
@@ -118,7 +143,8 @@ let SAMPLES = [
     id: "webgpu_gemini",
     title: "Google Gemini Nano",
     desc: "Google Gemini Nano integration with Chrome Canary",
-    sampleUrl: "https://huggingface.co/spaces/Xenova/experimental-built-in-ai-chat",
+    sampleUrl:
+      "https://huggingface.co/spaces/Xenova/experimental-built-in-ai-chat",
     models: ["Gemini Nano"],
     tasks: "Multimodal",
     webApis: [BACKENDS.WEBGPU],
@@ -179,7 +205,7 @@ let SAMPLES = [
   {
     id: "webgpu_phi3_mini",
     title: "Phi-3",
-    desc: "A private and powerful AI chatbot that runs locally in your browser",
+    desc: "Language model released in Apr 2024 by Microsoft",
     sampleUrl: "./samples/phi3-webgpu/index.html",
     models: ["Phi 3 Mini 4k Instruct"],
     tasks: "Text Generation",
@@ -187,6 +213,18 @@ let SAMPLES = [
     framework: "Transformers.js",
     devices: [DEVICES.GPU],
     update: "2024-06-09"
+  },
+  {
+    id: "webgpu_phi35_mini",
+    title: "Phi-3.5",
+    desc: "Language model released in Aug 2024 by Microsoft",
+    sampleUrl: "https://huggingface.co/spaces/webml-community/phi-3.5-webgpu",
+    models: ["Phi 3.5 Mini"],
+    tasks: "Text Generation",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2024-08-25"
   },
   {
     id: "webgpu_qwen2",
@@ -228,7 +266,8 @@ let SAMPLES = [
     id: "webgpu_smollm",
     title: "SmolLM",
     desc: "A blazingly fast and powerful SLM",
-    sampleUrl: "https://huggingface.co/spaces/HuggingFaceTB/SmolLM-360M-Instruct-WebGPU",
+    sampleUrl:
+      "https://huggingface.co/spaces/HuggingFaceTB/SmolLM-360M-Instruct-WebGPU",
     models: ["SmolLM"],
     tasks: "SLM",
     webApis: [BACKENDS.WEBGPU],
@@ -249,7 +288,7 @@ let SAMPLES = [
     update: "2024-06-09"
   },
   {
-    id: "webgpu_whisper",
+    id: "webgpu_whisper_base",
     title: "Whisper Base",
     desc: "Real-time speech recognition with OpenAI Whisper across 100 different languages",
     sampleUrl: "https://huggingface.co/spaces/Xenova/realtime-whisper-webgpu",
@@ -394,12 +433,15 @@ let SAMPLES = [
   }
 ];
 
-// the phi3 project only available in `production` mode
-// TODO: enable phi3 sample under development mode, maybe
-//       host another server for phi3 project since it is
+// the phi3 and deepseek-r1 projects only available in `production` mode
+// TODO: enable phi3 and deepseek-r1 samples under development mode, maybe
+//       host another server for phi3 and deepseek-r1 project since they are
 //       a standalone react + vite project
 if (import.meta.env.MODE === "development") {
-  SAMPLES = SAMPLES.filter((sample) => sample.id !== "webgpu_phi3_mini");
+  SAMPLES = SAMPLES.filter(
+    (sample) =>
+      sample.id !== "webgpu_phi3_mini" || sample.id !== "webgpu_deepseek_r1"
+  );
 }
 
 SAMPLES = SAMPLES.sort((a, b) => (a.update > b.update ? -1 : 1));
@@ -740,3 +782,4 @@ bindFilterChangeEventHandler();
 changeFilterHandler();
 setupVideos();
 setupNavigBar(".");
+setupFooter(".");

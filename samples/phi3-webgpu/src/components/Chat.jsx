@@ -29,7 +29,7 @@ export default function Chat({ messages }) {
                       <span
                         className="markdown"
                         dangerouslySetInnerHTML={{
-                          __html: DOMPurify.sanitize(marked.parse(msg.content)),
+                          __html: DOMPurify.sanitize(marked.parse(msg.content))
                         }}
                       />
                     ) : (

@@ -23,8 +23,11 @@ import {
   removeHiddenClass,
   formatBytes
 } from "../common/utility.js";
-import { setupNavigBar } from "../../js/navbar.js";
-import { MEDIAPIPE_WASM_FILE_PATH } from "../../config.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
+import {
+  MEDIAPIPE_WASM_FILE_PATH,
+  ALL_NEEDED_MODEL_RESOURCES
+} from "../../config.js";
 
 const input = document.getElementById("input");
 const output = document.getElementById("output");
@@ -46,8 +49,15 @@ if (location.href.toLowerCase().indexOf("github.io") > -1) {
 }
 
 let llmInference;
+
 const genaiFileset = await FilesetResolver.forGenAiTasks(
-  baseUrl + MEDIAPIPE_WASM_FILE_PATH
+  // eslint-disable-next-line no-undef
+  VITE_ENV_USE_REMOTE_MODELS
+    ? ALL_NEEDED_MODEL_RESOURCES["tasks-genai"].linkPathPrefix.replace(
+        /\/$/,
+        ""
+      )
+    : baseUrl + MEDIAPIPE_WASM_FILE_PATH
 );
 
 const STATUS = {
@@ -125,6 +135,8 @@ function setUpStatus(status) {
     if (!promptInputSection.classList.contains("running-mode")) {
       promptInputSection.classList.add("running-mode");
     }
+
+    promptInputSection.querySelector("textarea").setAttribute("readonly", true);
   } else if (status === STATUS.DEFAULT) {
     promptInspireBtn.disabled = false;
     submitBtn.disabled = false;
@@ -134,6 +146,8 @@ function setUpStatus(status) {
     if (promptInputSection.classList.contains("running-mode")) {
       promptInputSection.classList.remove("running-mode");
     }
+
+    promptInputSection.querySelector("textarea").removeAttribute("readonly");
   } else if (status === STATUS.UPLOADING) {
     promptInspireBtn.disabled = false;
     submitBtn.disabled = false;
@@ -143,6 +157,7 @@ function setUpStatus(status) {
     if (!promptInputSection.classList.contains("running-mode")) {
       promptInputSection.classList.add("running-mode");
     }
+    promptInputSection.querySelector("textarea").setAttribute("readonly", true);
   }
 }
 
@@ -243,3 +258,4 @@ document.getElementById("upload").addEventListener("change", function (event) {
 });
 
 setupNavigBar("../..");
+setupFooter("../..");

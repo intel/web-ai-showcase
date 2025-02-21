@@ -7,7 +7,7 @@
 
 import { AutoModel, AutoProcessor, env, RawImage } from "@xenova/transformers";
 
-import { setupNavigBar } from "../../js/navbar.js";
+import { setupNavigBar, setupFooter } from "../../js/navigation.js";
 import {
   changeClass4StatusBar,
   getRequestPrefix,
@@ -26,8 +26,9 @@ import {
 
 import exampleImg from "/assets/person.avif";
 
-// load navigation bar
+// load navigation bar & footer
 setupNavigBar("../..");
+setupFooter("../..");
 
 // Since we will download the model from the Hugging Face Hub, we can skip the local model check
 env.allowLocalModels = VITE_ENV_USE_REMOTE_MODELS ? false : true;
@@ -43,7 +44,9 @@ if (!VITE_ENV_USE_REMOTE_MODELS) {
 
 // Constants
 const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
-const MODEL_NAME = "RMBG-1.4";
+// !FIXME: currently the model has bug running with webgpu execution provider, waiting for upstream fix then we will enable this example
+const MODEL_NAME = "BiRefNet_T";
+const MODEL_ID = "onnx-community/BiRefNet_T";
 
 // Reference the elements that we will need
 const fileUpload = document.getElementById("upload");
@@ -67,15 +70,6 @@ let model = null;
 let processor = null;
 
 function model_progress_cb_handler(message) {
-  /**
-   *
-   * file - "onnx/model_quantized.onnx"
-   * loaded - 3997696
-   * name - "briaai/RMBG-1.4"
-   * progress - 9.003165670890668
-   * status - "progress"
-   * total : 44403226
-   */
   const fileName = message.file;
   let statusBarElement = null;
   if (fileName) {
@@ -333,7 +327,7 @@ async function predict(url) {
   try {
     // if model and processor are not ready, initialize them first
     if (!model) {
-      model = await AutoModel.from_pretrained("briaai/RMBG-1.4", {
+      model = await AutoModel.from_pretrained(MODEL_ID, {
         // Do not require config.json to be present in the repository
         progress_callback: model_progress_cb_handler,
         device: "webgpu",
@@ -342,20 +336,7 @@ async function predict(url) {
     }
 
     if (!processor) {
-      processor = await AutoProcessor.from_pretrained("briaai/RMBG-1.4", {
-        // Do not require config.json to be present in the repository
-        config: {
-          do_normalize: true,
-          do_pad: false,
-          do_rescale: true,
-          do_resize: true,
-          image_mean: [0.5, 0.5, 0.5],
-          feature_extractor_type: "ImageFeatureExtractor",
-          image_std: [1, 1, 1],
-          resample: 2,
-          rescale_factor: 0.00392156862745098,
-          size: { width: 1024, height: 1024 }
-        },
+      processor = await AutoProcessor.from_pretrained(MODEL_ID, {
         device: "webgpu",
         dtype: "fp32"
       });

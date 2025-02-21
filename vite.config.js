@@ -72,6 +72,8 @@ export default () => {
       rollupOptions: {
         input: {
           main: path.resolve(__dirname, "index.html"),
+          terms: path.resolve(__dirname, "terms.html"),
+
           stable_diffusion: path.resolve(
             __dirname,
             "samples/stable_diffusion/stable-diffusion.html"
