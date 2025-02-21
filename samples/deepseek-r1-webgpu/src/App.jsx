@@ -789,7 +789,10 @@ function App() {
           免责声明：生成的内容可能是假的或是不准确的。
         </p>
 
-        <a href="../../../terms.html" className="text-white text-xs underline">
+        <a
+          href={`${import.meta.env.BASE_URL}terms.html`}
+          className="text-white text-xs underline"
+        >
           使用条款
         </a>
       </div>
