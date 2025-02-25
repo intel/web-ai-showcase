@@ -35,21 +35,21 @@ function Message({ role, content, answerIndex }) {
       {role === "assistant" ? (
         <>
           <BotIcon className="h-6 w-6 min-h-6 min-w-6 my-3 text-gray-500 text-stone-50" />
-          <div className="bg-gray-200 dark:bg-gray-700 rounded-lg p-4">
-            <div className="min-h-6 text-gray-800 dark:text-gray-200 overflow-wrap-anywhere">
+          <div className="bg-stone-700/30 text-white rounded-lg p-4">
+            <div className="min-h-6 text-white overflow-wrap-anywhere">
               {thinking.length > 0 ? (
                 <>
-                  <div className="bg-white dark:bg-gray-800 rounded-lg flex flex-col">
+                  <div className="bg-stone-700/30 text-white rounded-lg flex flex-col">
                     <button
-                      className="flex items-center gap-2 cursor-pointer p-4 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg "
+                      className="flex items-center gap-2 cursor-pointer p-4 hover:bg-transparent rounded-lg "
                       onClick={() => setShowThinking((prev) => !prev)}
                       style={{ width: showThinking ? "100%" : "auto" }}
                     >
                       <BrainIcon
                         className={doneThinking ? "" : "animate-pulse"}
                       />
-                      <span>{doneThinking ? "查看思考过程" : "思考中..."}</span>
-                      <span className="ml-auto text-gray-700">
+                      <span>{doneThinking ? "查看思考过程" : "思考中 ..."}</span>
+                      <span className="ml-auto text-white">
                         {showThinking ? "▲" : "▼"}
                       </span>
                     </button>
@@ -80,9 +80,9 @@ function Message({ role, content, answerIndex }) {
                 </>
               ) : (
                 <span className="h-6 flex items-center gap-1">
-                  <span className="w-2.5 h-2.5 bg-gray-600 dark:bg-gray-300 rounded-full animate-pulse"></span>
-                  <span className="w-2.5 h-2.5 bg-gray-600 dark:bg-gray-300 rounded-full animate-pulse animation-delay-200"></span>
-                  <span className="w-2.5 h-2.5 bg-gray-600 dark:bg-gray-300 rounded-full animate-pulse animation-delay-400"></span>
+                  <span className="w-2.5 h-2.5 bg-white-600 dark:bg-white-300 rounded-full animate-pulse"></span>
+                  <span className="w-2.5 h-2.5 bg-white-600 dark:bg-white-300 rounded-full animate-pulse animation-delay-200"></span>
+                  <span className="w-2.5 h-2.5 bg-white-600 dark:bg-white-300 rounded-full animate-pulse animation-delay-400"></span>
                 </span>
               )}
             </div>
@@ -90,8 +90,8 @@ function Message({ role, content, answerIndex }) {
         </>
       ) : (
         <>
-          <UserIcon className="h-6 w-6 min-h-6 min-w-6 my-3 text-gray-500 text-stone-50" />
-          <div className="bg-blue-500 text-white rounded-lg p-4">
+          <UserIcon className="h-6 w-6 min-h-6 min-w-6 my-3 text-white text-stone-50" />
+          <div className="bg-stone-700/30 text-white rounded-lg p-4">
             <p className="min-h-6 overflow-wrap-anywhere">{content}</p>
           </div>
         </>
@@ -105,7 +105,7 @@ export default function Chat({ messages }) {
 
   return (
     <div
-      className={`${empty ? "flex flex-col items-center justify-end" : "flex-1 p-6 max-w-[960px] w-full space-y-4"}`}
+      className={`overflow-y-auto scrollbar-thin ${empty ? "flex flex-col items-center justify-end" : "flex-1 p-6 max-w-[1280px] w-full space-y-4"}`}
     >
       <MathJaxContext>
         {messages.map((msg, i) => (
