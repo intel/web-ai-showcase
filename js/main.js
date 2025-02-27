@@ -116,10 +116,10 @@ let SAMPLES = [
     update: "2024-06-08"
   },
   {
-    id: "webgpu_deepseek_r1",
-    title: "DeepSeek-R1",
+    id: "webgpu_deepseek_r1_local",
+    title: "DeepSeek-R1-local",
     desc: "Language model released in Jan 2025 by DeepSeek",
-    sampleUrl: "./samples/deepseek-r1-webgpu/index.html",
+    sampleUrl: "./samples/deepseek-r1-webgpu-local/index.html",
     models: ["DeepSeek R1 Distill Qwen 1.5B"],
     tasks: "Text Generation",
     webApis: [BACKENDS.WEBGPU],
@@ -127,6 +127,7 @@ let SAMPLES = [
     devices: [DEVICES.GPU],
     update: "2025-02-13"
   },
+
   {
     id: "webgpu_florence2",
     title: "Microsoft Florence2",
@@ -440,7 +441,8 @@ let SAMPLES = [
 if (import.meta.env.MODE === "development") {
   SAMPLES = SAMPLES.filter(
     (sample) =>
-      sample.id !== "webgpu_phi3_mini" || sample.id !== "webgpu_deepseek_r1"
+      sample.id !== "webgpu_phi3_mini" ||
+      sample.id !== "webgpu_deepseek_r1_local"
   );
 }
 
