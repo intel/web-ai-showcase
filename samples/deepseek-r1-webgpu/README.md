@@ -1,1 +1,0 @@
-_This sample is from [Transformers.js-v3](https://github.com/huggingface/transformers.js-examples/tree/main/deepseek-r1-webgpu) with minor changes._
