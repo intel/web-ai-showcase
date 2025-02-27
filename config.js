@@ -132,9 +132,13 @@ export const ALL_NEEDED_MODEL_RESOURCES = {
 
   // ort web wasm
   "ort-web@transformers_js_3_3_1": {
-    linkPathPrefix: "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.1/dist/",
+    linkPathPrefix:
+      "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.3.1/dist/",
     localFolderPathPrefix: "frameworks/ort-web/",
-    resources: ["ort-wasm-simd-threaded.jsep.wasm", "ort-wasm-simd-threaded.jsep.mjs"]
+    resources: [
+      "ort-wasm-simd-threaded.jsep.wasm",
+      "ort-wasm-simd-threaded.jsep.mjs"
+    ]
   },
 
   "ort-web@1_18_0": {
