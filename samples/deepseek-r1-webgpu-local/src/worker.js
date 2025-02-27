@@ -145,6 +145,7 @@ async function load() {
   env.allowLocalModels = true;
   env.allowRemoteModels = true;
   env.localModelPath = `${baseUrl}/models/`;
+  env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@transformers_js_3_3_1/`;
 
   // Load the pipeline and save it for future use.
   await TextGenerationPipeline.getInstance((x) => {
