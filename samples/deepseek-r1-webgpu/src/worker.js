@@ -142,10 +142,12 @@ async function load() {
     baseUrl = "/web-ai-showcase";
   }
 
-  env.allowLocalModels = true;
-  env.allowRemoteModels = true;
-  env.localModelPath = `${baseUrl}/models/`;
-  env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@transformers_js_3_3_1/`;
+  // For debugging
+  //env.allowLocalModels = true;
+  //env.allowRemoteModels = true;
+  //env.localModelPath = `${baseUrl}/models/`;
+  //env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@transformers_js_3_3_1/`;
+  env.remoteHost = `https://hf-mirror.com/`;
 
   // Load the pipeline and save it for future use.
   const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
