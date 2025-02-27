@@ -48,7 +48,9 @@ function Message({ role, content, answerIndex }) {
                       <BrainIcon
                         className={doneThinking ? "" : "animate-pulse"}
                       />
-                      <span>{doneThinking ? "查看思考过程" : "思考中 ..."}</span>
+                      <span>
+                        {doneThinking ? "查看思考过程" : "思考中 ..."}
+                      </span>
                       <span className="ml-auto text-white">
                         {showThinking ? "▲" : "▼"}
                       </span>
