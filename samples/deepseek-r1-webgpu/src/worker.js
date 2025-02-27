@@ -148,12 +148,20 @@ async function load() {
   env.backends.onnx.wasm.wasmPaths = `${baseUrl}/models/frameworks/ort-web/ort-web@transformers_js_3_3_1/`;
 
   // Load the pipeline and save it for future use.
-  await TextGenerationPipeline.getInstance((x) => {
+  const [tokenizer, model] = await TextGenerationPipeline.getInstance((x) => {
     // We also add a progress callback to the pipeline so that we can
     // track model loading.
     self.postMessage(x);
   });
 
+  self.postMessage({
+    status: "loading",
+    data: "Warming up"
+  });
+
+  // Run model with dummy input to compile shaders
+  const inputs = tokenizer("a");
+  await model.generate({ ...inputs, max_new_tokens: 1 });
   self.postMessage({ status: "ready" });
 }
 // Listen for messages from the main thread
