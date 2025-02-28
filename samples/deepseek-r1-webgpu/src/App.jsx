@@ -312,7 +312,7 @@ function App() {
           );
           if (statusBarElement) {
             changeClass4StatusBar("loaded", statusBarElement);
-            statusBarElement.textContent = "上传完毕";
+            statusBarElement.textContent = "加载完毕";
           }
 
           setProgressItems((prev) =>
