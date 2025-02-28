@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "format": "prettier --log-level warn --write \"./{js,samples,styles}/**/*.{js,css,jsx,html}\" \"*.{js,cjs,html}\"",
+    "format": "prettier --log-level log --write \"**/*.{js,jsx,html,css}\"",
     "dev": "vite --port 9999 --host -- use-remote-models",
     "css-update": "npx tailwindcss -i ./style/tailwind-input.css -o ./style/tailwind.css --watch",
     "generate-ssl": "openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem",
