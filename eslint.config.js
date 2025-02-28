@@ -15,6 +15,19 @@ const prettierConfig = JSON.parse(
 );
 
 export default [
+  {
+    ignores: [
+      "node_modules",
+      "dist",
+      "samples/phi3-webgpu/node_modules",
+      "samples/phi3-webgpu/dist",
+      "samples/deepseek-r1-webgpu-local/node_modules",
+      "samples/deepseek-r1-webgpu-local/dist",
+      "*.config.js",
+      "*.config.cjs",
+      "models"
+    ]
+  },
   { languageOptions: { globals: globals.browser } },
   {
     files: ["**/*.js"],
@@ -26,21 +39,6 @@ export default [
       ],
       "prettier/prettier": ["error", prettierConfig]
     }
-  },
-  {
-    ignores: [
-      "dist/",
-      "samples/phi3-webgpu/node_modules/**/*.js",
-      "samples/phi3-webgpu/dist/**/*.js",
-      "samples/deepseek-r1-webgpu/node_modules/**/*.js",
-      "samples/deepseek-r1-webgpu/dist/**/*.js",
-      "samples/deepseek-r1-webgpu-local/node_modules/**/*.js",
-      "samples/deepseek-r1-webgpu-local/dist/**/*.js",
-      "**/*.config.js",
-      "**/*.config.cjs",
-      "models/**/*.js",
-      "models/**/*.mjs"
-    ]
   },
   pluginJs.configs.recommended,
   eslintPluginPrettierRecommended
