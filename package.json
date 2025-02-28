@@ -1,14 +1,12 @@
 {
   "scripts": {
-    "format": "prettier --log-level warn --write \"./{js,samples,styles}/**/*.{js,css,jsx,html}\"",
-    "build": "vite build",
-    "build:use-remote-models": "vite build -- use-remote-models",
+    "format": "prettier --log-level log --write \"**/*.{js,jsx,html,css}\"",
     "dev": "vite --port 9999 --host -- use-remote-models",
     "css-update": "npx tailwindcss -i ./style/tailwind-input.css -o ./style/tailwind.css --watch",
     "generate-ssl": "openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout key.pem -out cert.pem",
-    "prod:github": "npm run build:use-remote-models && node build_scripts.js --github",
-    "prod:use-remote-models": "npm run build:use-remote-models && node build_scripts.js --use-remote-models",
-    "prod": "npm run build && node build_scripts.js",
+    "prod:github": "vite build -- use-remote-models && node build_scripts.js --github",
+    "prod:use-remote-models": "vite build -- use-remote-models && node build_scripts.js --use-remote-models",
+    "prod": "vite build && node build_scripts.js",
     "startup": "cd ./dist && http-server -S -C ../cert.pem -K ../key.pem -o",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
