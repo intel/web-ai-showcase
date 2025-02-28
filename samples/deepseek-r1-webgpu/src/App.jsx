@@ -470,7 +470,7 @@ function App() {
                 <br />
                 您将在浏览器内使用一个拥有 15 亿参数的大语言模型{" "}
                 <a
-                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/file/view/master?fileName=onnx%252Fmodel_q4f16.onnx&status=2"
+                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX"
                   target="_blank"
                   rel="noreferrer"
                   className="font-medium underline text-amber-300 dark:text-amber-200"
