@@ -116,6 +116,18 @@ let SAMPLES = [
     update: "2024-06-08"
   },
   {
+    id: "webgpu_deepseek_r1",
+    title: "DeepSeek-R1",
+    desc: "Language model released in Jan 2025 by DeepSeek",
+    sampleUrl: "./samples/deepseek-r1-webgpu/index.html",
+    models: ["DeepSeek R1 Distill Qwen 1.5B"],
+    tasks: "Text Generation",
+    webApis: [BACKENDS.WEBGPU],
+    framework: "Transformers.js",
+    devices: [DEVICES.GPU],
+    update: "2025-02-27"
+  },
+  {
     id: "webgpu_deepseek_r1_local",
     title: "DeepSeek-R1-local",
     desc: "Language model released in Jan 2025 by DeepSeek",
@@ -442,6 +454,7 @@ if (import.meta.env.MODE === "development") {
   SAMPLES = SAMPLES.filter(
     (sample) =>
       sample.id !== "webgpu_phi3_mini" ||
+      sample.id !== "webgpu_deepseek_r1" ||
       sample.id !== "webgpu_deepseek_r1_local"
   );
 }
