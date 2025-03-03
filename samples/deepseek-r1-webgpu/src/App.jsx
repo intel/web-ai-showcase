@@ -7,14 +7,15 @@ import Progress from "./components/Progress";
 
 import {
   getElementId4Resource,
-  removeHiddenClass,
-  formatBytes
+  removeHiddenClass
 } from "../../common/utility.js";
 
 import {
   TRANSFORMER_LOCAL_MODEL_PATH,
   ALL_NEEDED_MODEL_RESOURCES
 } from "../../../config.js";
+
+import { DEFAULT_CACHE_STORAGE_NAME, MODEL_NAME } from "./constants.js";
 
 import logoImg from "/assets/logo-deepseek-r1.png";
 
@@ -26,10 +27,6 @@ const EXAMPLES = [
   "小李今年年龄是小王的 3 倍，15 年后她的年龄将是小王的 2 倍，小李今年几岁？",
   "请用 Python 写一个程序来计算第 n 个斐波那契数。"
 ];
-
-const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
-
-const MODEL_NAME = "DeepSeek-R1-Distill-Qwen-1.5B-ONNX";
 
 let baseUrl = "";
 
