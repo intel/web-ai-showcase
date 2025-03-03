@@ -46,6 +46,9 @@ export default ({ mode }) => {
   console.log("Loaded environment variables:", env);
 
   return defineConfig({
+    build: {
+      target: "esnext"
+    },
     base: env.VITE_BASE,
     plugins: [react(), basicSsl(), resourceHandlerPlugin(), topLevelAwait()],
     define: {
