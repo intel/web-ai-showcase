@@ -450,6 +450,12 @@ function App() {
               <div className="flex flex-wrap items-center gap-2 2xl:gap-4">
                 <div className="flex items-center justify-between">
                   <span
+                    title="模型名称"
+                    className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >
+                    <a>{` ${MODEL_NAME}`}</a>{" "}
+                  </span>
+                  <span
                     id="model_q4f16-onnxStatusBar"
                     className="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
                   >

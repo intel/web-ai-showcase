@@ -41,8 +41,8 @@ export class LLM {
     env.allowRemoteModels = true;
     env.localModelPath = this.local_model_path;
 
-    //const model_data_file_url = `${LOCAL_REQUEST_PREFIX}/onnx/${this.model_data_file_name}`;
-    //const model_config_file_url = `${LOCAL_REQUEST_PREFIX}/${this.model_config_file_name}`;
+    //const model_data_file_url = `${LOCAL_REQUEST_PREFIX}${MODEL_NAME}/onnx/${this.model_data_file_name}`;
+    //const model_config_file_url = `${LOCAL_REQUEST_PREFIX}${MODEL_NAME}/${this.model_config_file_name}`;
     env.remoteHost = `https://hf-mirror.com/`;
     const model_data_file_url = `${env.remoteHost}onnx-community/${MODEL_NAME}/resolve/main/onnx/${this.model_data_file_name}`;
     const model_config_file_url = `${env.remoteHost}onnx-community/${MODEL_NAME}/resolve/main/${this.model_config_file_name}`;
