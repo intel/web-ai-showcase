@@ -23,7 +23,7 @@ const IS_WEBGPU_AVAILABLE = !!navigator.gpu;
 const STICKY_SCROLL_THRESHOLD = 120;
 
 const EXAMPLES = [
-  "求方程 x^2 - 3x + 2 = 0 的解。",
+  "解方程 x^2 - 3x + 2 = 0",
   "小李今年年龄是小王的 3 倍，15 年后她的年龄将是小王的 2 倍，小李今年几岁？",
   "请用 Python 写一个程序来计算第 n 个斐波那契数。"
 ];
