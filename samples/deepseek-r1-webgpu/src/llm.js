@@ -19,8 +19,7 @@ if (location.href.toLowerCase().indexOf("github.io") > -1) {
 const LOCAL_REQUEST_PREFIX =
   baseUrl +
   TRANSFORMER_LOCAL_MODEL_PATH +
-  ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].localFolderPathPrefix +
-  MODEL_NAME;
+  ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].localFolderPathPrefix;
 
 export class LLM {
   model_data_file_name = `model_q4f16.onnx`;
