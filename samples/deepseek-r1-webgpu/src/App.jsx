@@ -7,8 +7,7 @@ import Progress from "./components/Progress";
 
 import {
   getElementId4Resource,
-  removeHiddenClass,
-  formatBytes
+  removeHiddenClass
 } from "../../common/utility.js";
 
 import {
@@ -16,20 +15,18 @@ import {
   ALL_NEEDED_MODEL_RESOURCES
 } from "../../../config.js";
 
+import { DEFAULT_CACHE_STORAGE_NAME, MODEL_NAME } from "./constants.js";
+
 import logoImg from "/assets/logo-deepseek-r1.png";
 
 const IS_WEBGPU_AVAILABLE = !!navigator.gpu;
 const STICKY_SCROLL_THRESHOLD = 120;
 
 const EXAMPLES = [
-  "求方程 x^2 - 3x + 2 = 0 的解。",
+  "解方程 x^2 - 3x + 2 = 0",
   "小李今年年龄是小王的 3 倍，15 年后她的年龄将是小王的 2 倍，小李今年几岁？",
   "请用 Python 写一个程序来计算第 n 个斐波那契数。"
 ];
-
-const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
-
-const MODEL_NAME = "DeepSeek-R1-Distill-Qwen-1.5B-ONNX";
 
 let baseUrl = "";
 
@@ -452,6 +449,12 @@ function App() {
             <div className="text-nowrap justify-self-center flex gap-2 2xl:gap-4 items-center text-stone-100 max-w-100 rounded-2xl backdrop-blur-xl px-2 font-mono">
               <div className="flex flex-wrap items-center gap-2 2xl:gap-4">
                 <div className="flex items-center justify-between">
+                  <span
+                    title="模型名称"
+                    className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
+                  >
+                    <a>{` ${MODEL_NAME}`}</a>{" "}
+                  </span>
                   <span
                     id="model_q4f16-onnxStatusBar"
                     className="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
