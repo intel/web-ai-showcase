@@ -22,7 +22,7 @@ const LOCAL_REQUEST_PREFIX =
   ALL_NEEDED_MODEL_RESOURCES[MODEL_NAME].localFolderPathPrefix;
 
 export class LLM {
-  model_data_file_name = `model_q4f16.onnx`;
+  model_data_file_name = `onnx/model_q4f16.onnx`;
   model_config_file_name = `config.json`;
 
   local_model_path = LOCAL_REQUEST_PREFIX;
@@ -44,8 +44,8 @@ export class LLM {
     const model_config_file_url = `${LOCAL_REQUEST_PREFIX}${MODEL_NAME}/${this.model_config_file_name}`;
 
     const remoteHost = `https://hf-mirror.com/`;
-    const model_data_file_url = `${remoteHost}onnx-community/${MODEL_NAME}/resolve/main/onnx/${this.model_data_file_name}`;
-    //const model_data_file_url = `${LOCAL_REQUEST_PREFIX}${MODEL_NAME}/onnx/${this.model_data_file_name}`;
+    const model_data_file_url = `${remoteHost}onnx-community/${MODEL_NAME}/resolve/main/${this.model_data_file_name}`;
+    //const model_data_file_url = `${LOCAL_REQUEST_PREFIX}${MODEL_NAME}/${this.model_data_file_name}`;
 
     const callback = (x) => {
       self.postMessage(x);
