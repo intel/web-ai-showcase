@@ -51,7 +51,9 @@ export class LLM {
       self.postMessage(x);
     };
 
-    this.tokenizer = await AutoTokenizer.from_pretrained(MODEL_NAME, callback);
+    this.tokenizer = await AutoTokenizer.from_pretrained(MODEL_NAME, {
+      progress_callback: callback
+    });
 
     // 151648: <think>
     // 151649: </think>
