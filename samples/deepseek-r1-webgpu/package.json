@@ -12,7 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@huggingface/transformers": "^3.3.1",
+    "@huggingface/transformers": "^3.4.2",
     "@tailwindcss/vite": "^4.0.9",
     "better-react-mathjax": "^2.0.3",
     "dompurify": "^3.2.4",
