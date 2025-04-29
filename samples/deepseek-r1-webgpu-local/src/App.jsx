@@ -7,7 +7,8 @@ import Progress from "./components/Progress";
 
 import {
   getElementId4Resource,
-  removeHiddenClass
+  removeHiddenClass,
+  formatBytes
 } from "../../common/utility.js";
 
 import {
@@ -15,18 +16,20 @@ import {
   ALL_NEEDED_MODEL_RESOURCES
 } from "../../../config.js";
 
-import { DEFAULT_CACHE_STORAGE_NAME, MODEL_NAME } from "./constants.js";
-
 import logoImg from "/assets/logo-deepseek-r1.png";
 
 const IS_WEBGPU_AVAILABLE = !!navigator.gpu;
 const STICKY_SCROLL_THRESHOLD = 120;
 
 const EXAMPLES = [
-  "解方程 x^2 - 3x + 2 = 0",
+  "求方程 x^2 - 3x + 2 = 0 的解。",
   "小李今年年龄是小王的 3 倍，15 年后她的年龄将是小王的 2 倍，小李今年几岁？",
   "请用 Python 写一个程序来计算第 n 个斐波那契数。"
 ];
+
+const DEFAULT_CACHE_STORAGE_NAME = "transformers-cache";
+
+const MODEL_NAME = "DeepSeek-R1-Distill-Qwen-1.5B-ONNX";
 
 let baseUrl = "";
 
@@ -237,8 +240,106 @@ function App() {
   </div>`;
   }
 
+  function bindEventListener() {
+    const PROGRESS_BAR = document.getElementById(`progressBar`);
+    const resource = "onnx/model_q4f16.onnx";
+    const inputElement = document.getElementById(`uploadModel`);
+    if (inputElement) {
+      inputElement.addEventListener("change", async function (event) {
+        const files = event.target.files;
+        if (!files.length) {
+          return;
+        }
+
+        const cache = await caches.open(DEFAULT_CACHE_STORAGE_NAME);
+
+        for (const file of files) {
+          const reader = new FileReader();
+
+          reader.onprogress = function (progressEvent) {
+            if (progressEvent.lengthComputable) {
+              const loaded = progressEvent.loaded;
+              const total = progressEvent.total;
+              // show the progress bar
+              removeHiddenClass(PROGRESS_BAR);
+
+              PROGRESS_BAR.innerHTML = `
+                    <div class="relative px-2 z-20" id="StatusText"></div>
+                    <div class="relative px-2 z-20">
+                      <span id="ProgressVal">0%</span>
+                    </div>
+                    <div
+                      id="ProgressBar"
+                      class="absolute top-0 rounded-lg z-10 text-left bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-sm font-mono"
+                    ></div>
+                 `;
+
+              const statusText = document.getElementById(`StatusText`);
+              // show the progress of downloading
+              const progressEle = document.getElementById(`ProgressBar`);
+              // show the progress value
+              const progressValEle = document.getElementById(`ProgressVal`);
+
+              let progress = (loaded / total) * 100;
+              statusText.textContent = `模型文件上传中 ...`;
+
+              if (!progressEle.style.height) {
+                progressEle.style.height = "24px";
+              }
+              progressEle.style.width = `${progress}%`;
+              progressValEle.textContent = `${formatBytes(
+                loaded
+              )}/${formatBytes(total)}`;
+            }
+          };
+
+          reader.onload = async function (fileEvent) {
+            const arrayBuffer = fileEvent.target.result;
+            const blob = new Blob([arrayBuffer]);
+            const fileExt =
+              file.name.split(".").length > 0 ? file.name.split(".")[1] : "";
+            const contentType =
+              fileExt === "json"
+                ? "text/plain; charset=utf-8"
+                : "binary/octet-stream";
+            const response = new Response(blob, {
+              headers: {
+                "Content-Length": blob.size.toString(),
+                "Accept-Ranges": "bytes",
+                "Content-Type": contentType
+              }
+            });
+            // construct the url for this cached resource.
+            const cacheKey = LOCAL_REQUEST_PREFIX + resource;
+            const cacheResponse = await cache.match(cacheKey);
+            if (!cacheResponse) {
+              cache
+                .put(cacheKey, response)
+                .then(() => {
+                  console.log(`cache ${resource} successfully.`);
+                  scanCacheStorage();
+                })
+                .catch((error) => {
+                  console.error(`cache ${resource} failed:`, error);
+                });
+            }
+
+            if (!PROGRESS_BAR.classList.contains("hidden")) {
+              PROGRESS_BAR.classList.add("hidden");
+            }
+          };
+
+          reader.readAsArrayBuffer(file);
+        }
+      });
+    }
+  }
+
   useEffect(() => {
     setupNavigBar("../..");
+
+    // bind event listener for loading models
+    bindEventListener();
 
     scanCacheStorage();
   }, []);
@@ -309,7 +410,7 @@ function App() {
           );
           if (statusBarElement) {
             changeClass4StatusBar("loaded", statusBarElement);
-            statusBarElement.textContent = "加载完毕";
+            statusBarElement.textContent = "上传完毕";
           }
 
           setProgressItems((prev) =>
@@ -450,11 +551,18 @@ function App() {
               <div className="flex flex-wrap items-center gap-2 2xl:gap-4">
                 <div className="flex items-center justify-between">
                   <span
-                    title="模型名称"
+                    title="点击下载模型"
                     className="rounded-l-md bg-stone-600 px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
                   >
-                    <a>{` ${MODEL_NAME}`}</a>{" "}
+                    <a
+                      href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/file/view/master?fileName=onnx%252Fmodel_q4f16.onnx&status=2"
+                      target="_blank"
+                    >
+                      {" "}
+                      model_q4f16.onnx
+                    </a>{" "}
                   </span>
+
                   <span
                     id="model_q4f16-onnxStatusBar"
                     className="rounded-r-md bg-neutral-400 min-h-[32px] min-w-[68px] px-2 py-1 text-stone-50 ring-1 ring-inset ring-stone-500/10"
@@ -473,7 +581,7 @@ function App() {
                 <br />
                 您将在浏览器内使用一个拥有 15 亿参数的大语言模型{" "}
                 <a
-                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX"
+                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/file/view/master?fileName=onnx%252Fmodel_q4f16.onnx&status=2"
                   target="_blank"
                   rel="noreferrer"
                   className="font-medium underline text-amber-300 dark:text-amber-200"
@@ -510,22 +618,42 @@ function App() {
             <div className="w-full flex justify-center items-center">
               <div className="relative flex flex-row items-center">
                 <button
-                  id="uploadModel"
+                  id="loadModelLocallyBtn"
                   className="cursor-pointer control-entry transition ease-in-out bg-blue-500 hover:-translate-y-1 hover:translate-x-0 hover:bg-indigo-500 duration-200 text-stone-50 2xl:text-base text-sm font-semibold py-2 px-4 rounded-md disabled:bg-blue-100 disabled:cursor-not-allowed select-none"
                   disabled={status !== null}
-                  onClick={() => {
-                    worker.current.postMessage({ type: "load" });
-                    setStatus("loading");
-                  }}
                 >
-                  加载模型
+                  <label className="cursor-pointer" htmlFor="uploadModel">
+                    <span title="从本地文件系统上传模型"> 上传模型文件</span>
+                  </label>
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    id="uploadModel"
+                    multiple
+                  />
                 </button>{" "}
+                <a
+                  href="https://modelscope.cn/models/onnx-community/DeepSeek-R1-Distill-Qwen-1.5B-ONNX/file/view/master?fileName=onnx%252Fmodel_q4f16.onnx&status=2"
+                  target="_blank"
+                  className="ml-4 text-stone-50 underline flex flex-row"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#FFFFFF"
+                  >
+                    <path d="M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+                  </svg>
+                  下载模型
+                </a>
               </div>
 
               <div>
                 {error && (
                   <div className="text-red-500 text-center mb-2">
-                    <p className="mb-1">加载模型文件失败。错误信息:</p>
+                    <p className="mb-1">上传模型文件失败。错误信息:</p>
                     <p className="text-sm">{error}</p>
                   </div>
                 )}

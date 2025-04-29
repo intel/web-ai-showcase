@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
-import { defineConfig, loadEnv } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig, loadEnv } from "vite";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import * as path from "path";
 import { existsSync } from "fs";
@@ -46,11 +47,14 @@ export default ({ mode }) => {
   console.log("Loaded environment variables:", env);
 
   return defineConfig({
-    build: {
-      target: "esnext"
-    },
     base: env.VITE_BASE,
-    plugins: [react(), basicSsl(), resourceHandlerPlugin(), topLevelAwait()],
+    plugins: [
+      tailwindcss(),
+      react(),
+      basicSsl(),
+      resourceHandlerPlugin(),
+      topLevelAwait()
+    ],
     define: {
       VITE_ENV_USE_REMOTE_MODELS: process.argv
         .slice(2)
