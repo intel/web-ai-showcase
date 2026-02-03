@@ -17,7 +17,7 @@
     "@eslint/js": "^9.6.0",
     "@vitejs/plugin-basic-ssl": "^1.1.0",
     "adm-zip": "^0.5.12",
-    "eslint": "^9.6.0",
+    "eslint": "^9.39.2",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-prettier": "^5.1.3",
     "fs-extra": "^11.2.0",
