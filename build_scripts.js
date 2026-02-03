@@ -22,7 +22,6 @@ const __dirname = path.dirname(__filename);
 
 function buildSubProjects(args) {
   const PROJECT_ARRAY = [
-    "phi3-webgpu",
     "deepseek-r1-webgpu",
     "deepseek-r1-webgpu-local"
   ];
@@ -49,8 +48,6 @@ function copyResourcesIntoDist(args) {
   ];
 
   const REMOTE_DEMOS_DIST = {
-    "samples/phi3-webgpu/dist/assets": "/assets",
-    "samples/phi3-webgpu/dist/index.html": "samples/phi3-webgpu/",
     "samples/deepseek-r1-webgpu/dist/assets": "/assets",
     "samples/deepseek-r1-webgpu/dist/index.html": "samples/deepseek-r1-webgpu/",
     "samples/deepseek-r1-webgpu-local/dist/assets": "/assets",
