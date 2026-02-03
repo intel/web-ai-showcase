@@ -21,10 +21,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function buildSubProjects(args) {
-  const PROJECT_ARRAY = [
-    "deepseek-r1-webgpu",
-    "deepseek-r1-webgpu-local"
-  ];
+  const PROJECT_ARRAY = ["deepseek-r1-webgpu", "deepseek-r1-webgpu-local"];
   const buildCmd =
     args === "--github"
       ? "build:github"
