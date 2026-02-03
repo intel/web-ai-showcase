@@ -19,8 +19,6 @@ export default [
     ignores: [
       "node_modules",
       "dist",
-      "samples/phi3-webgpu/node_modules",
-      "samples/phi3-webgpu/dist",
       "samples/deepseek-r1-webgpu/node_modules",
       "samples/deepseek-r1-webgpu/dist",
       "samples/deepseek-r1-webgpu-local/node_modules",

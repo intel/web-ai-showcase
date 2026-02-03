@@ -216,18 +216,6 @@ let SAMPLES = [
     update: "2024-06-10"
   },
   {
-    id: "webgpu_phi3_mini",
-    title: "Phi-3",
-    desc: "Language model released in Apr 2024 by Microsoft",
-    sampleUrl: "./samples/phi3-webgpu/index.html",
-    models: ["Phi 3 Mini 4k Instruct"],
-    tasks: "Text Generation",
-    webApis: [BACKENDS.WEBGPU],
-    framework: "Transformers.js",
-    devices: [DEVICES.GPU],
-    update: "2024-06-09"
-  },
-  {
     id: "webgpu_phi35_mini",
     title: "Phi-3.5",
     desc: "Language model released in Aug 2024 by Microsoft",

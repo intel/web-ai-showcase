@@ -35,6 +35,7 @@
     "@mediapipe/tasks-genai": "0.10.14",
     "@xenova/transformers": "github:xenova/transformers.js#aadeed936af7cc9049e1d238fd4ec70545dfd508",
     "dompurify": "^3.2.4",
+    "eslint-config-prettier": "^10.1.8",
     "highlight.js": "11.9.0",
     "marked": "12.0.1"
   },
